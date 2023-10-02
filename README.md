@@ -10,6 +10,10 @@ improvements has been made:
 
 ## Prerequisites
 
+You will need to have [`pwsh`](https://github.com/PowerShell/PowerShell) installed
+on your platform of choice in order to run any of the scripts, in addition to the
+following platform-specific prerequisites:
+
 ### Windows
 
 - [ ] `winget`

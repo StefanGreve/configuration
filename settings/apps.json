@@ -1,0 +1,28 @@
+{
+    "Windows": {
+        "winget": [
+            "7zip.7zip",
+            "Audacity.Audacity",
+            "CoreyButler.NVMforWindows",
+            "Discord.Discord",
+            "Docker.DockerDesktop",
+            "Git.Git",
+            "GnuPG.GnuPG",
+            "Inkscape.Inkscape",
+            "ImageMagick.ImageMagick",
+            "JohnMacFarlane.Pandoc",
+            "Neovim.Neovim",
+            "Python.Python.3.11",
+            "RaspberryPiFoundation.RaspberryPiImager",
+            "GoLang.Go",
+            "GitHub.cli",
+            "Microsoft.Teams",
+            "Microsoft.PowerToys",
+            "Microsoft.VisualStudioCode",
+            "Microsoft.WindowsTerminal",
+            "OpenJS.NodeJS",
+            "Oracle.MySQL",
+            "VideoLAN.VLC"
+        ]
+    }
+}

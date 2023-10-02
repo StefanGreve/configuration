@@ -1,0 +1,14 @@
+{
+    "Windows": {
+        "code": [
+            {
+                "path": "apps/code/settings.json",
+                "target": "$env:APPDATA/Code/User/settings.json"
+            },
+            {
+                "path": "apps/code/keybindings.json",
+                "target": "$env:APPDATA/Code/User/keybindings.json"
+            }
+        ]
+    }
+}

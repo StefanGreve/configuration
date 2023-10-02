@@ -1,0 +1,77 @@
+{
+    "[powershell]": {
+        "debug.saveBeforeStart": "nonUntitledEditorsInActiveGroup",
+        "editor.defaultFormatter": "ms-vscode.powershell-preview",
+        "editor.semanticHighlighting.enabled": true,
+        "editor.wordSeparators": "`~!@#$%^&*()=+[{]}\\|;:'\",.<>/?"
+    },
+    "editor.acceptSuggestionOnEnter": "smart",
+    "editor.bracketPairColorization.enabled": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": false,
+        "source.organizeImports": false
+    },
+    "editor.cursorBlinking": "smooth",
+    "editor.folding": true,
+    "editor.foldingStrategy": "indentation",
+    "editor.formatOnSave": false,
+    "editor.linkedEditing": true,
+    "editor.minimap.enabled": false,
+    "editor.renderControlCharacters": true,
+    "editor.renderFinalNewline": "on",
+    "editor.renderLineHighlight": "none",
+    "editor.renderWhitespace": "all",
+    "editor.rulers": [
+        80,
+        120,
+        160
+    ],
+    "editor.semanticHighlighting.enabled": true,
+    "editor.showFoldingControls": "always",
+    "editor.suggestSelection": "first",
+    "editor.tabSize": 4,
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
+    "extensions.ignoreRecommendations": true,
+    "files.autoGuessEncoding": true,
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.factorypath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/__pycache__": true,
+        "venv/": true
+    },
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "git.inputValidationSubjectLength": 72,
+    "html.autoClosingTags": true,
+    "javascript.autoClosingTags": true,
+    "javascript.suggest.autoImports": true,
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "notebook.lineNumbers": "on",
+    "powershell.enableProfileLoading": true,
+    "powershell.scriptAnalysis.enable": true,
+    "powershell.sideBar.CommandExplorerVisibility": true,
+    "powershell.startAutomatically": false,
+    "security.workspace.trust.untrustedFiles": "open",
+    "telemetry.enableTelemetry": false,
+    "terminal.integrated.profiles.windows": {
+        "PowerShell": {
+            "args": [
+                "-nologo"
+            ],
+            "icon": "terminal-powershell",
+            "source": "PowerShell"
+        }
+    },
+    "typescript.autoClosingTags": true,
+    "typescript.suggest.autoImports": true,
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "window.menuBarVisibility": "hidden",
+    "workbench.editor.highlightModifiedTabs": true,
+    "workbench.iconTheme": "vscode-icons",
+    "workbench.settings.editor": "json",
+    "workbench.sideBar.location": "right",
+    "workbench.startupEditor": "none"
+}

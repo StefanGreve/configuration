@@ -35,8 +35,13 @@ Install all required programs:
 > ⚠ Cargo installs can be very time intensive, depending on your hardware specification.
 
 ```powershell
-.\scripts\install.ps1
+.\scripts\install.ps1 -All
 ```
+
+The installer script also accepts individual flags for user-customized installations
+and reads its definitions from the `settings` folder.
+
+---
 
 Symlink config files from the apps directory by force:
 
@@ -45,6 +50,9 @@ Symlink config files from the apps directory by force:
 ```powershell
 .\scripts\link.ps1
 ```
+
+As a result of running this scripts, a new assets directory will be created in
+`$home/.config/assets`.
 
 ## Notes
 

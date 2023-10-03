@@ -1,0 +1,35 @@
+{
+    "$schema": "https://aka.ms/winget-settings.schema.json",
+    "visual": {
+        "progressBar": "retro"
+    },
+    "installBehavior": {
+        "preferences": {
+            "scope": "user",
+            "locale": [
+                "en-US",
+                "ja-JP"
+            ],
+            "installerTypes": [
+                "msi",
+                "msix",
+                "exe"
+            ]
+        }
+    },
+    "uninstallBehavior": {
+        "purgePortablePackage": true
+    },
+    "network": {
+        "downloader": "do"
+    },
+    "telemetry": {
+        "disable": true
+    },
+    "experimentalFeatures": {
+        "directMSI": true,
+        "dependencies": true,
+        "configuration": true,
+        "windowsFeature": true
+    }
+}

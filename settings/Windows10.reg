@@ -1,0 +1,98 @@
+Windows Registry Editor Version 5.00
+
+; ==============================================================================
+; WINDOWS 10 SYSTEM REGISTRIES
+; ==============================================================================
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem]
+; Set max path length from 260 to 32767 characters
+"LongPathsEnabled"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System]
+; Enable verbose message output on system start and shutdown
+"VerboseStatus"=dword:00000001
+
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
+; Show seconds count in taskbar system clock
+"ShowSecondsInSystemClock"=dword:00000001
+
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager]
+; Prevent Windows from automatically installing apps through their subscription channels
+"ContentDeliveryAllowed"=dword:00000000
+"FeatureManagementEnabled"=dword:00000000
+"OemPreInstalledAppsEnabled"=dword:00000000
+"SoftLandingEnabled"=dword:00000000
+"SilentInstalledAppsEnabled"=dword:00000000
+"PreInstalledAppsEnabled"=dword:00000000
+"PreInstalledAppsEverEnabled"=dword:00000000
+"SubscribedContentEnabled"=dword:00000000
+; Don't show suggestions occasionally in Start menu
+"SystemPaneSuggestionsEnabled"=dword:00000000
+
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\AdvertisingInfo]
+; Disable advertising id for relevant ads
+"Enabled"=dword:00000000
+
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Privacy]
+"TailoredExperiencesWithDiagnosticDataEnabled"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization]
+; Show login form immediately
+"NoLockScreen"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\CloudContent]
+; Disable personalized recommendations from microsoft and notifications about
+; your Microsoft account
+"DisableCloudOptimizedContent"=dword:00000001
+"DisableConsumerAccountStateContent"=dword:00000001
+"DisableWindowsConsumerFeatures"=dword:00000001
+"DisableWindowsSpotlightFeatures"=dword:00000001
+"DisableTailoredExperiencesWithDiagnosticData"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DataCollection]
+; Disable telemetry
+"AllowTelemetry"=dword:00000000
+"DisableOneSettingsDownloads"=dword:00000001
+"DoNotShowFeedbackNotifications"=dword:00000001
+"LimitDiagnosticLogCollection"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System]
+; Disable Windows' 10 timeline feature
+"EnableActivityFeed"=dword:00000000
+; Don't upload or publish user activity
+"UploadUserActivities"=dword:00000000
+"PublishUserActivities"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Feeds]
+; Disable news and interests on the taskbar
+"EnableFeeds"=dword:00000000
+
+[HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Windows Search]
+; Disable cortana-related features related to windows search
+"AllowCortana"=dword:00000000
+"AllowCortanaAboveLock"=dword:00000000
+"AllowCloudSearch"=dword:00000000
+"AllowSearchToUseLocation"=dword:00000000
+"ConnectedSearchUseWeb"=dword:00000000
+"ConnectedSearchUseWebOverMeteredConnections"=dword:00000000
+"DisableWebSearch"=dword:00000001
+
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Personalization\Settings]
+; Decline privacy policy
+"AcceptedPrivacyPolicy"=dword:00000000
+
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\InputPersonalization]
+; Turn off data collection for automatic learning
+"RestrictImplicitInkCollection"=dword:00000001
+"RestrictImplicitTextCollection"=dword:00000001
+
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\InputPersonalization\TrainedDataStore]
+"HarvestContacts"=dword:00000000
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\Windows Error Reporting]
+; Don't notify Microsoft of application faults, kernel faults, unresponsive applications, etc.
+"Disabled"=dword:00000001
+
+; Remove 3D Objects folder from file explorer (This PC)
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}]
+[-HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}]

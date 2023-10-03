@@ -28,7 +28,20 @@ TODO
 
 ## Usage
 
-Run the following scripts to bootstrap your system, preferably in order:
+**Run the following scripts to bootstrap your system, preferably in order.**
+
+(Optional) Hook up the PowerShell profile file from the
+[`profile`](https://github.com/StefanGreve/profile)
+repository:
+
+```powershell
+.\scripts\setuprofile.ps1
+```
+
+The script above will clone the profile repository inside a `repos` directory on
+your desktop by default. To use a different path, change the value of `$Repository`.
+
+---
 
 Install all required programs:
 

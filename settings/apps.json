@@ -24,5 +24,26 @@
             "Oracle.MySQL",
             "VideoLAN.VLC"
         ]
+    },
+    "Extensions": {
+        "code": [
+            "ms-vscode.hexeditor",
+            "ms-vscode.powershell",
+            "ms-dotnettools.csharp",
+            "ms-python.python",
+            "ms-python.vscode-pylance",
+            "ms-toolsai.jupyter",
+            "james-yu.latex-workshop",
+            "editorconfig.editorconfig",
+            "yzhang.markdown-all-in-one",
+            "eamodio.gitlens",
+            "visualstudioexptteam.vscodeintellicode",
+            "visualstudioexptteam.intellicode-api-usage-examples",
+            "albert.tabout",
+            "vscode-icons-team.vscode-icons",
+            "streetsidesoftware.code-spell-checker",
+            "ecmel.vscode-html-css",
+            "ionutvmi.reg"
+        ]
     }
 }

@@ -15,6 +15,12 @@
                 "path": "apps/winget/settings.json",
                 "target": "$env:LOCALAPPDATA/Packages/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe/LocalState/settings.json"
             }
+        ],
+        "wt": [
+            {
+                "path": "apps/wt/settings.json",
+                "target": "$env:LOCALAPPDATA/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json"
+            }
         ]
     }
 }

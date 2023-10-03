@@ -1,0 +1,334 @@
+{
+    "$help": "https://aka.ms/terminal-documentation",
+    "$schema": "https://aka.ms/terminal-profiles-schema",
+    "actions": [
+        {
+            "command": {
+                "action": "copy",
+                "singleLine": false
+            },
+            "keys": "ctrl+c"
+        },
+        {
+            "command": {
+                "action": "splitPane",
+                "split": "right"
+            },
+            "keys": "ctrl+shift+|"
+        },
+        {
+            "command": {
+                "action": "moveFocus",
+                "direction": "down"
+            },
+            "keys": "ctrl+j"
+        },
+        {
+            "command": "paste",
+            "keys": "ctrl+v"
+        },
+        {
+            "command": {
+                "action": "newTab"
+            },
+            "keys": "ctrl+t"
+        },
+        {
+            "command": {
+                "action": "splitPane",
+                "split": "down"
+            },
+            "keys": "ctrl+shift+minus"
+        },
+        {
+            "command": {
+                "action": "closeTab"
+            },
+            "keys": "ctrl+w"
+        },
+        {
+            "command": {
+                "action": "resizePane",
+                "direction": "left"
+            },
+            "keys": "ctrl+shift+h"
+        },
+        {
+            "command": "find",
+            "keys": "ctrl+shift+f"
+        },
+        {
+            "command": {
+                "action": "moveFocus",
+                "direction": "left"
+            },
+            "keys": "ctrl+h"
+        },
+        {
+            "command": {
+                "action": "moveFocus",
+                "direction": "up"
+            },
+            "keys": "ctrl+k"
+        },
+        {
+            "command": {
+                "action": "moveFocus",
+                "direction": "right"
+            },
+            "keys": "ctrl+l"
+        },
+        {
+            "command": {
+                "action": "resizePane",
+                "direction": "down"
+            },
+            "keys": "ctrl+shift+j"
+        },
+        {
+            "command": {
+                "action": "resizePane",
+                "direction": "up"
+            },
+            "keys": "ctrl+shift+k"
+        },
+        {
+            "command": {
+                "action": "resizePane",
+                "direction": "right"
+            },
+            "keys": "ctrl+shift+l"
+        },
+        {
+            "command": "closePane",
+            "keys": "ctrl+shift+w"
+        }
+    ],
+    "copyFormatting": "none",
+    "copyOnSelect": true,
+    "defaultProfile": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+    "experimental.detectURLs": true,
+    "language": "en-US",
+    "launchMode": "maximized",
+    "profiles": {
+        "defaults": {
+            "backgroundImageOpacity": 0.5,
+            "bellSound": [
+                "none"
+            ],
+            "colorScheme": "PowerShellDark",
+            "commandline": "C:\\Program Files\\PowerShell\\7\\pwsh.exe -NoLogo",
+            "cursorShape": "vintage",
+            "elevate": true,
+            "font": {
+                "face": "Cascadia Mono",
+                "size": 12.0
+            },
+            "hidden": false,
+            "historySize": 9001,
+            "icon": "%USERPROFILE%\\Settings\\WindowsTerminalAssets\\Icons\\powershell-core.ico",
+            "name": "PowerShell",
+            "opacity": 100,
+            "padding": "5, 5, 0, 0",
+            "snapOnInput": true,
+            "startingDirectory": "%USERPROFILE%\\Desktop",
+            "tabColor": "#1E2127",
+            "tabTitle": "PowerShell",
+            "useAcrylic": true
+        },
+        "list": [
+            {
+                "colorScheme": "AdventureTime",
+                "commandline": "powershell.exe -NoLogo",
+                "guid": "{eef40fca-41a1-4efc-8d15-da1f78909254}",
+                "hidden": false,
+                "icon": "%USERPROFILE%\\Settings\\WindowsTerminalAssets\\Icons\\powershell.png",
+                "name": "Windows PowerShell",
+                "tabColor": "#1f1d45",
+                "tabTitle": "Windows PowerShell"
+            },
+            {
+                "colorScheme": "Atom",
+                "commandline": "C:\\Windows\\System32\\cmd.exe",
+                "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+                "hidden": false,
+                "icon": "%USERPROFILE%\\Settings\\WindowsTerminalAssets\\Icons\\cmd_prompt.png",
+                "name": "Command Prompt",
+                "tabColor": "#161719",
+                "tabTitle": "CMD"
+            },
+            {
+                "colorScheme": "Ubuntu",
+                "commandline": "%PROGRAMFILES%\\Git\\usr\\bin\\bash.exe --login",
+                "guid": "{a2fc3baf-962b-46e1-b4d6-0ff09ec629d3}",
+                "hidden": false,
+                "icon": "%PROGRAMFILES%\\Git\\mingw64\\share\\git\\git-for-windows.ico",
+                "name": "Git Bash",
+                "tabColor": "#300A24",
+                "tabTitle": "Git Bash"
+            },
+            {
+                "colorScheme": "Atom",
+                "commandline": "C:\\Windows\\system32\\wsl.exe",
+                "guid": "{f377d379-3a08-4f88-b40d-f7405db11a77}",
+                "hidden": false,
+                "icon": "%USERPROFILE%\\Settings\\WindowsTerminalAssets\\Icons\\linux.png",
+                "name": "WSL",
+                "tabColor": "#161719",
+                "tabTitle": "WSL"
+            },
+            {
+                "colorScheme": "cyberpunk",
+                "commandline": "%LOCALAPPDATA%\\Programs\\Python\\Python311\\python.exe",
+                "guid": "{6ee2d370-4f6a-4a55-a0ad-8afdbc68d6ca}",
+                "hidden": false,
+                "icon": "%USERPROFILE%\\Settings\\WindowsTerminalAssets\\Icons\\python.png",
+                "name": "Python",
+                "tabColor": "#332A57",
+                "tabTitle": "Python"
+            }
+        ]
+    },
+    "schemes": [
+        {
+            "background": "#1E2127",
+            "black": "#55544E",
+            "blue": "#327DC3",
+            "brightBlack": "#7F7E76",
+            "brightBlue": "#6DA5D9",
+            "brightCyan": "#46ECE9",
+            "brightGreen": "#38FAC6",
+            "brightPurple": "#C5B2E6",
+            "brightRed": "#DB575B",
+            "brightWhite": "#FFFFFF",
+            "brightYellow": "#FFF1AD",
+            "cursorColor": "#FFFFFF",
+            "cyan": "#15CDCB",
+            "foreground": "#D2D8D9",
+            "green": "#06D6A0",
+            "name": "PowerShellDark",
+            "purple": "#916CCF",
+            "red": "#B9272C",
+            "selectionBackground": "#FFFFFF",
+            "white": "#FDFFFC",
+            "yellow": "#FFE45E"
+        },
+        {
+            "background": "#F9F9F9",
+            "black": "#000000",
+            "blue": "#2F5AF3",
+            "brightBlack": "#000000",
+            "brightBlue": "#2F5AF3",
+            "brightCyan": "#3F953A",
+            "brightGreen": "#3F953A",
+            "brightPurple": "#a00095",
+            "brightRed": "#DE3E35",
+            "brightWhite": "#FFFFFF",
+            "brightYellow": "#D2B67C",
+            "cursorColor": "#BBBBBB",
+            "cyan": "#3F953A",
+            "foreground": "#2A2C33",
+            "green": "#3F953A",
+            "name": "PowerShellLight",
+            "purple": "#950095",
+            "red": "#DE3E35",
+            "selectionBackground": "#EDEDED",
+            "white": "#BBBBBB",
+            "yellow": "#D2B67C"
+        },
+        {
+            "background": "#1F1D45",
+            "black": "#050404",
+            "blue": "#0F4AC6",
+            "brightBlack": "#4E7CBF",
+            "brightBlue": "#1997C6",
+            "brightCyan": "#C8FAF4",
+            "brightGreen": "#9EFF6E",
+            "brightPurple": "#9B5953",
+            "brightRed": "#FC5F5A",
+            "brightWhite": "#F6F5FB",
+            "brightYellow": "#EFC11A",
+            "cursorColor": "#FFFFFF",
+            "cyan": "#70A598",
+            "foreground": "#F8DCC0",
+            "green": "#4AB118",
+            "name": "AdventureTime",
+            "purple": "#665993",
+            "red": "#BD0013",
+            "selectionBackground": "#FFFFFF",
+            "white": "#F8DCC0",
+            "yellow": "#E7741E"
+        },
+        {
+            "background": "#161719",
+            "black": "#000000",
+            "blue": "#85BEFD",
+            "brightBlack": "#000000",
+            "brightBlue": "#96CBFE",
+            "brightCyan": "#85BEFD",
+            "brightGreen": "#94FA36",
+            "brightPurple": "#B9B6FC",
+            "brightRed": "#FD5FF1",
+            "brightWhite": "#E0E0E0",
+            "brightYellow": "#F5FFA8",
+            "cursorColor": "#FFFFFF",
+            "cyan": "#85BEFD",
+            "foreground": "#C5C8C6",
+            "green": "#87C38A",
+            "name": "Atom",
+            "purple": "#B9B6FC",
+            "red": "#FD5FF1",
+            "selectionBackground": "#FFFFFF",
+            "white": "#E0E0E0",
+            "yellow": "#FFD7B1"
+        },
+        {
+            "background": "#300A24",
+            "black": "#2E3436",
+            "blue": "#3465A4",
+            "brightBlack": "#555753",
+            "brightBlue": "#729FCF",
+            "brightCyan": "#34E2E2",
+            "brightGreen": "#8AE234",
+            "brightPurple": "#AD7FA8",
+            "brightRed": "#EF2929",
+            "brightWhite": "#EEEEEC",
+            "brightYellow": "#FCE94F",
+            "cursorColor": "#FFFFFF",
+            "cyan": "#06989A",
+            "foreground": "#EEEEEC",
+            "green": "#4E9A06",
+            "name": "Ubuntu",
+            "purple": "#75507B",
+            "red": "#CC0000",
+            "selectionBackground": "#FFFFFF",
+            "white": "#D3D7CF",
+            "yellow": "#C4A000"
+        },
+        {
+            "background": "#332A57",
+            "black": "#000000",
+            "blue": "#00BFFF",
+            "brightBlack": "#000000",
+            "brightBlue": "#1BCCFD",
+            "brightCyan": "#99D6FC",
+            "brightGreen": "#21F6BC",
+            "brightPurple": "#E6AEFE",
+            "brightRed": "#FF8AA4",
+            "brightWhite": "#FFFFFF",
+            "brightYellow": "#FFF787",
+            "cursorColor": "#FFFFFF",
+            "cyan": "#86CBFE",
+            "foreground": "#E5E5E5",
+            "green": "#00FBAC",
+            "name": "cyberpunk",
+            "purple": "#DF95FF",
+            "red": "#FF7092",
+            "selectionBackground": "#FFFFFF",
+            "white": "#FFFFFF",
+            "yellow": "#FFFA6A"
+        }
+    ],
+    "theme": "dark",
+    "themes": []
+}

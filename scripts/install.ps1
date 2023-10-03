@@ -16,7 +16,7 @@ param(
 dynamicparam {
     if ([OperatingSystem]::IsWindows()) {
         $ParamDictionary = New-Object -Type RuntimeDefinedParameterDictionary
-        $AttributeCollection = New-Object -Type System.Collections.ObjectModel.Collection[System.Attribute]
+        $AttributeCollection = New-Object -Type System.Collections.ObjectModel.Collection[Attribute]
 
         $RegistryParameter = New-Object -Type RuntimeDefinedParameter("Registry", [switch], $AttributeCollection)
 

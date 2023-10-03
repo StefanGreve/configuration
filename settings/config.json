@@ -10,6 +10,16 @@
                 "target": "$env:APPDATA/Code/User/keybindings.json"
             }
         ],
+        "gnupg": [
+            {
+                "path": "apps/gnupg/gpg-agent.conf",
+                "target": "$home/.gnupg/gpg-agent.conf"
+            },
+            {
+                "path": "apps/gnupg/gpg.conf",
+                "target": "$home/.gnupg/gpg.conf"
+            }
+        ],
         "winget": [
             {
                 "path": "apps/winget/settings.json",

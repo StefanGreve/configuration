@@ -9,3 +9,18 @@ function Get-OperatingSystem {
         Write-Error "Unsupported Operating System" -ErrorAction Stop -Category DeviceError
     }
 }
+
+function Write-Status {
+    param(
+        [int] $Step,
+
+        [int] $Total,
+
+        [string] $Message
+    )
+
+    process {
+        Write-Host "[$Step/$Total] " -NoNewline -ForegroundColor DarkGray
+        Write-Host $Message
+    }
+}

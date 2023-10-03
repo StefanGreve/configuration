@@ -126,7 +126,7 @@
             },
             "hidden": false,
             "historySize": 9001,
-            "icon": "%USERPROFILE%\\Settings\\WindowsTerminalAssets\\Icons\\powershell-core.ico",
+            "icon": "%USERPROFILE%\\.config\\assets\\icons\\pwsh.ico",
             "name": "PowerShell",
             "opacity": 100,
             "padding": "5, 5, 0, 0",
@@ -142,7 +142,7 @@
                 "commandline": "powershell.exe -NoLogo",
                 "guid": "{eef40fca-41a1-4efc-8d15-da1f78909254}",
                 "hidden": false,
-                "icon": "%USERPROFILE%\\Settings\\WindowsTerminalAssets\\Icons\\powershell.png",
+                "icon": "%USERPROFILE%\\.config\\assets\\icons\\powershell.png",
                 "name": "Windows PowerShell",
                 "tabColor": "#1f1d45",
                 "tabTitle": "Windows PowerShell"
@@ -152,7 +152,7 @@
                 "commandline": "C:\\Windows\\System32\\cmd.exe",
                 "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
                 "hidden": false,
-                "icon": "%USERPROFILE%\\Settings\\WindowsTerminalAssets\\Icons\\cmd_prompt.png",
+                "icon": "%USERPROFILE%\\.config\\assets\\icons\\cmd.png",
                 "name": "Command Prompt",
                 "tabColor": "#161719",
                 "tabTitle": "CMD"
@@ -162,7 +162,7 @@
                 "commandline": "%PROGRAMFILES%\\Git\\usr\\bin\\bash.exe --login",
                 "guid": "{a2fc3baf-962b-46e1-b4d6-0ff09ec629d3}",
                 "hidden": false,
-                "icon": "%PROGRAMFILES%\\Git\\mingw64\\share\\git\\git-for-windows.ico",
+                "icon": "%USERPROFILE%\\.config\\assets\\icons\\git-for-windows.png",
                 "name": "Git Bash",
                 "tabColor": "#300A24",
                 "tabTitle": "Git Bash"
@@ -172,7 +172,7 @@
                 "commandline": "C:\\Windows\\system32\\wsl.exe",
                 "guid": "{f377d379-3a08-4f88-b40d-f7405db11a77}",
                 "hidden": false,
-                "icon": "%USERPROFILE%\\Settings\\WindowsTerminalAssets\\Icons\\linux.png",
+                "icon": "%USERPROFILE%\\.config\\assets\\icons\\linux.png",
                 "name": "WSL",
                 "tabColor": "#161719",
                 "tabTitle": "WSL"
@@ -182,7 +182,7 @@
                 "commandline": "%LOCALAPPDATA%\\Programs\\Python\\Python311\\python.exe",
                 "guid": "{6ee2d370-4f6a-4a55-a0ad-8afdbc68d6ca}",
                 "hidden": false,
-                "icon": "%USERPROFILE%\\Settings\\WindowsTerminalAssets\\Icons\\python.png",
+                "icon": "%USERPROFILE%\\.config\\assets\\icons\\python.png",
                 "name": "Python",
                 "tabColor": "#332A57",
                 "tabTitle": "Python"

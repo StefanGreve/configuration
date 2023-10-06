@@ -55,7 +55,7 @@ process {
         }
     }
 
-    if ($Cargo.IsPresent) {
+    if ($Cargo.IsPresent -or $All.IsPresent) {
         if (Test-Command "cargo") {
             # update rustc and cargo because some crates won't install easily
             # if we continue with an outdated version

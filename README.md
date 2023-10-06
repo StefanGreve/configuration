@@ -61,7 +61,7 @@ Symlink config files from the apps directory by force:
 > ⚠ This script will override your custom settings and requires elevated permissions.
 
 ```powershell
-.\scripts\link.ps1
+.\scripts\configure.ps1
 ```
 
 As a result of running this scripts, a new assets directory will be created in

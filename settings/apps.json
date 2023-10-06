@@ -1,5 +1,5 @@
 {
-    "Windows": {
+    "PackageManagers": {
         "winget": [
             "7zip.7zip",
             "Audacity.Audacity",
@@ -23,6 +23,12 @@
             "OpenJS.NodeJS",
             "Oracle.MySQL",
             "VideoLAN.VLC"
+        ],
+        "cargo": [
+            "bat",
+            "procs",
+            "tokei",
+            "git-delta"
         ]
     },
     "Extensions": {

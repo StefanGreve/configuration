@@ -22,7 +22,7 @@ $Arguments = @{
     Force = $true
 }
 
-Write-Host "Link PowerShell Profile:`n$($Arguments.Value) -> $($Arguments.Path)" -ForegroundColor Green
+Write-Host "$($Arguments.Value) -> $($Arguments.Path)" -ForegroundColor Yellow
 New-Item @Arguments | Out-Null
 
 Pop-Location

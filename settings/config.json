@@ -10,6 +10,12 @@
                 "target": "$env:APPDATA\\Code\\User\\keybindings.json"
             }
         ],
+        "git": [
+            {
+                "path": ".\\apps\\git\\.gitconfig",
+                "target": "$HOME\\.gitconfig"
+            }
+        ],
         "gnupg": [
             {
                 "path": ".\\apps\\gnupg\\gpg-agent.conf",

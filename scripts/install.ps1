@@ -8,6 +8,9 @@ param(
     [switch] $Applications,
 
     [Parameter(ParameterSetName = "Custom")]
+    [switch] $Cargo,
+
+    [Parameter(ParameterSetName = "Custom")]
     [switch] $Plugins,
 
     [Parameter(ParameterSetName = "All", Mandatory)]
@@ -34,16 +37,14 @@ begin {
     . $([Path]::Combine($Root, "scripts", "utils.ps1"))
     $OperatingSystem = Get-OperatingSystem
     $Apps = Get-Content -Path $([Path]::Combine($Root, "settings", "apps.json")) -Raw | ConvertFrom-Json
+    $PackageManagers = $Apps | Select-Object -ExpandProperty "PackageManagers"
     Push-Location -Path $Root
 }
 process {
     if ($Applications.IsPresent -or $All.IsPresent) {
-        $PackageManagers = $Apps | Select-Object -ExpandProperty $OperatingSystem
-
         switch ($OperatingSystem) {
             "Windows" {
-                $WingetPackages = $PackageManagers.Winget
-                winget install --id $WingetPackages --accept-package-agreements --accept-source-agreements --disable-interactivity
+                $PackageManagers.Winget | Install-WingetPackage
              }
             "Linux" {
                 throw [NotImplementedException]::new("TODO")
@@ -51,6 +52,31 @@ process {
             "MacOS" {
                 throw [NotImplementedException]::new("TODO")
             }
+        }
+    }
+
+    if ($Cargo.IsPresent) {
+        if (Test-Command "cargo") {
+            # update rustc and cargo because some crates won't install easily
+            # if we continue with an outdated version
+            rustup update
+        }
+        else {
+            switch ($OperatingSystem) {
+                "Windows" {
+                    Install-WingetPackage -Id "rustlang.rustup"
+                }
+                "Linux" {
+                    throw [NotImplementedException]::new("TODO")
+                }
+                "MacOS" {
+                    thow [NotImplementedException]::new("TODO")
+                }
+            }
+        }
+
+        $PackageManagers.Cargo | ForEach-Object {
+            cargo install $_
         }
     }
 

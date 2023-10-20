@@ -70,8 +70,10 @@ As a result of running this scripts, a new assets directory will be created in
 
 Update everything.
 
+> ⚠ This script depends on global variables defined by my custom profile
+
 ```powershell
-.\scripts\update.ps1 -All
+.\tools\update.ps1 -All
 ```
 
 ## Notes

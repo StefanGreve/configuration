@@ -14,18 +14,13 @@ param(
     [switch] $All
 )
 
-begin {
-    $Root = git rev-parse --show-toplevel
-    . $([Path]::Combine($Root, "scripts", "utils.ps1"))
-    $OperatingSystem = Get-OperatingSystem
-}
 process {
     if ($Help.IsPresent -or $All.IsPresent) {
         Update-Help -UICulture "en-US" -ErrorAction SilentlyContinue -ErrorVariable UpdateErrors -Force
     }
 
     if ($Applications.IsPresent -or $All.IsPresent) {
-        switch ($OperatingSystem) {
+        switch ($global:OperatingSystem) {
             ([OS]::Windows) {
                 winget upgrade --all --silent
             }

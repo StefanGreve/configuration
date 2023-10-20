@@ -59,10 +59,8 @@ and reads its definitions from the `settings` folder.
 
 Symlink config files from the apps directory by force:
 
-> ⚠ This script will override your custom settings and requires elevated permissions.
-
 ```powershell
-.\scripts\configure.ps1
+.\scripts\configure.ps1 -All
 ```
 
 As a result of running this scripts, a new assets directory will be created in
@@ -76,7 +74,10 @@ Update everything.
 .\tools\update.ps1 -All
 ```
 
-## Notes
+## Personal Notes
 
-- running `configure.ps1` will add user-customized settings to `.gitconfig`, because
-  this config file cannot expand variables such as `$home`
+- Prior to the Windows 10 Creator Update, creating symbolic links required elevated
+  permissions. Enabling the `Developer Mode` in the settings app lifts this restriction
+- Running `configure.ps1` will add user-customized settings to `.gitconfig`, because
+  this config file cannot expand variables such as `$home`. Use `git stash` to get
+  around that

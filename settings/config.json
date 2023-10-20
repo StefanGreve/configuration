@@ -26,6 +26,12 @@
                 "target": "$home\\.gnupg\\gpg.conf"
             }
         ],
+        "nvim": [
+            {
+                "path": ".\\apps\\nvim\\init.vim",
+                "target": "$env:LOCALAPPDATA\\nvim\\init.vim"
+            }
+        ],
         "pip": [
             {
                 "path": ".\\apps\\pip\\pip.ini",

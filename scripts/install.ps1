@@ -91,10 +91,19 @@ process {
     if ($Plugins.IsPresent -or $All.IsPresent) {
         $Extensions = $Apps | Select-Object -ExpandProperty Extensions
 
+        # install vs code extensions
         $Extensions.Code | ForEach-Object -ThrottleLimit 5 -Parallel {
-            # force parameter updates to the latest version, if already installed
             code --install-extension $_ --force
         }
+
+        # first install a vim plugin manager
+        Write-Host "Installing vim-plug..."
+        $VimPlug = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+        Invoke-WebRequest -UseBasicParsing $VimPlug | New-Item "$env:LOCALAPPDATA/nvim/autoload/plug.vim" -Force
+        # then perform initial plugin installation
+        nvim +'PlugInstall --sync' +qa
+        # finally install all CoC depedencies from init.vim
+        nvim +'call coc#util#install()' +qa
     }
 }
 clean {

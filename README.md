@@ -66,12 +66,13 @@ Symlink config files from the apps directory by force:
 As a result of running this scripts, a new assets directory will be created in
 `$home/.config/assets`.
 
-Update everything.
+Update everything. You may need to re-load your session before this function gets
+recognized as a Cmdlet.
 
 > ⚠ This script depends on global variables defined by my custom profile
 
 ```powershell
-.\tools\update.ps1 -All
+Update-System -All
 ```
 
 ## Personal Notes

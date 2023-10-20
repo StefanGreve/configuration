@@ -1,12 +1,13 @@
 # Configuration
 
-This repository primarily consists of configuration files geared toward power users.
-As a successor to [`confiles`](https://github.com/StefanGreve/confiles), the following
-improvements has been made:
+This project is a collection of configuration files and scripts that I use on my
+personal computer. They have been open-sourced for my own convenience, so you may
+use anything you see here at your own risk.
 
-- better ease of use
-- cross-platform support
-- updated default settings
+As a successor to
+[`confiles`](https://github.com/StefanGreve/confiles),
+this repository has been meticulously designed with cross-platform compatibility
+in mind.
 
 ## Prerequisites
 
@@ -67,6 +68,13 @@ Symlink config files from the apps directory by force:
 As a result of running this scripts, a new assets directory will be created in
 `$home/.config/assets`.
 
+Update everything.
+
+```powershell
+.\scripts\update.ps1 -All
+```
+
 ## Notes
 
-TODO
+- running `configure.ps1` will add user-customized settings to `.gitconfig`, because
+  this config file cannot expand variables such as `$home`

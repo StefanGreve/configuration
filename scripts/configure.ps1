@@ -60,12 +60,26 @@ process {
     }
 
     if ($AddUserSettings.IsPresent -or $All.IsPresent) {
-        Write-Status -Message "Apply platform-specific settings . . ." -Step 4 -Total $Total
+        Write-Status -Message "Apply platform-specific settings . . ." -Step $Step -Total $Total
 
         switch ($OperatingSystem) {
             "Windows" {
-                git config --global core.sshCommand "C:/Windows/System32/OpenSSH/ssh.exe"
+                # commit signing
                 git config --global gpg.program "C:/Program Files (x86)/GnuPG/bin/gpg.exe"
+
+                # help git remember the ssh passphrase, using the default name
+                git config --global core.sshCommand "C:/Windows/System32/OpenSSH/ssh.exe"
+
+                # NOTE: ssh-add will ask for a passphrase (if enabled), which
+                # disrupts the automatic flow of execution. If future workaround
+                # might use the SSH_ASKPASS environment variable which defines
+                # the prompt program to hardcodes the passphrase into a custom
+                # script, which in turn would have to be set prior to this line
+                if ($null -eq $env:GIT_SSH) {
+                    ssh-add $home/.ssh/id_rsa
+                    Set-Service ssh-agent -StartupType Automatic
+                    [Environment]::SetEnvironmentVariable("GIT_SSH", "C:/Windows/System32/OpenSSH/ssh.exe", [EnvironmentVariableTarget]::User)
+                }
             }
             "Linux" {
                 [NotImplementedException]::new("TODO")

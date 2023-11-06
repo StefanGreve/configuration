@@ -53,7 +53,7 @@
     "powershell.enableProfileLoading": true,
     "powershell.scriptAnalysis.enable": true,
     "powershell.sideBar.CommandExplorerVisibility": true,
-    "powershell.startAutomatically": false,
+    "powershell.startAutomatically": true,
     "security.workspace.trust.untrustedFiles": "open",
     "telemetry.enableTelemetry": false,
     "terminal.integrated.profiles.windows": {

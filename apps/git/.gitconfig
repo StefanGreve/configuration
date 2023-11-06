@@ -42,7 +42,5 @@
 [help]
     autocorrect = 20
     format = html
-[credential]
-    helper = cache
 [commit]
     gpgsign = true

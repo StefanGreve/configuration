@@ -5,19 +5,22 @@ using namespace System.IO
 $Desktop = [Environment]::GetFolderPath("Desktop")
 $ParentFolder = Join-Path -Path $Desktop -ChildPath "repos" -AdditionalChildPath "profile"
 $Repository = New-Item -Path $ParentFolder -ItemType Directory -Force
+$Profile = [Path]::Combine($ParentFolder, "profile.ps1")
 
 #endregion
 
-Push-Location $Repository.Directory.FullName
+Push-Location $ParentFolder
 
-if (!(Test-Path $Repository)) {
-    git clone "git@github.com:StefanGreve/profile.git"
+if (!(Test-Path $Profile)) {
+    git clone "git@github.com:StefanGreve/profile.git" .
+} else {
+    git pull
 }
 
 $Arguments = @{
     # current user, all hosts
     Path = [OperatingSystem]::IsWindows() ? "$HOME\Documents\PowerShell\Profile.ps1" : "~/.config/powershell/profile.ps1"
-    Value = [Path]::Combine($Repository.FullName, "profile.ps1")
+    Value = $Profile
     ItemType = "SymbolicLink"
     Force = $true
 }

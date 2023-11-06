@@ -5,12 +5,12 @@
 let mapleader=" "
 
 call plug#begin('~/AppData/Local/nvim/plugged')
+    Plug 'neoclide/coc.nvim'
     Plug 'sheerun/vim-polyglot'
     Plug 'scrooloose/NERDTree'
     Plug 'jiangmiao/auto-pairs'
     Plug 'editorconfig/editorconfig-vim'
     Plug 'tmhedberg/SimpylFold'
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 syntax on

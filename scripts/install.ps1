@@ -96,13 +96,19 @@ process {
             code --install-extension $_ --force
         }
 
+        # prerequisites for coc
+        corepack enable
+        npm install --global corepack
+        npm install --global npm@latest
+
         # first install a vim plugin manager
         Write-Host "Installing vim-plug..."
         $VimPlug = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
         Invoke-WebRequest -UseBasicParsing $VimPlug | New-Item "$env:LOCALAPPDATA/nvim/autoload/plug.vim" -Force
-        # then perform initial plugin installation
+        # install all CoC depedencies from init.vim
+        nvim +'call coc#util#install()' +qa
         nvim +'PlugInstall --sync' +qa
-        # finally install all CoC depedencies from init.vim
+        # finally install all plugins
         nvim +'call coc#util#install()' +qa
     }
 }

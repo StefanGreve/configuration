@@ -12,8 +12,14 @@ in mind.
 ## Prerequisites
 
 You will need to have [`pwsh`](https://github.com/PowerShell/PowerShell) installed
-on your platform of choice in order to run any of the scripts, in addition to the
-following platform-specific prerequisites:
+on your platform of choice in order to run any of the scripts, as well as an
+appropriate execution policy, e.g.
+
+```powershell
+Set-ExecutionPolicy RemoteSigned
+```
+
+in addition to the following platform-specific prerequisites:
 
 ### Windows
 
@@ -82,3 +88,8 @@ Update-System -All
 - Running `configure.ps1` will add user-customized settings to `.gitconfig`, because
   this config file cannot expand variables such as `$home`. Use `git stash` to get
   around that
+- Import the GPG key for signing commits with the following command:
+
+```powershell
+gpg --import .\gpg-private-key.asc
+```

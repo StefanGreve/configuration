@@ -20,7 +20,7 @@ function Update-System {
         if ($Applications.IsPresent -or $All.IsPresent) {
             switch ($global:OperatingSystem) {
                 ([OS]::Windows) {
-                    winget upgrade --all --silent
+                    winget upgrade --all --silent --accept-package-agreements --accept-source-agreements --include-unknown --disable-interactivity
                 }
                 ([OS]::Linux) {
                     [NotImplementedException]::new("TODO")

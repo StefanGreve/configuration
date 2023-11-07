@@ -107,9 +107,8 @@ process {
         Invoke-WebRequest -UseBasicParsing $VimPlug | New-Item "$env:LOCALAPPDATA/nvim/autoload/plug.vim" -Force
         # install all CoC depedencies from init.vim
         nvim +'call coc#util#install()' +qa
-        nvim +'PlugInstall --sync' +qa
         # finally install all plugins
-        nvim +'call coc#util#install()' +qa
+        nvim +'PlugInstall --sync' +qa
     }
 }
 clean {

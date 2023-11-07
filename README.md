@@ -4,6 +4,9 @@ This project is a collection of configuration files and scripts that I use on my
 personal computer. They have been open-sourced for my own convenience, so you may
 use anything you see here at your own risk.
 
+The tools repository defines some custom Cmdlets which are implicitly dot-sourced
+through my PowerShell profile.
+
 As a successor to
 [`confiles`](https://github.com/StefanGreve/confiles),
 this repository has been meticulously designed with cross-platform compatibility
@@ -92,4 +95,10 @@ Update-System -All
 
 ```powershell
 gpg --import .\gpg-private-key.asc
+```
+
+- Clone all my public repositories on GitHub:
+
+```powershell
+Import-Repository -All -Path $desktop/repos/private -Verbose
 ```

@@ -71,10 +71,10 @@ process {
                 git config --global core.sshCommand "C:/Windows/System32/OpenSSH/ssh.exe"
 
                 # NOTE: ssh-add will ask for a passphrase (if enabled), which
-                # disrupts the automatic flow of execution. If future workaround
+                # disrupts the automatic flow of execution. A future workaround
                 # might use the SSH_ASKPASS environment variable which defines
-                # the prompt program to hardcodes the passphrase into a custom
-                # script, which in turn would have to be set prior to this line
+                # the prompt program to hardcode the passphrase in a custom script,
+                # though this would have to be set prior to this line
                 if ($null -eq $env:GIT_SSH) {
                     ssh-add $home/.ssh/id_rsa
                     Set-Service ssh-agent -StartupType Automatic

@@ -4,31 +4,35 @@ using namespace System.IO
 
 $Desktop = [Environment]::GetFolderPath("Desktop")
 $ParentFolder = Join-Path -Path $Desktop -ChildPath "repos" -AdditionalChildPath "profile"
-$Repository = New-Item -Path $ParentFolder -ItemType Directory -Force
-$Profile = [Path]::Combine($ParentFolder, "profile.ps1")
+
+New-Item -Path $ParentFolder -ItemType Directory -Force | Out-Null
+$ProfileSource = [Path]::Combine($ParentFolder, "profile.ps1")
 
 #endregion
 
 Push-Location $ParentFolder
 
-Write-Host "Download repository . . ."
+Write-Host "Download repository . . . " -NoNewline
 
-if (!(Test-Path $Profile)) {
-    git clone "git@github.com:StefanGreve/profile.git" .
+if (!(Test-Path $ProfileSource)) {
+    git clone "git@github.com:StefanGreve/profile.git" . --quiet
 } else {
-    git pull
+    git pull --quiet
 }
+
+Write-Host "✓" -ForegroundColor Green
 
 $Arguments = @{
     # current user, all hosts
     Path = [OperatingSystem]::IsWindows() ? "$HOME\Documents\PowerShell\Profile.ps1" : "~/.config/powershell/profile.ps1"
-    Value = $Profile
+    Value = $ProfileSource
     ItemType = "SymbolicLink"
     Force = $true
 }
 
-Write-Host "$($Arguments.Value) -> $($Arguments.Path)" -ForegroundColor Yellow
+Write-Host "Create Symbolic Link . . . " -NoNewline
 New-Item @Arguments | Out-Null
+Write-Host "✓" -ForegroundColor Green
 
 Write-Host "Configure Profile Environment Variables . . . " -NoNewLine
 [Environment]::SetEnvironmentVariable("PROFILE_ENABLE_DAILY_TRANSCRIPTS", "1", [EnvironmentVariableTarget]::User)

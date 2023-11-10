@@ -26,7 +26,7 @@
     init-empty = !"f() { git init && git commit --allow-empty --allow-empty-message --no-edit; }; f"
     unstage = reset HEAD --
     uncommit = reset --soft HEAD^1
-    last = log -1 HEAD --stat -p
+    last = log -1 HEAD
     graph = log --date-order --graph --all --date=short --pretty=format:\"%x09%C(auto)%h  %C(cyan)%ad  %C(green)%aN  %x09%C(reset)%s\"
     purge = "!f(){ git restore . && git clean -f .; };f"
     push-notes = push origin refs/notes/*

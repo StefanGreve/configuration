@@ -11,6 +11,8 @@ Windows Registry Editor Version 5.00
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System]
 ; Enable verbose message output on system start and shutdown
 "VerboseStatus"=dword:00000001
+; Set to 0 to disable automatically locking the computer screen
+"InactivityTimeoutSecs"=dword:00000000
 
 [HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
 ; Show seconds count in taskbar system clock

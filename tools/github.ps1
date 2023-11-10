@@ -32,7 +32,7 @@ function Import-Repository {
     )
 
     begin {
-        $TargetDirectory = Resolve-Path $Path | Select-Object -ExpandProperty Path
+        $TargetDirectory = New-Item -Path $Path -ItemType Directory -Force | Select-Object -ExpandProperty FullName
     }
     process {
         if ($All.IsPresent) {

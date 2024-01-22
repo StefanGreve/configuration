@@ -8,8 +8,8 @@
     "editor.acceptSuggestionOnEnter": "smart",
     "editor.bracketPairColorization.enabled": true,
     "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": false,
-        "source.organizeImports": false
+        "source.fixAll.eslint": "never",
+        "source.organizeImports": "never"
     },
     "editor.cursorBlinking": "smooth",
     "editor.folding": true,
@@ -73,5 +73,6 @@
     "workbench.iconTheme": "vscode-icons",
     "workbench.settings.editor": "json",
     "workbench.sideBar.location": "right",
-    "workbench.startupEditor": "none"
+    "workbench.startupEditor": "none",
+    "window.zoomLevel": -1
 }

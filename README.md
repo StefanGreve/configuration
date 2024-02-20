@@ -102,3 +102,6 @@ gpg --import .\gpg-private-key.asc
 ```powershell
 Import-Repository -All -Path $desktop/repos/private -Verbose
 ```
+
+- In order to use the `Set-DevelopmentProfile` script, you need to define the
+  environment variables `GitWorkUserName` and `GitWorkUserEmail` first.

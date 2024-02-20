@@ -15,10 +15,14 @@
     colorMoved = default
 [merge]
     conflictstyle = diff3
+[rerere]
+    enabled = true
 [blame]
     hyperlinks = true
 [init]
     defaultBranch = master
+[commit]
+    verbose = true
 [push]
     autoSetupRemote = true
 [alias]

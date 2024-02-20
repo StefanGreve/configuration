@@ -9,13 +9,13 @@ function Set-DevelopmentProfile {
         switch ($Account) {
             "Work" {
                 git config --local user.name $env:GitWorkUserName
-                git config --local user.mail $env:GitWorkEmail
+                git config --local user.email $env:GitWorkEmail
                 git config --local core.autocrlf false
                 git config --local commit.gpgsign false
              }
             Default {
                 git config --local user.name "StefanGreve"
-                git config --local user.mail "greve.stefan@outlook.jp"
+                git config --local user.email "greve.stefan@outlook.jp"
                 git config --local core.autocrlf input
                 git config --local core.sshCommand "C:/Windows/System32/OpenSSH/ssh.exe"
 

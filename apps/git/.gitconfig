@@ -1,7 +1,6 @@
 [user]
     email = greve.stefan@outlook.jp
     name = StefanGreve
-    signingkey = F380062B9F847687
 [core]
     editor = nvim
     autocrlf = false
@@ -44,5 +43,3 @@
 [help]
     autocorrect = 20
     format = html
-[commit]
-    gpgsign = true

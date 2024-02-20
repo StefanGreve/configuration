@@ -64,12 +64,6 @@ process {
 
         switch ($OperatingSystem) {
             "Windows" {
-                # commit signing
-                git config --global gpg.program "C:/Program Files (x86)/GnuPG/bin/gpg.exe"
-
-                # help git remember the ssh passphrase, using the default name
-                git config --global core.sshCommand "C:/Windows/System32/OpenSSH/ssh.exe"
-
                 # NOTE: ssh-add will ask for a passphrase (if enabled), which
                 # disrupts the automatic flow of execution. A future workaround
                 # might use the SSH_ASKPASS environment variable which defines

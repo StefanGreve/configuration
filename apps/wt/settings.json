@@ -179,7 +179,7 @@
             },
             {
                 "colorScheme": "cyberpunk",
-                "commandline": "%LOCALAPPDATA%\\Programs\\Python\\Python311\\python.exe",
+                "commandline": "%LOCALAPPDATA%\\Programs\\Python\\Python312\\python.exe",
                 "guid": "{6ee2d370-4f6a-4a55-a0ad-8afdbc68d6ca}",
                 "hidden": false,
                 "icon": "%USERPROFILE%\\.config\\assets\\icons\\python.png",

@@ -5,9 +5,6 @@ machine. They have been open-sourced for my own convenience, so you may use
 anything you see here at your own risk. Some settings are tailored to meet my
 personal needs, so running these scripts might not work for you out of the box.
 
-The tools repository defines some custom Cmdlets which are implicitly dot-sourced
-through my PowerShell profile.
-
 As a successor to
 [`confiles`](https://github.com/StefanGreve/confiles),
 this repository has been meticulously designed with cross-platform compatibility

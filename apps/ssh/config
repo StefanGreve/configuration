@@ -1,0 +1,15 @@
+# personal account
+Host github.com
+    User git
+    HostName github.com
+    IdentityFile ~/.ssh/id_rsa
+    IdentitiesOnly yes
+    AddKeysToAgent yes
+
+# work account
+Host git.swisslab.de
+    User git
+    HostName git.swisslab.de
+    IdentityFile ~/.ssh/work
+    IdentitiesOnly yes
+    AddKeysToAgent yes

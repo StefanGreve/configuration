@@ -1,8 +1,9 @@
 # Configuration
 
 This project is a collection of configuration files and scripts that I use on my
-personal computer. They have been open-sourced for my own convenience, so you may
-use anything you see here at your own risk.
+machine. They have been open-sourced for my own convenience, so you may use
+anything you see here at your own risk. Some settings are tailored to meet my
+personal needs, so running these scripts might not work for you out of the box.
 
 The tools repository defines some custom Cmdlets which are implicitly dot-sourced
 through my PowerShell profile.
@@ -86,11 +87,10 @@ Update-System -All
 
 ## Personal Notes
 
+- The `hosts` file on Windows can *not* be replaced by a symbolic link
 - Prior to the Windows 10 Creator Update, creating symbolic links required elevated
   permissions. Enabling the `Developer Mode` in the settings app lifts this restriction
-- Running `configure.ps1` will add user-customized settings to `.gitconfig`, because
-  this config file cannot expand variables such as `$home`. Use `git stash` to get
-  around that
+- The SSH config file is configured to look for two separate SSH keys
 - Import the GPG key for signing commits with the following command:
 
 ```powershell

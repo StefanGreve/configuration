@@ -38,6 +38,12 @@
                 "target": "$env:APPDATA\\pip\\pip.ini"
             }
         ],
+        "ssh": [
+            {
+                "path": ".\\apps\\ssh\\config",
+                "target": "$home\\.ssh\\config"
+            }
+        ],
         "winget": [
             {
                 "path": ".\\apps\\winget\\settings.json",

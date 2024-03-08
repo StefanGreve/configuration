@@ -4,28 +4,17 @@
     "actions": [
         {
             "command": {
+                "action": "splitPane",
+                "split": "down"
+            },
+            "keys": "ctrl+shift+minus"
+        },
+        {
+            "command": {
                 "action": "copy",
                 "singleLine": false
             },
             "keys": "ctrl+c"
-        },
-        {
-            "command": {
-                "action": "splitPane",
-                "split": "right"
-            },
-            "keys": "ctrl+shift+|"
-        },
-        {
-            "command": {
-                "action": "moveFocus",
-                "direction": "down"
-            },
-            "keys": "ctrl+j"
-        },
-        {
-            "command": "paste",
-            "keys": "ctrl+v"
         },
         {
             "command": {
@@ -35,10 +24,21 @@
         },
         {
             "command": {
-                "action": "splitPane",
-                "split": "down"
+                "action": "moveFocus",
+                "direction": "down"
             },
-            "keys": "ctrl+shift+minus"
+            "keys": "ctrl+j"
+        },
+        {
+            "command": {
+                "action": "splitPane",
+                "split": "right"
+            },
+            "keys": "ctrl+shift+\\"
+        },
+        {
+            "command": "paste",
+            "keys": "ctrl+v"
         },
         {
             "command": {
@@ -47,15 +47,15 @@
             "keys": "ctrl+w"
         },
         {
+            "command": "find",
+            "keys": "ctrl+shift+f"
+        },
+        {
             "command": {
                 "action": "resizePane",
                 "direction": "left"
             },
             "keys": "ctrl+shift+h"
-        },
-        {
-            "command": "find",
-            "keys": "ctrl+shift+f"
         },
         {
             "command": {
@@ -110,6 +110,37 @@
     "experimental.detectURLs": true,
     "language": "en-US",
     "launchMode": "maximized",
+    "newTabMenu": [
+        {
+            "type": "profile",
+            "profile": "PowerShell"
+        },
+        {
+            "type": "profile",
+            "profile": "Windows PowerShell"
+        },
+        {
+            "type": "profile",
+            "profile": "Command Prompt"
+        },
+        {
+            "type": "separator"
+        },
+        {
+            "type": "folder",
+            "name": "Interactive Shells",
+            "icon": "%USERPROFILE%\\.config\\assets\\icons\\folder.png",
+            "entries": [
+                {
+                    "profile": "Python",
+                    "type": "profile"
+                }
+            ]
+        },
+        {
+            "type": "remainingProfiles"
+        }
+    ],
     "profiles": {
         "defaults": {
             "backgroundImageOpacity": 0.5,
@@ -137,6 +168,9 @@
             "useAcrylic": true
         },
         "list": [
+            {
+                "name": "PowerShell"
+            },
             {
                 "colorScheme": "AdventureTime",
                 "commandline": "powershell.exe -NoLogo",
@@ -329,6 +363,7 @@
             "yellow": "#FFFA6A"
         }
     ],
-    "theme": "dark",
+    "showTabsInTitlebar": true,
+    "tabWidthMode": "compact",
     "themes": []
 }

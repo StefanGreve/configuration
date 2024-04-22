@@ -9,7 +9,7 @@ function Set-DevelopmentProfile {
         switch ($Account) {
             "Work" {
                 git config --local user.name $env:GitWorkUserName
-                git config --local user.email $env:GitWorkEmail
+                git config --local user.email $env:GitWorkUserEmail
                 git config --local core.autocrlf false
                 git config --local commit.gpgsign false
              }

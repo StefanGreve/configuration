@@ -365,6 +365,6 @@
         }
     ],
     "showTabsInTitlebar": true,
-    "tabWidthMode": "compact",
+    "tabWidthMode": "equal",
     "themes": []
 }

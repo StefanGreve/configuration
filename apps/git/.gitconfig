@@ -40,6 +40,7 @@
     ls-untracked = ls-files --exclude-standard --others
 [http]
     sslverify = true
+    sslbackend = schannel
 [url "ssh://git@github.com/"]
     insteadOf = https://github.com/
 [safe]

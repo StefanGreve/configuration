@@ -5,6 +5,7 @@
     editor = nvim
     autocrlf = false
     pager = "delta --syntax-theme='Solarized (dark)' --dark"
+    longpaths = true
 [interactive]
     diffFilter = delta --color-only --features=interactive
 [delta]

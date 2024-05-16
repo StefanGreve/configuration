@@ -23,6 +23,7 @@
             "Microsoft.WindowsTerminal",
             "OpenJS.NodeJS",
             "Oracle.MySQL",
+            "sysinternals",
             "VideoLAN.VLC"
         ],
         "cargo": [

@@ -17,6 +17,7 @@
     "editor.formatOnSave": false,
     "editor.linkedEditing": true,
     "editor.minimap.enabled": false,
+    "editor.mouseWheelZoom": true,
     "editor.renderControlCharacters": true,
     "editor.renderFinalNewline": "on",
     "editor.renderLineHighlight": "none",

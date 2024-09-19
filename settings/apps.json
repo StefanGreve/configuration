@@ -1,6 +1,7 @@
 {
     "PackageManagers": {
         "winget": [
+            "NuGet Package Explorer",
             "7zip.7zip",
             "Audacity.Audacity",
             "CoreyButler.NVMforWindows",
@@ -13,7 +14,7 @@
             "JohnMacFarlane.Pandoc",
             "KeePassXCTeam.KeePassXC",
             "Neovim.Neovim",
-            "Python.Python.3.11",
+            "Python.Python.3.12",
             "RaspberryPiFoundation.RaspberryPiImager",
             "GoLang.Go",
             "GitHub.cli",

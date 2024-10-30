@@ -1,106 +1,136 @@
 {
     "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "actions": [
+    "actions":
+    [
         {
-            "command": {
+            "command":
+            {
                 "action": "splitPane",
                 "split": "down"
             },
+            "id": "User.splitPane.D5151347",
             "keys": "ctrl+shift+minus"
         },
         {
-            "command": {
+            "command":
+            {
                 "action": "copy",
                 "singleLine": false
             },
+            "id": "User.copy.644BA8F2",
             "keys": "ctrl+c"
         },
         {
-            "command": {
+            "command":
+            {
                 "action": "newTab"
             },
+            "id": "User.newTab.5DEADB41",
             "keys": "ctrl+t"
         },
         {
-            "command": {
+            "command":
+            {
                 "action": "moveFocus",
                 "direction": "down"
             },
+            "id": "User.moveFocus.F747588A",
             "keys": "ctrl+j"
         },
         {
-            "command": {
+            "command":
+            {
                 "action": "splitPane",
                 "split": "right"
             },
+            "id": "User.splitPane.864CD510",
             "keys": "ctrl+shift+\\"
         },
         {
-            "command": "paste",
-            "keys": "ctrl+v"
-        },
-        {
-            "command": {
+            "command":
+            {
                 "action": "closeTab"
             },
+            "id": "User.closeTab.0",
             "keys": "ctrl+w"
         },
         {
-            "command": "find",
-            "keys": "ctrl+shift+f"
+            "command": "paste",
+            "id": "User.paste",
+            "keys": "ctrl+v"
         },
         {
-            "command": {
+            "command":
+            {
                 "action": "resizePane",
                 "direction": "left"
             },
+            "id": "User.resizePane.2A0DA8E0",
             "keys": "ctrl+shift+h"
         },
         {
-            "command": {
+            "command": "find",
+            "id": "User.find",
+            "keys": "ctrl+shift+f"
+        },
+        {
+            "command":
+            {
                 "action": "moveFocus",
                 "direction": "left"
             },
+            "id": "User.moveFocus.2A0DA8E0",
             "keys": "ctrl+h"
         },
         {
-            "command": {
+            "command":
+            {
                 "action": "moveFocus",
                 "direction": "up"
             },
+            "id": "User.moveFocus.6CD791B",
             "keys": "ctrl+k"
         },
         {
-            "command": {
+            "command":
+            {
                 "action": "moveFocus",
                 "direction": "right"
             },
+            "id": "User.moveFocus.87C324ED",
             "keys": "ctrl+l"
         },
         {
-            "command": {
+            "command":
+            {
                 "action": "resizePane",
                 "direction": "down"
             },
+            "id": "User.resizePane.F747588A",
             "keys": "ctrl+shift+j"
         },
         {
-            "command": {
+            "command":
+            {
                 "action": "resizePane",
                 "direction": "up"
             },
+            "id": "User.resizePane.6CD791B",
             "keys": "ctrl+shift+k"
         },
         {
-            "command": {
+            "command":
+            {
                 "action": "resizePane",
                 "direction": "right"
             },
+            "id": "User.resizePane.87C324ED",
             "keys": "ctrl+shift+l"
         },
         {
             "command": "closePane",
+            "id": "User.closePane",
             "keys": "ctrl+shift+w"
         }
     ],
@@ -110,50 +140,62 @@
     "experimental.detectURLs": true,
     "language": "en-US",
     "launchMode": "maximized",
-    "newTabMenu": [
+    "newTabMenu":
+    [
         {
-            "type": "profile",
-            "profile": "PowerShell"
+            "profile": "{8778dc12-361b-4f51-884c-19318188edba}",
+            "type": "profile"
         },
         {
-            "type": "profile",
-            "profile": "Windows PowerShell"
+            "profile": "{eef40fca-41a1-4efc-8d15-da1f78909254}",
+            "type": "profile"
         },
         {
-            "type": "profile",
-            "profile": "Command Prompt"
+            "profile": "{41062d2c-d27b-4797-9bcf-de2fb202b7ed}",
+            "type": "profile"
+        },
+        {
+            "profile": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+            "type": "profile"
         },
         {
             "type": "separator"
         },
         {
-            "type": "folder",
-            "name": "Interactive Shells",
-            "icon": "%USERPROFILE%\\.config\\assets\\icons\\folder.png",
-            "entries": [
+            "allowEmpty": false,
+            "entries":
+            [
                 {
-                    "profile": "Python",
+                    "profile": "{6ee2d370-4f6a-4a55-a0ad-8afdbc68d6ca}",
                     "type": "profile"
                 }
-            ]
+            ],
+            "icon": "%USERPROFILE%\\.config\\assets\\icons\\folder.png",
+            "inline": "never",
+            "name": "Interactive Shells",
+            "type": "folder"
         },
         {
             "type": "remainingProfiles"
         }
     ],
-    "profiles": {
-        "defaults": {
+    "profiles":
+    {
+        "defaults":
+        {
             "backgroundImageOpacity": 0.5,
-            "bellSound": [
+            "bellSound":
+            [
                 "none"
             ],
             "colorScheme": "PowerShellDark",
             "commandline": "C:\\Program Files\\PowerShell\\7\\pwsh.exe -NoLogo",
             "cursorShape": "vintage",
             "elevate": true,
-            "font": {
+            "font":
+            {
                 "face": "Cascadia Mono",
-                "size": 12.0
+                "size": 12
             },
             "hidden": false,
             "historySize": 9001,
@@ -167,10 +209,11 @@
             "tabTitle": "PowerShell",
             "useAcrylic": true
         },
-        "list": [
+        "list":
+        [
             {
-                "name": "PowerShell",
-                "guid": "{8778dc12-361b-4f51-884c-19318188edba}"
+                "guid": "{8778dc12-361b-4f51-884c-19318188edba}",
+                "name": "PowerShell"
             },
             {
                 "colorScheme": "AdventureTime",
@@ -179,7 +222,7 @@
                 "hidden": false,
                 "icon": "%USERPROFILE%\\.config\\assets\\icons\\powershell.png",
                 "name": "Windows PowerShell",
-                "tabColor": "#1f1d45",
+                "tabColor": "#1F1D45",
                 "tabTitle": "Windows PowerShell"
             },
             {
@@ -213,6 +256,16 @@
                 "tabTitle": "WSL"
             },
             {
+                "colorScheme": "Atom",
+                "commandline": "pwsh -NoExit -ExecutionPolicy Bypass -File \"%ProgramFiles%\\Microsoft Visual Studio\\2022\\Enterprise\\Common7\\Tools\\Launch-VsDevShell.ps1\"",
+                "guid": "{41062d2c-d27b-4797-9bcf-de2fb202b7ed}",
+                "hidden": false,
+                "icon": "%USERPROFILE%\\.config\\assets\\icons\\vsdevpwsh.png",
+                "name": "Visual Studio Developer PowerShell",
+                "tabColor": "#161719",
+                "tabTitle": "VsDevPwsh"
+            },
+            {
                 "colorScheme": "cyberpunk",
                 "commandline": "%LOCALAPPDATA%\\Programs\\Python\\Python312\\python.exe",
                 "guid": "{6ee2d370-4f6a-4a55-a0ad-8afdbc68d6ca}",
@@ -224,53 +277,8 @@
             }
         ]
     },
-    "schemes": [
-        {
-            "background": "#1E2127",
-            "black": "#55544E",
-            "blue": "#327DC3",
-            "brightBlack": "#7F7E76",
-            "brightBlue": "#6DA5D9",
-            "brightCyan": "#46ECE9",
-            "brightGreen": "#38FAC6",
-            "brightPurple": "#C5B2E6",
-            "brightRed": "#DB575B",
-            "brightWhite": "#FFFFFF",
-            "brightYellow": "#FFF1AD",
-            "cursorColor": "#FFFFFF",
-            "cyan": "#15CDCB",
-            "foreground": "#D2D8D9",
-            "green": "#06D6A0",
-            "name": "PowerShellDark",
-            "purple": "#916CCF",
-            "red": "#B9272C",
-            "selectionBackground": "#FFFFFF",
-            "white": "#FDFFFC",
-            "yellow": "#FFE45E"
-        },
-        {
-            "background": "#F9F9F9",
-            "black": "#000000",
-            "blue": "#2F5AF3",
-            "brightBlack": "#000000",
-            "brightBlue": "#2F5AF3",
-            "brightCyan": "#3F953A",
-            "brightGreen": "#3F953A",
-            "brightPurple": "#a00095",
-            "brightRed": "#DE3E35",
-            "brightWhite": "#FFFFFF",
-            "brightYellow": "#D2B67C",
-            "cursorColor": "#BBBBBB",
-            "cyan": "#3F953A",
-            "foreground": "#2A2C33",
-            "green": "#3F953A",
-            "name": "PowerShellLight",
-            "purple": "#950095",
-            "red": "#DE3E35",
-            "selectionBackground": "#EDEDED",
-            "white": "#BBBBBB",
-            "yellow": "#D2B67C"
-        },
+    "schemes":
+    [
         {
             "background": "#1F1D45",
             "black": "#050404",
@@ -316,6 +324,52 @@
             "selectionBackground": "#FFFFFF",
             "white": "#E0E0E0",
             "yellow": "#FFD7B1"
+        },
+        {
+            "background": "#1E2127",
+            "black": "#55544E",
+            "blue": "#327DC3",
+            "brightBlack": "#7F7E76",
+            "brightBlue": "#6DA5D9",
+            "brightCyan": "#46ECE9",
+            "brightGreen": "#38FAC6",
+            "brightPurple": "#C5B2E6",
+            "brightRed": "#DB575B",
+            "brightWhite": "#FFFFFF",
+            "brightYellow": "#FFF1AD",
+            "cursorColor": "#FFFFFF",
+            "cyan": "#15CDCB",
+            "foreground": "#D2D8D9",
+            "green": "#06D6A0",
+            "name": "PowerShellDark",
+            "purple": "#916CCF",
+            "red": "#B9272C",
+            "selectionBackground": "#FFFFFF",
+            "white": "#FDFFFC",
+            "yellow": "#FFE45E"
+        },
+        {
+            "background": "#F9F9F9",
+            "black": "#000000",
+            "blue": "#2F5AF3",
+            "brightBlack": "#000000",
+            "brightBlue": "#2F5AF3",
+            "brightCyan": "#3F953A",
+            "brightGreen": "#3F953A",
+            "brightPurple": "#A00095",
+            "brightRed": "#DE3E35",
+            "brightWhite": "#FFFFFF",
+            "brightYellow": "#D2B67C",
+            "cursorColor": "#BBBBBB",
+            "cyan": "#3F953A",
+            "foreground": "#2A2C33",
+            "green": "#3F953A",
+            "name": "PowerShellLight",
+            "purple": "#950095",
+            "red": "#DE3E35",
+            "selectionBackground": "#EDEDED",
+            "white": "#BBBBBB",
+            "yellow": "#D2B67C"
         },
         {
             "background": "#300A24",

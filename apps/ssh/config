@@ -13,3 +13,5 @@ Host git.swisslab.de
     IdentityFile ~/.ssh/work
     IdentitiesOnly yes
     AddKeysToAgent yes
+    HostKeyAlgorithms +ssh-rsa
+    PubKeyAcceptedAlgorithms +ssh-rsa

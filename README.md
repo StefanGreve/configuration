@@ -34,6 +34,10 @@ TODO
 
 TODO
 
+The setting files are configured to use the classic Code Page 437 character set
+from the original IBM PCs; the respective DOS VGA font can be downloaded from here:
+<https://cp437.github.io/>.
+
 ## Usage
 
 **Run the following scripts to bootstrap your system, preferably in order.**

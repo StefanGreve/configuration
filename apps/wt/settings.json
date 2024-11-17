@@ -194,7 +194,7 @@
             "elevate": true,
             "font":
             {
-                "face": "Cascadia Mono",
+                "face": "Perfect DOS VGA 437 Win",
                 "size": 12
             },
             "hidden": false,

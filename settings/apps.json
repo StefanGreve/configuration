@@ -53,7 +53,8 @@
             "vscode-icons-team.vscode-icons",
             "streetsidesoftware.code-spell-checker",
             "ecmel.vscode-html-css",
-            "ionutvmi.reg"
+            "ionutvmi.reg",
+            "redhat.vscode-xml"
         ]
     }
 }

@@ -32,6 +32,7 @@
     "editor.showFoldingControls": "always",
     "editor.suggestSelection": "first",
     "editor.tabSize": 4,
+    "editor.wordSeparators": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?",
     "explorer.confirmDelete": false,
     "explorer.confirmDragAndDrop": false,
     "extensions.ignoreRecommendations": true,
@@ -52,7 +53,10 @@
     "javascript.suggest.autoImports": true,
     "javascript.updateImportsOnFileMove.enabled": "always",
     "notebook.lineNumbers": "on",
+    "powershell.buttons.showPanelMovementButtons": false,
+    "powershell.codeFolding.showLastLine": true,
     "powershell.enableProfileLoading": true,
+    "powershell.integratedConsole.focusConsoleOnExecute": true,
     "powershell.scriptAnalysis.enable": true,
     "powershell.sideBar.CommandExplorerVisibility": true,
     "powershell.startAutomatically": true,
@@ -71,10 +75,20 @@
     "typescript.suggest.autoImports": true,
     "typescript.updateImportsOnFileMove.enabled": "always",
     "window.menuBarVisibility": "hidden",
+    "workbench.colorTheme": "Default Dark Modern",
     "workbench.editor.highlightModifiedTabs": true,
     "workbench.iconTheme": "vscode-icons",
     "workbench.settings.editor": "json",
     "workbench.sideBar.location": "right",
     "workbench.startupEditor": "none",
-    "window.zoomLevel": -1
+    "xml.fileAssociations": [
+        {
+            "systemId": "https://raw.githubusercontent.com/PowerShell/PowerShell/master/src/Schemas/Format.xsd",
+            "pattern": "**/*.Format.ps1xml"
+        },
+        {
+            "systemId": "https://raw.githubusercontent.com/PowerShell/PowerShell/master/src/Schemas/Types.xsd",
+            "pattern": "**/*.Types.ps1xml"
+        }
+    ]
 }

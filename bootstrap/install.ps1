@@ -34,7 +34,7 @@ dynamicparam {
 
 begin {
     $Root = git rev-parse --show-toplevel
-    . $([Path]::Combine($Root, "scripts", "utils.ps1"))
+    . $([Path]::Combine($Root, "bootstrap", "utils.ps1"))
     $OperatingSystem = Get-OperatingSystem
     $Apps = Get-Content -Path $([Path]::Combine($Root, "settings", "apps.json")) -Raw | ConvertFrom-Json
     $PackageManagers = $Apps | Select-Object -ExpandProperty "PackageManagers"

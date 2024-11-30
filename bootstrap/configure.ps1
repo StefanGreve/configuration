@@ -21,9 +21,10 @@ param(
 
 begin {
     $Root = git rev-parse --show-toplevel
-    . $([Path]::Combine($Root, "scripts", "utils.ps1"))
+    . $([Path]::Combine($Root, "bootstrap", "utils.ps1"))
 
     $OperatingSystem = Get-OperatingSystem
+
     $Config = Get-Content -Path $([Path]::Combine($Root, "settings", "config.json")) -Raw | ConvertFrom-Json
     $Assets = [Path]::Combine($HOME, ".config", "assets")
     $Scripts = $env:PROFILE_LOAD_CUSTOM_SCRIPTS ?? [Path]::Combine($HOME, "Documents", "Scripts")
@@ -62,24 +63,18 @@ process {
     if ($AddUserSettings.IsPresent -or $All.IsPresent) {
         Write-Status -Message "Apply platform-specific settings . . ." -Step $Step -Total $Total
 
-        switch ($OperatingSystem) {
-            "Windows" {
-                # NOTE: ssh-add will ask for a passphrase (if enabled), which
-                # disrupts the automatic flow of execution. A future workaround
-                # might use the SSH_ASKPASS environment variable which defines
-                # the prompt program to hardcode the passphrase in a custom script,
-                # though this would have to be set prior to this line
-                if ($null -eq $env:GIT_SSH) {
-                    ssh-add $home/.ssh/id_rsa
-                    Set-Service ssh-agent -StartupType Automatic
-                    [Environment]::SetEnvironmentVariable("GIT_SSH", "C:/Windows/System32/OpenSSH/ssh.exe", [EnvironmentVariableTarget]::User)
-                }
-            }
-            "Linux" {
-                [NotImplementedException]::new("TODO")
-            }
-            "MacOS" {
-                [NotImplementedException]::new("TODO")
+        if ($isWindows) {
+            # NOTE: ssh-add will ask for a passphrase (if enabled), which
+            # disrupts the automatic flow of execution. A future workaround
+            # might use the SSH_ASKPASS environment variable which defines
+            # the prompt program to hardcode the passphrase in a custom script,
+            # though this would have to be set prior to this line
+            if ($null -eq $env:GIT_SSH) {
+                ssh-add $home/.ssh/id_rsa
+                Set-Service ssh-agent -StartupType Automatic
+                [Environment]::SetEnvironmentVariable("GIT_SSH", "C:/Windows/System32/OpenSSH/ssh.exe", [EnvironmentVariableTarget]::User)
+            } else {
+                Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
             }
         }
 

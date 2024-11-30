@@ -60,8 +60,13 @@
     "powershell.scriptAnalysis.enable": true,
     "powershell.sideBar.CommandExplorerVisibility": true,
     "powershell.startAutomatically": true,
+    "powershell.pester.codeLens": false,
+    "redhat.telemetry.enabled": false,
     "security.workspace.trust.untrustedFiles": "open",
     "telemetry.enableTelemetry": false,
+    "terminal.integrated.persistentSessionReviveProcess": "never",
+    "terminal.integrated.enablePersistentSessions": false,
+    "terminal.integrated.hideOnStartup": "always",
     "terminal.integrated.profiles.windows": {
         "PowerShell": {
             "args": [

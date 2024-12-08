@@ -1,6 +1,10 @@
 {
     "PackageManagers": {
+        "brew": [
+            "1password-cli"
+        ],
         "winget": [
+            "1password-cli",
             "NuGet Package Explorer",
             "7zip.7zip",
             "Audacity.Audacity",

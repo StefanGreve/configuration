@@ -1,3 +1,5 @@
+using namespace System
+
 # Installs the GCC compiler on Windows
 
 if (!$IsWindows) {

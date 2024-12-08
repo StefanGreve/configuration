@@ -103,15 +103,15 @@ process {
         $VimPlug = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 
         if ($IsWindows) {
-            Invoke-WebRequest -UseBasicParsing $VimPlug | New-Item "$env:LOCALAPPDATA/nvim/autoload/plug.vim" -Force
+            Invoke-WebRequest -UseBasicParsing $VimPlug | New-Item "${env:LOCALAPPDATA}/nvim/autoload/plug.vim" -Force
         } else {
-            sh -c "curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs $VimPlug"
+            sh -c "curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs ${VimPlug}"
         }
 
         # install all CoC depedencies from init.vim
-        nvim +'call coc#util#install()' +qa
+        nvim +"call coc#util#install()" +qa
         # finally install all plugins
-        nvim +'PlugInstall --sync' +qa
+        nvim +"PlugInstall --sync" +qa
     }
 }
 clean {

@@ -10,7 +10,7 @@ function Get-LiveEventLog {
 
     begin {
         if (!$IsWindows) {
-            Write-Error "This Cmdlet only works on the Windows Operating System" -ErrorAction Stop
+            Write-Error "This Cmdlet only works on the Windows Operating System" -Category DeviceError -ErrorAction Stop
         }
 
         $Arguments = @{

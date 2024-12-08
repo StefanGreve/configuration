@@ -1,3 +1,4 @@
+using namespace System
 using namespace System.IO
 
 [CmdletBinding()]
@@ -33,7 +34,7 @@ begin {
     $Step = 1
 
     if ($Total -eq 0) {
-        Write-Error "Insufficient number of parameters supplied to this Cmdlet" -ErrorAction Stop
+        Write-Error "Insufficient number of parameters supplied to this Cmdlet" -Category NotSpecified -ErrorAction Stop
     }
 
     Push-Location -Path $Root

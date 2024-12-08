@@ -1,3 +1,5 @@
+using namespace System.IO
+
 # General
 $global:DESKTOP = [Environment]::GetFolderPath("Desktop")
 $global:DOCUMENTS = [Environment]::GetFolderPath("MyDocuments")
@@ -8,5 +10,5 @@ $global:VIDEOS = [Environment]::GetFolderPath("MyVideos")
 # Windows
 if ($IsWindows) {
     $global:HOSTS = "C:\Windows\System32\Drivers\etc\hosts"
-    $global:DOWNLOADS = Join-Path -Path $HOME -ChildPath "Downloads"
+    $global:DOWNLOADS = [Path]::Combine($HOME, "Downloads")
 }

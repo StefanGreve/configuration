@@ -1,3 +1,4 @@
+using namespace System.Collections.ObjectModel
 using namespace System.IO
 using namespace System.Management.Automation
 
@@ -17,41 +18,43 @@ param(
     [switch] $All
 )
 dynamicparam {
-    if ([OperatingSystem]::IsWindows()) {
-        $ParamDictionary = New-Object -Type RuntimeDefinedParameterDictionary
-        $AttributeCollection = New-Object -Type System.Collections.ObjectModel.Collection[Attribute]
+    $ParamDictionary = [RuntimeDefinedParameterDictionary]::new()
 
-        $RegistryParameter = New-Object -Type RuntimeDefinedParameter("Registry", [switch], $AttributeCollection)
-
-        $RegistryAttribute = New-Object ParameterAttribute
+    if ($IsWindows) {
+        $RegistryAttribute = [ParameterAttribute]::new()
         $RegistryAttribute.ParameterSetName = "Custom"
 
+        $AttributeCollection = [Collection[Attribute]]::new()
         $AttributeCollection.Add($RegistryAttribute)
+
+        $RegistryParameter = [RuntimeDefinedParameter]::new("Registry", [switch], $AttributeCollection)
+
         $ParamDictionary.Add("Registry", $RegistryParameter)
-        return $ParamDictionary
     }
+
+    return $ParamDictionary
 }
 
 begin {
     $Root = git rev-parse --show-toplevel
-    . $([Path]::Combine($Root, "scripts", "utils.ps1"))
-    $OperatingSystem = Get-OperatingSystem
+    . $([Path]::Combine($Root, "bootstrap", "utils.ps1"))
+
     $Apps = Get-Content -Path $([Path]::Combine($Root, "settings", "apps.json")) -Raw | ConvertFrom-Json
     $PackageManagers = $Apps | Select-Object -ExpandProperty "PackageManagers"
     Push-Location -Path $Root
 }
 process {
+    if (!(Get-Module PowerTools)) {
+        Install-Module PowerTools -Force
+    }
+
+    Import-Module PowerTools
+
     if ($Applications.IsPresent -or $All.IsPresent) {
-        switch ($OperatingSystem) {
-            "Windows" {
-                $PackageManagers.Winget | Install-WingetPackage
-             }
-            "Linux" {
-                throw [NotImplementedException]::new("TODO")
-            }
-            "MacOS" {
-                throw [NotImplementedException]::new("TODO")
-            }
+        if ($IsWindows) {
+            $PackageManagers.WinGet | Install-WinGet
+        } else {
+            Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
         }
     }
 
@@ -62,16 +65,10 @@ process {
             rustup update
         }
         else {
-            switch ($OperatingSystem) {
-                "Windows" {
-                    Install-WingetPackage -Id "rustlang.rustup"
-                }
-                "Linux" {
-                    throw [NotImplementedException]::new("TODO")
-                }
-                "MacOS" {
-                    thow [NotImplementedException]::new("TODO")
-                }
+            if ($IsWindows) {
+                Install-WinGet -Id "rustlang.rustup"
+            } else {
+                Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
             }
         }
 
@@ -80,7 +77,7 @@ process {
         }
     }
 
-    if ($PSBoundParameters.Registry -or ([OperatingSystem]::IsWindows() -and $All.IsPresent)) {
+    if ($PSBoundParameters.Registry -or ($IsWindows -and $All.IsPresent)) {
         $RegistryFiles = Get-ChildItem -Path $([Path]::Combine($Root, "settings")) -Filter *.reg
         $RegistryFiles | ForEach-Object {
             Write-Verbose $_.FullName
@@ -104,11 +101,17 @@ process {
         # first install a vim plugin manager
         Write-Host "Installing vim-plug..."
         $VimPlug = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-        Invoke-WebRequest -UseBasicParsing $VimPlug | New-Item "$env:LOCALAPPDATA/nvim/autoload/plug.vim" -Force
+
+        if ($IsWindows) {
+            Invoke-WebRequest -UseBasicParsing $VimPlug | New-Item "${env:LOCALAPPDATA}/nvim/autoload/plug.vim" -Force
+        } else {
+            sh -c "curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs ${VimPlug}"
+        }
+
         # install all CoC depedencies from init.vim
-        nvim +'call coc#util#install()' +qa
+        nvim +"call coc#util#install()" +qa
         # finally install all plugins
-        nvim +'PlugInstall --sync' +qa
+        nvim +"PlugInstall --sync" +qa
     }
 }
 clean {

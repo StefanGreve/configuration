@@ -1,5 +1,3 @@
-using namespace System
-
 function Get-LiveEventLog {
     [CmdletBinding()]
     [OutputType([System.Diagnostics.Eventing.Reader.EventLogRecord])]
@@ -11,7 +9,7 @@ function Get-LiveEventLog {
     )
 
     begin {
-        if (![OperatingSystem]::IsWindows()) {
+        if (!$IsWindows) {
             Write-Error "This Cmdlet only works on the Windows Operating System" -ErrorAction Stop
         }
 

@@ -41,6 +41,12 @@ begin {
     Push-Location -Path $Root
 }
 process {
+    if (!(Get-Module PowerTools)) {
+        Install-Module PowerTools -Force
+    }
+
+    Import-Module PowerTools
+
     if ($Applications.IsPresent -or $All.IsPresent) {
         if ($IsWindows) {
             $PackageManagers.Winget | Install-WinGet

@@ -1,9 +1,3 @@
-if (!(Get-Module PowerTools)) {
-    Install-Module PowerTools -Force
-}
-
-Import-Module PowerTools
-
 function Get-OperatingSystem {
     if ([OperatingSystem]::IsWindows()) {
         "Windows"
@@ -13,21 +7,6 @@ function Get-OperatingSystem {
         "MacOS"
     } else {
         Write-Error "Unsupported Operating System" -Category DeviceError -ErrorAction Stop
-    }
-}
-
-function Write-Status {
-    param(
-        [int] $Step,
-
-        [int] $Total,
-
-        [string] $Message
-    )
-
-    process {
-        Write-Host "[$Step/$Total] " -NoNewline -ForegroundColor DarkGray
-        Write-Host $Message
     }
 }
 

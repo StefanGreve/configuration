@@ -27,7 +27,7 @@ begin {
 
     $Config = Get-Content -Path $([Path]::Combine($Root, "settings", "config.json")) -Raw | ConvertFrom-Json
     $Assets = [Path]::Combine($HOME, ".config", "assets")
-    $Scripts = $env:PROFILE_LOAD_CUSTOM_SCRIPTS ?? [Path]::Combine($HOME, "Documents", "Scripts")
+    $ScriptsFolder = $env:PROFILE_LOAD_CUSTOM_SCRIPTS ?? [Path]::Combine($HOME, "Documents", "Scripts")
 
     $Total = $All.IsPresent ? 4 : $PSBoundParameters.Count
     $Step = 1
@@ -40,19 +40,22 @@ begin {
 }
 process {
     if ($LinkConfiguration.IsPresent -or $All.IsPresent) {
-        Write-Status -Message "Symlink configuration files . . ." -Step $Step -Total $Total
+        Write-Host "[$Step/$Total] " -NoNewline -ForegroundColor DarkGray
+        Write-Host "Symlink configuration files . . ."
 
         $Links = $Config | Select-Object -ExpandProperty $OperatingSystem
-        $Links.PsObject.Properties.Value | Foreach-Object -ThrottleLimit 5 -Parallel {
+        $Links.PsObject.Properties.Value | Foreach-Object {
             foreach ($File in $_) {
                 $Arguments = @{
                     Path = $ExecutionContext.InvokeCommand.ExpandString($File.Target)
-                    # see also: https://github.com/PowerShell/PowerShell/issues/12804
-                    Value = [System.IO.Path]::Combine($using:Root, $File.Path)
+                    Value = [Path]::Combine($Root, $File.Path)
                     ItemType = "SymbolicLink"
                     Force = $true
                 }
 
+                Write-Host "[ LINK ] " -ForegroundColor Green -NoNewline
+                Write-Host $Arguments.Value -ForegroundColor Cyan -NoNewline
+                Write-Host " -> $($Arguments.Path)"
                 New-Item @Arguments | Out-Null
             }
         }
@@ -61,9 +64,10 @@ process {
     }
 
     if ($AddUserSettings.IsPresent -or $All.IsPresent) {
-        Write-Status -Message "Apply platform-specific settings . . ." -Step $Step -Total $Total
+        Write-Host "[$Step/$Total] " -NoNewline -ForegroundColor DarkGray
+        Write-Host "Apply platform-specific settings . . ."
 
-        if ($isWindows) {
+        if ($IsWindows) {
             # NOTE: ssh-add will ask for a passphrase (if enabled), which
             # disrupts the automatic flow of execution. A future workaround
             # might use the SSH_ASKPASS environment variable which defines
@@ -73,26 +77,30 @@ process {
                 ssh-add $home/.ssh/id_rsa
                 Set-Service ssh-agent -StartupType Automatic
                 [Environment]::SetEnvironmentVariable("GIT_SSH", "C:/Windows/System32/OpenSSH/ssh.exe", [EnvironmentVariableTarget]::User)
-            } else {
-                Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
             }
+        } else {
+            Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
         }
 
         $Step++
     }
 
     if ($LinkScripts.IsPresent -or $All.IsPresent) {
-        Write-Status -Message "Symlink custom PowerShell scripts . . ." -Step $Step -Total $Total
+        Write-Host "[$Step/$Total] " -NoNewline -ForegroundColor DarkGray
+        Write-Host "Symlink custom PowerShell scripts . . ."
 
         $Scripts = Get-ChildItem -Path $([Path]::Combine($Root, "scripts")) -Filter *.ps1
-        $Scripts | ForEach-Object -ThrottleLimit 5 -Parallel {
+        $Scripts | ForEach-Object {
             $Arguments = @{
-                Path = [System.IO.Path]::Combine($using:Scripts, $_.Name)
+                Path = [Path]::Combine($ScriptsFolder, $_.Name)
                 Value = $_.FullName
                 ItemType = "SymbolicLink"
                 Force = $true
             }
 
+            Write-Host "[ LINK ] " -ForegroundColor Green -NoNewline
+            Write-Host $Arguments.Value -ForegroundColor Cyan -NoNewline
+            Write-Host " -> $($Arguments.Path)"
             New-Item @Arguments | Out-Null
         }
 
@@ -100,7 +108,8 @@ process {
     }
 
     if ($CopyAssets.IsPresent -or $All.IsPresent) {
-        Write-Status -Message "Copy Assets to $Assets . . ." -Step $Step -Total $Total
+        Write-Host "[$Step/$Total] " -NoNewline -ForegroundColor DarkGray
+        Write-Host "Copy Assets to $Assets . . ."
         New-Item -ItemType Directory -Path $Assets -Force | Out-Null
         Copy-Item -Path $([Path]::Combine($Root, "assets", "icons")) -Recurse -Destination $Assets -Force
         $Step++

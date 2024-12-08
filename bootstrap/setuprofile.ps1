@@ -12,19 +12,31 @@ $ProfileSource = [Path]::Combine($ParentFolder, "profile.ps1")
 
 Push-Location $ParentFolder
 
-Write-Host "Download repository . . . " -NoNewline
+Write-Host "Download PowerShell Profile . . . " -NoNewline
 
-if (!(Test-Path $ProfileSource)) {
-    git clone "git@github.com:StefanGreve/profile.git" . --quiet
-} else {
-    git pull --quiet
-}
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/StefanGreve/profile/refs/heads/master/profile.ps1" -Out "./profile.ps1"
+$ProfileSource = $(Resolve-Path -Path "profile.ps1").Path
 
 Write-Host "✓" -ForegroundColor Green
 
+Write-Host "Install Dependencies . . . " -NoNewline
+
+Install-Module PowerTools -Force
+
+Write-Host "✓" -ForegroundColor Green
+
+$Definition = $PROFILE
+  | Get-Member -Type NoteProperty
+  | Where-Object Name -eq CurrentUserAllHosts
+  | Select-Object -ExpandProperty Definition
+
+$ProfilePath = $Definition.Split("=")[1]
+
+# Create a PowerShell directory if necessary
+New-Item $(Split-Path -Parent $ProfilePath) -ItemType Directory -ErrorAction SilentlyContinue
+
 $Arguments = @{
-    # current user, all hosts
-    Path = [OperatingSystem]::IsWindows() ? "$HOME\Documents\PowerShell\Profile.ps1" : "~/.config/powershell/profile.ps1"
+    Path = $ProfilePath
     Value = $ProfileSource
     ItemType = "SymbolicLink"
     Force = $true

@@ -12,12 +12,16 @@ in mind.
 
 ## Prerequisites
 
+The setting files are configured to use the classic Code Page 437 character set
+from the original IBM PCs; the respective DOS VGA font can be downloaded from here:
+<https://cp437.github.io/>.
+
 You will need to have [`pwsh`](https://github.com/PowerShell/PowerShell) installed
 on your platform of choice in order to run any of the scripts, as well as an
 appropriate execution policy, e.g.
 
 ```powershell
-Set-ExecutionPolicy RemoteSigned
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted
 ```
 
 in addition to the following platform-specific prerequisites:
@@ -32,11 +36,7 @@ TODO
 
 ### MacOS
 
-TODO
-
-The setting files are configured to use the classic Code Page 437 character set
-from the original IBM PCs; the respective DOS VGA font can be downloaded from here:
-<https://cp437.github.io/>.
+- [ ] `brew`
 
 ## Usage
 

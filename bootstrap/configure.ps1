@@ -84,8 +84,8 @@ process {
     if ($LinkScripts.IsPresent -or $All.IsPresent) {
         Write-Status -Message "Symlink custom PowerShell scripts . . ." -Step $Step -Total $Total
 
-        $Tools = Get-ChildItem -Path $([Path]::Combine($Root, "tools")) -Filter *.ps1
-        $Tools | ForEach-Object -ThrottleLimit 5 -Parallel {
+        $Scripts = Get-ChildItem -Path $([Path]::Combine($Root, "scripts")) -Filter *.ps1
+        $Scripts | ForEach-Object -ThrottleLimit 5 -Parallel {
             $Arguments = @{
                 Path = [System.IO.Path]::Combine($using:Scripts, $_.Name)
                 Value = $_.FullName

@@ -47,7 +47,7 @@ TODO
 repository:
 
 ```powershell
-.\scripts\setuprofile.ps1
+.\scripts\misc\setuprofile.ps1
 ```
 
 The script above will clone the profile repository inside a `repos` directory on

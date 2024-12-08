@@ -1,4 +1,4 @@
-if (!(Get-Module( PowerTools))) {
+if (!(Get-Module PowerTools)) {
     Install-Module PowerTools -Force
 }
 
@@ -12,7 +12,7 @@ function Get-OperatingSystem {
     } elseif ([OperatingSystem]::IsMacOS()) {
         "MacOS"
     } else {
-        Write-Error "Unsupported Operating System" -ErrorAction Stop -Category DeviceError
+        Write-Error "Unsupported Operating System" -Category DeviceError -ErrorAction Stop
     }
 }
 
@@ -31,7 +31,7 @@ function Write-Status {
     }
 }
 
-function Install-WingetPackage {
+function Install-WinGet {
     [OutputType([void])]
     param(
         [Parameter(Position = 0, Mandatory, ValueFromPipeline)]

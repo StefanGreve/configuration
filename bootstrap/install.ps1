@@ -43,7 +43,7 @@ begin {
 process {
     if ($Applications.IsPresent -or $All.IsPresent) {
         if ($IsWindows) {
-            $PackageManagers.Winget | Install-WingetPackage
+            $PackageManagers.Winget | Install-WinGet
         } else {
             Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
         }
@@ -57,7 +57,7 @@ process {
         }
         else {
             if ($isWindows) {
-                Install-WingetPackage -Id "rustlang.rustup"
+                Install-WinGet -Id "rustlang.rustup"
             } else {
                 Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
             }
@@ -92,7 +92,13 @@ process {
         # first install a vim plugin manager
         Write-Host "Installing vim-plug..."
         $VimPlug = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-        Invoke-WebRequest -UseBasicParsing $VimPlug | New-Item "$env:LOCALAPPDATA/nvim/autoload/plug.vim" -Force
+
+        if ($IsWindows) {
+            Invoke-WebRequest -UseBasicParsing $VimPlug | New-Item "$env:LOCALAPPDATA/nvim/autoload/plug.vim" -Force
+        } else {
+            sh -c "curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs $VimPlug"
+        }
+
         # install all CoC depedencies from init.vim
         nvim +'call coc#util#install()' +qa
         # finally install all plugins

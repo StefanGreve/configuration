@@ -1,3 +1,4 @@
+using namespace System.Collections.ObjectModel
 using namespace System.IO
 using namespace System.Management.Automation
 
@@ -17,19 +18,21 @@ param(
     [switch] $All
 )
 dynamicparam {
+    $ParamDictionary = [RuntimeDefinedParameterDictionary]::new()
+
     if ($IsWindows) {
-        $ParamDictionary = New-Object -Type RuntimeDefinedParameterDictionary
-        $AttributeCollection = New-Object -Type System.Collections.ObjectModel.Collection[Attribute]
-
-        $RegistryParameter = New-Object -Type RuntimeDefinedParameter("Registry", [switch], $AttributeCollection)
-
-        $RegistryAttribute = New-Object ParameterAttribute
+        $RegistryAttribute = [ParameterAttribute]::new()
         $RegistryAttribute.ParameterSetName = "Custom"
 
+        $AttributeCollection = [Collection[Attribute]]::new()
         $AttributeCollection.Add($RegistryAttribute)
+
+        $RegistryParameter = [RuntimeDefinedParameter]::new("Registry", [switch], $AttributeCollection)
+
         $ParamDictionary.Add("Registry", $RegistryParameter)
-        return $ParamDictionary
     }
+
+    return $ParamDictionary
 }
 
 begin {
@@ -62,7 +65,7 @@ process {
             rustup update
         }
         else {
-            if ($isWindows) {
+            if ($IsWindows) {
                 Install-WinGet -Id "rustlang.rustup"
             } else {
                 Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
@@ -74,7 +77,7 @@ process {
         }
     }
 
-    if ($PSBoundParameters.Registry -or ($isWindows -and $All.IsPresent)) {
+    if ($PSBoundParameters.Registry -or ($IsWindows -and $All.IsPresent)) {
         $RegistryFiles = Get-ChildItem -Path $([Path]::Combine($Root, "settings")) -Filter *.reg
         $RegistryFiles | ForEach-Object {
             Write-Verbose $_.FullName

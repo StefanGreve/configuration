@@ -1,3 +1,9 @@
+if (!(Get-Module( PowerTools))) {
+    Install-Module PowerTools -Force
+}
+
+Import-Module PowerTools
+
 function Get-OperatingSystem {
     if ([OperatingSystem]::IsWindows()) {
         "Windows"
@@ -7,27 +13,6 @@ function Get-OperatingSystem {
         "MacOS"
     } else {
         Write-Error "Unsupported Operating System" -ErrorAction Stop -Category DeviceError
-    }
-}
-
-function Test-Command {
-    [OutputType([bool])]
-    param(
-        [string] $Name
-    )
-
-    $PrevPreference = $ErrorActionPreference
-
-    try {
-        $ErrorActionPreference = "stop"
-        $_ = Get-Command $Name
-        return $true
-    }
-    catch {
-        return $false
-    }
-    finally {
-        $ErrorActionPreference = $PrevPreference
     }
 }
 

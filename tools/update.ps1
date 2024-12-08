@@ -18,16 +18,10 @@ function Update-System {
         }
 
         if ($Applications.IsPresent -or $All.IsPresent) {
-            switch ($global:OperatingSystem) {
-                ([OS]::Windows) {
-                    winget upgrade --all --silent --accept-package-agreements --accept-source-agreements --include-unknown --disable-interactivity
-                }
-                ([OS]::Linux) {
-                    [NotImplementedException]::new("TODO")
-                }
-                ([OS]::MacOS) {
-                    [NotImplementedException]::new("TODO")
-                }
+            if ($IsWindows) {
+                winget upgrade --all --silent --accept-package-agreements --accept-source-agreements --include-unknown --disable-interactivity
+            } else {
+                Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
             }
         }
     }

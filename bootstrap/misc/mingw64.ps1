@@ -1,6 +1,6 @@
 # Installs the GCC compiler on Windows
 
-if (![OperatingSystem]::IsWindows()) {
+if (!$IsWindows) {
     Write-Error "Unsupported Operating System" -ErrorAction Stop -Category DeviceError
 }
 

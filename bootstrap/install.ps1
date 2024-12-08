@@ -17,7 +17,7 @@ param(
     [switch] $All
 )
 dynamicparam {
-    if ([OperatingSystem]::IsWindows()) {
+    if ($IsWindows) {
         $ParamDictionary = New-Object -Type RuntimeDefinedParameterDictionary
         $AttributeCollection = New-Object -Type System.Collections.ObjectModel.Collection[Attribute]
 
@@ -35,23 +35,17 @@ dynamicparam {
 begin {
     $Root = git rev-parse --show-toplevel
     . $([Path]::Combine($Root, "bootstrap", "utils.ps1"))
-    $OperatingSystem = Get-OperatingSystem
+
     $Apps = Get-Content -Path $([Path]::Combine($Root, "settings", "apps.json")) -Raw | ConvertFrom-Json
     $PackageManagers = $Apps | Select-Object -ExpandProperty "PackageManagers"
     Push-Location -Path $Root
 }
 process {
     if ($Applications.IsPresent -or $All.IsPresent) {
-        switch ($OperatingSystem) {
-            "Windows" {
-                $PackageManagers.Winget | Install-WingetPackage
-             }
-            "Linux" {
-                throw [NotImplementedException]::new("TODO")
-            }
-            "MacOS" {
-                throw [NotImplementedException]::new("TODO")
-            }
+        if ($IsWindows) {
+            $PackageManagers.Winget | Install-WingetPackage
+        } else {
+            Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
         }
     }
 
@@ -62,16 +56,10 @@ process {
             rustup update
         }
         else {
-            switch ($OperatingSystem) {
-                "Windows" {
-                    Install-WingetPackage -Id "rustlang.rustup"
-                }
-                "Linux" {
-                    throw [NotImplementedException]::new("TODO")
-                }
-                "MacOS" {
-                    thow [NotImplementedException]::new("TODO")
-                }
+            if ($isWindows) {
+                Install-WingetPackage -Id "rustlang.rustup"
+            } else {
+                Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
             }
         }
 
@@ -80,7 +68,7 @@ process {
         }
     }
 
-    if ($PSBoundParameters.Registry -or ([OperatingSystem]::IsWindows() -and $All.IsPresent)) {
+    if ($PSBoundParameters.Registry -or ($isWindows -and $All.IsPresent)) {
         $RegistryFiles = Get-ChildItem -Path $([Path]::Combine($Root, "settings")) -Filter *.reg
         $RegistryFiles | ForEach-Object {
             Write-Verbose $_.FullName

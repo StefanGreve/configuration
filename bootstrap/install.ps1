@@ -49,7 +49,7 @@ process {
 
     if ($Applications.IsPresent -or $All.IsPresent) {
         if ($IsWindows) {
-            $PackageManagers.Winget | Install-WinGet
+            $PackageManagers.WinGet | Install-WinGet
         } else {
             Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
         }

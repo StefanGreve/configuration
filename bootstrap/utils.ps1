@@ -1,9 +1,9 @@
 function Get-OperatingSystem {
-    if ([OperatingSystem]::IsWindows()) {
+    if ($IsWindows) {
         "Windows"
-    } elseif ([OperatingSystem]::IsLinux()) {
+    } elseif ($IsLinux) {
         "Linux"
-    } elseif ([OperatingSystem]::IsMacOS()) {
+    } elseif ($IsMacOS) {
         "MacOS"
     } else {
         Write-Error "Unsupported Operating System" -Category DeviceError -ErrorAction Stop

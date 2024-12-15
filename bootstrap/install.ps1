@@ -12,7 +12,10 @@ param(
     [switch] $Cargo,
 
     [Parameter(ParameterSetName = "Custom")]
-    [switch] $Plugins,
+    [switch] $NeoVim,
+
+    [Parameter(ParameterSetName = "Custom")]
+    [switch] $VsCode,
 
     [Parameter(ParameterSetName = "All", Mandatory)]
     [switch] $All
@@ -50,14 +53,21 @@ process {
 
     Import-Module PowerTools
 
+    #region Packages
     if ($Applications.IsPresent -or $All.IsPresent) {
         if ($IsWindows) {
             $PackageManagers.WinGet | Install-WinGet
+        } elseif ($IsMacOS) {
+            foreach ($Package in $PackageManagers.Brew) {
+                brew install $Package
+            }
         } else {
             Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
         }
     }
+    #endregion
 
+    #region Cargo
     if ($Cargo.IsPresent -or $All.IsPresent) {
         if (Test-Command "cargo") {
             # update rustc and cargo because some crates won't install easily
@@ -76,7 +86,9 @@ process {
             cargo install $_
         }
     }
+    #endregion
 
+    #region Windows Registry
     if ($PSBoundParameters.Registry -or ($IsWindows -and $All.IsPresent)) {
         $RegistryFiles = Get-ChildItem -Path $([Path]::Combine($Root, "settings")) -Filter *.reg
         $RegistryFiles | ForEach-Object {
@@ -84,15 +96,22 @@ process {
             reg import $_.FullName
         }
     }
+    #endregion
 
-    if ($Plugins.IsPresent -or $All.IsPresent) {
+    #region VS Code
+    if ($VsCode.IsPresent -or $All.IsPresent) {
         $Extensions = $Apps | Select-Object -ExpandProperty Extensions
 
         # install vs code extensions
         $Extensions.Code | ForEach-Object -ThrottleLimit 5 -Parallel {
             code --install-extension $_ --force
         }
+    }
 
+    #endregion
+
+    #region NeoVim
+    if ($NeoVim.IsPresent -or $All.IsPresent) {
         # prerequisites for coc
         corepack enable
         npm install --global corepack
@@ -113,6 +132,7 @@ process {
         # finally install all plugins
         nvim +"PlugInstall --sync" +qa
     }
+    #endregion
 }
 clean {
     Pop-Location

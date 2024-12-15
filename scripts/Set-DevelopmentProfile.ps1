@@ -29,11 +29,13 @@ function Set-DevelopmentProfile {
                     git config --local core.autocrlf input
                     git config --local core.sshCommand "C:/Windows/System32/OpenSSH/ssh.exe"
                     git config --local gpg.program "C:/Program Files (x86)/GnuPG/bin/gpg.exe"
-                }
-
-                if ($IsMacOS) {
+                } elseif ($IsMacOS) {
                     git config --local core.sshCommand $(which ssh)
                     git config --local gpg.program "$(which gpg)"
+                } elseif ($IsLinux) {
+                    Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
+                } else {
+                    Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
                 }
             }
         }

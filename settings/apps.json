@@ -2,7 +2,9 @@
     "PackageManagers": {
         "brew": [
             "1password-cli",
+            "discord",
             "iterm2",
+            "gh",
             "git",
             "gnupg",
             "gpg2",
@@ -10,6 +12,7 @@
             "pinentry-mac",
             "nvim",
             "obsidian",
+            "python@3.12",
             "visual-studio-code",
             "wget"
         ],

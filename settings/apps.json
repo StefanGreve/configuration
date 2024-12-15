@@ -9,7 +9,9 @@
             "neofetch",
             "pinentry-mac",
             "nvim",
-            "visual-studio-code"
+            "obsidian",
+            "visual-studio-code",
+            "wget"
         ],
         "winget": [
             "1password-cli",

@@ -40,6 +40,7 @@ begin {
     Push-Location -Path $Root
 }
 process {
+    #region Symlink Config Files
     if ($LinkConfiguration.IsPresent -or $All.IsPresent) {
         Write-Host "[$Step/$Total] " -NoNewline -ForegroundColor DarkGray
         Write-Host "Symlink configuration files . . ."
@@ -63,6 +64,7 @@ process {
 
         $Step++
     }
+    #endregion
 
     if ($AddUserSettings.IsPresent -or $All.IsPresent) {
         Write-Host "[$Step/$Total] " -NoNewline -ForegroundColor DarkGray
@@ -75,10 +77,22 @@ process {
             # the prompt program to hardcode the passphrase in a custom script,
             # though this would have to be set prior to this line
             if ($null -eq $env:GIT_SSH) {
-                ssh-add $home/.ssh/id_rsa
+                ssh-add $HOME/.ssh/id_rsa
                 Set-Service ssh-agent -StartupType Automatic
                 [Environment]::SetEnvironmentVariable("GIT_SSH", "C:/Windows/System32/OpenSSH/ssh.exe", [EnvironmentVariableTarget]::User)
             }
+        } elseif ($IsMacOS) {
+            if ($null -eq $env:GIT_SSH) {
+                ssh-add ~/.ssh/ed_25519
+            }
+
+            # Update permissions for GNUPG
+            $GNUPG =  New-Item ~/.gnupg -ItemType Directory -Force
+            chmod 700 $GNUPG.FullName
+
+            # Restart GPG agent
+            gpgconf --kill gpg-agent
+            gpgconf --launch gpg-agent
         } else {
             Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
         }
@@ -86,6 +100,7 @@ process {
         $Step++
     }
 
+    #region Symlink Scripts
     if ($LinkScripts.IsPresent -or $All.IsPresent) {
         Write-Host "[$Step/$Total] " -NoNewline -ForegroundColor DarkGray
         Write-Host "Symlink custom PowerShell scripts . . ."
@@ -107,7 +122,9 @@ process {
 
         $Step++
     }
+    #endregion
 
+    #region Copy Assets
     if ($CopyAssets.IsPresent -or $All.IsPresent) {
         Write-Host "[$Step/$Total] " -NoNewline -ForegroundColor DarkGray
         Write-Host "Copy Assets to $Assets . . ."
@@ -115,6 +132,7 @@ process {
         Copy-Item -Path $([Path]::Combine($Root, "assets", "icons")) -Recurse -Destination $Assets -Force
         $Step++
     }
+    #endregion
 }
 clean {
     Pop-Location

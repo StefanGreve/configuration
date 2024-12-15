@@ -1,0 +1,37 @@
+[user]
+    email = greve.stefan@outlook.jp
+    name = StefanGreve
+[merge]
+    conflictstyle = diff3
+[rerere]
+    enabled = true
+[blame]
+    hyperlinks = true
+[init]
+    defaultBranch = master
+[commit]
+    verbose = true
+[push]
+    autoSetupRemote = true
+[alias]
+    init-empty = !"f() { git init && git commit --allow-empty --allow-empty-message --no-edit; }; f"
+    unstage = reset HEAD --
+    uncommit = reset --soft HEAD^1
+    last = log -1 HEAD
+    graph = log --date-order --graph --all --date=short --pretty=format:\"%x09%C(auto)%h  %C(cyan)%ad  %C(green)%aN  %x09%C(reset)%s\"
+    purge = "!f(){ git restore . && git clean -f .; };f"
+    push-notes = push origin refs/notes/*
+    pull-notes = fetch origin refs/notes/*:refs/notes/*
+    orphans = fsck --full
+    ls-authors = shortlog --summary --numbered --all --no-merges
+    ls-ignored = ls-files --ignored --exclude-standard --others
+    ls-untracked = ls-files --exclude-standard --others
+[http]
+    sslverify = true
+[url "ssh://git@github.com/"]
+    insteadOf = https://github.com/
+[safe]
+    directory = *
+[help]
+    autocorrect = 20
+    format = html

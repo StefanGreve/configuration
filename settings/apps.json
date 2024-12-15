@@ -1,7 +1,15 @@
 {
     "PackageManagers": {
         "brew": [
-            "1password-cli"
+            "1password-cli",
+            "iterm2",
+            "git",
+            "gnupg",
+            "gpg2",
+            "neofetch",
+            "pinentry-mac",
+            "nvim",
+            "visual-studio-code"
         ],
         "winget": [
             "1password-cli",

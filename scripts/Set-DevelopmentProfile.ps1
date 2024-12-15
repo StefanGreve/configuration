@@ -8,22 +8,33 @@ function Set-DevelopmentProfile {
     process {
         switch ($Account) {
             "Work" {
+                if (!$IsWindows) {
+                    Write-Error "This is not your work machine." -Category DeviceError -ErrorAction Stop
+                }
+
                 git config --local user.name $env:GitWorkUserName
                 git config --local user.email $env:GitWorkUserEmail
                 git config --local core.autocrlf false
                 git config --local commit.gpgsign false
              }
-            Default {
-                # TODO: configure ssh and gpg for non-Windows platforms
+            "Personal" {
                 git config --local user.name "StefanGreve"
                 git config --local user.email "greve.stefan@outlook.jp"
-                git config --local core.autocrlf input
-                git config --local core.sshCommand $IsWindows ? "C:/Windows/System32/OpenSSH/ssh.exe" : $null
 
-                # GPG commit signing
+                # configure commit signing via gpg
                 git config --local commit.gpgsign true
                 git config --local user.signingkey F380062B9F847687
-                git config --local gpg.program $IsWindows ? "C:/Program Files (x86)/GnuPG/bin/gpg.exe" : $null
+                
+                if ($IsWindows) {
+                    git config --local core.autocrlf input
+                    git config --local core.sshCommand "C:/Windows/System32/OpenSSH/ssh.exe"
+                    git config --local gpg.program "C:/Program Files (x86)/GnuPG/bin/gpg.exe"
+                }
+
+                if ($IsMacOS) {
+                    git config --local core.sshCommand $(which ssh)
+                    git config --local gpg.program "$(which gpg)"
+                }
             }
         }
     }

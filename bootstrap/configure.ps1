@@ -27,7 +27,6 @@ begin {
     $OperatingSystem = Get-OperatingSystem
 
     $Config = Get-Content -Path $([Path]::Combine($Root, "settings", "config.json")) -Raw | ConvertFrom-Json
-    $Assets = [Path]::Combine($HOME, ".config", "assets")
     $ScriptsFolder = $env:PROFILE_LOAD_CUSTOM_SCRIPTS ?? [Path]::Combine($HOME, "Documents", "Scripts")
 
     $Total = $All.IsPresent ? 4 : $PSBoundParameters.Count
@@ -126,6 +125,9 @@ process {
 
     #region Copy Assets
     if ($CopyAssets.IsPresent -or $All.IsPresent) {
+        $Assets = [Path]::Combine([Environment]::GetFolderPath("MyPictures"), ".configuration", "assets")
+        New-Item -Path $Assets -ItemType Directory -Force | Out-Null
+
         Write-Host "[$Step/$Total] " -NoNewline -ForegroundColor DarkGray
         Write-Host "Copy Assets to $Assets . . ."
         New-Item -ItemType Directory -Path $Assets -Force | Out-Null

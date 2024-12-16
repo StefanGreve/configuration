@@ -1,3 +1,5 @@
+using namespace System.IO
+
 function Test-Repository {
     [OutputType([bool])]
     param(
@@ -36,19 +38,19 @@ function Import-Repository {
     }
     process {
         if ($All.IsPresent) {
-            $Response = Invoke-RestMethod -Uri "https://api.github.com/users/$User/repos"
+            $Response = Invoke-RestMethod -Uri "https://api.github.com/users/${User}/repos"
             $Repositories = $Response | Select-Object ssh_url, name | Where-Object name -ne "profile"
 
             foreach ($Repository in $Repositories) {
-                $Path = Join-Path -Path $TargetDirectory -ChildPath $Repository.Name
+                $Path = [Path]::Combine($TargetDirectory, $Repositories.name)
 
                 if (Test-Repository $Path) { continue }
 
-                Write-Verbose "Clone $($Repository.Name) . . ."
+                Write-Verbose "Clone $($Repository.name) . . ."
                 git clone $Repository.SSH_URL $Path --quiet
             }
         } else {
-            $Path = Join-Path $TargetDirectory -ChildPath $Name
+            $Path = [Path]::Combine($TargetDirectory, $Name)
 
             if (Test-Repository $Path) { return }
 

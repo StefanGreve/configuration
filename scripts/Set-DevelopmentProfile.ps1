@@ -1,6 +1,6 @@
 function Set-DevelopmentProfile {
     param(
-        [ValidateSet("Work", "Personal")]
+        [ValidateSet("Work", "Personal", "Hentai")]
         [Parameter(Mandatory)]
         [string] $Account
     )
@@ -24,7 +24,7 @@ function Set-DevelopmentProfile {
                 # configure commit signing via gpg
                 git config --local commit.gpgsign true
                 git config --local user.signingkey F380062B9F847687
-                
+
                 if ($IsWindows) {
                     git config --local core.autocrlf input
                     git config --local core.sshCommand "C:/Windows/System32/OpenSSH/ssh.exe"
@@ -37,6 +37,10 @@ function Set-DevelopmentProfile {
                 } else {
                     Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
                 }
+            }
+            "Hentai" {
+                git config --local user.name hentai-chan
+                git config --local user.email "dev.hentai-chan@outlok.com"
             }
         }
     }

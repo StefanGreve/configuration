@@ -3,4 +3,11 @@ Host github.com
     HostName github.com
     UseKeychain yes
     AddKeysToAgent yes
-    IdentityFile "~/.ssh/id_ed25519"
+    IdentityFile ~/.ssh/id_ed25519
+
+Host github.com-hentaichan
+    User git
+    HostName github.com
+    UseKeychain yes
+    AddKeysToAgent yes
+    IdentityFile ~/.ssh/hentai-chan

@@ -29,6 +29,7 @@ in addition to the following platform-specific prerequisites:
 ### Windows
 
 - [ ] `winget`
+- [ ] `cargo`
 
 ### Linux
 
@@ -37,6 +38,7 @@ TODO
 ### MacOS
 
 - [ ] `brew`
+- [ ] `cargo`
 
 ## Usage
 
@@ -79,8 +81,6 @@ As a result of running this scripts, a new assets directory will be created in
 
 Update everything. You may need to re-load your session before this function gets
 recognized as a Cmdlet.
-
-> ⚠ This script depends on global variables defined by my custom profile
 
 ```powershell
 Update-System -All

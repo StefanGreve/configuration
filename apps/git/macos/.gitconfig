@@ -1,6 +1,19 @@
 [user]
     email = greve.stefan@outlook.jp
     name = StefanGreve
+[core]
+    editor = nvim
+    autocrlf = false
+    pager = "delta --syntax-theme='Solarized (dark)' --dark"
+    longpaths = true
+[interactive]
+    diffFilter = delta --color-only --features=interactive
+[delta]
+    navigate = true
+    light = false
+    features = decorations
+[diff]
+    colorMoved = default
 [merge]
     conflictstyle = diff3
 [rerere]

@@ -46,10 +46,13 @@ process {
 
         $Links = $Config | Select-Object -ExpandProperty $OperatingSystem
         $Links.PsObject.Properties.Value | Foreach-Object {
-            foreach ($File in $_) {
+            foreach ($Key in $_) {
+                # skip platform-specific settings
+                if (!$IsMacOS -and $Key.Path.StartsWith("./macos")) { continue }
+
                 $Arguments = @{
-                    Path = $ExecutionContext.InvokeCommand.ExpandString($File.Target)
-                    Value = [Path]::Combine($Root, $File.Path)
+                    Path = $ExecutionContext.InvokeCommand.ExpandString($Key.Target)
+                    Value = [Path]::Combine($Root, $Key.Path)
                     ItemType = "SymbolicLink"
                     Force = $true
                 }

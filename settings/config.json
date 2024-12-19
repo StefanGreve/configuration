@@ -19,11 +19,11 @@
         "gnupg": [
             {
                 "path": ".\\apps\\gnupg\\gpg-agent.conf",
-                "target": "$home\\.gnupg\\gpg-agent.conf"
+                "target": "$HOME\\.gnupg\\gpg-agent.conf"
             },
             {
                 "path": ".\\apps\\gnupg\\gpg.conf",
-                "target": "$home\\.gnupg\\gpg.conf"
+                "target": "$HOME\\.gnupg\\gpg.conf"
             }
         ],
         "nvim": [
@@ -41,7 +41,7 @@
         "ssh": [
             {
                 "path": ".\\apps\\ssh\\config",
-                "target": "$home\\.ssh\\config"
+                "target": "$HOME\\.ssh\\config"
             }
         ],
         "winget": [
@@ -57,11 +57,33 @@
             }
         ]
     },
-    "Linux": {
-        "pip": [
+    "MacOS": {
+        "git": [
             {
-                "path": "./apps/pip/pip.ini",
-                "target": "/etc/pip.ini"
+                "path": "./apps/git/macos/.gitconfig",
+                "target": "~/.gitconfig"
+            }
+        ],
+        "gnupg": [
+            {
+                "path": "./apps/gnupg/macos/gpg-agent.conf",
+                "target": "~/.gnupg/macos/gpg-agent.conf"
+            },
+            {
+                "path": "./apps/gnupg/gpg.conf",
+                "target": "~/.gnupg/gpg.conf"
+            }
+        ],
+        "ssh": [
+            {
+                "path": "./apps/ssh/macos/config",
+                "target": "~/.ssh/config"
+            }
+        ],
+        "profile": [
+            {
+                "path": "./macos/usr/.profile",
+                "target": "~/.profile"
             }
         ]
     }

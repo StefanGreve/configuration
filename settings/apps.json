@@ -1,6 +1,23 @@
 {
     "PackageManagers": {
+        "brew": [
+            "1password-cli",
+            "discord",
+            "iterm2",
+            "gh",
+            "git",
+            "gnupg",
+            "gpg2",
+            "neofetch",
+            "pinentry-mac",
+            "nvim",
+            "obsidian",
+            "python@3.12",
+            "visual-studio-code",
+            "wget"
+        ],
         "winget": [
+            "1password-cli",
             "NuGet Package Explorer",
             "7zip.7zip",
             "Audacity.Audacity",

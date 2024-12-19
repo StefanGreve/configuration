@@ -79,6 +79,12 @@
                 "path": "./apps/ssh/macos/config",
                 "target": "~/.ssh/config"
             }
+        ],
+        "profile": [
+            {
+                "path": "./macos/usr/.profile",
+                "target": "~/.profile"
+            }
         ]
     }
 }

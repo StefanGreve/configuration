@@ -112,24 +112,32 @@ process {
 
     #region NeoVim
     if ($NeoVim.IsPresent -or $All.IsPresent) {
-        # prerequisites for coc
-        corepack enable
-        npm install --global corepack
-        npm install --global npm@latest
+        if (!$(Test-Command npm)) {
+            Write-Error "npm is not installed, but it is required to proceed. Please install npm and try again." -Category ObjectNotFound -ErrorAction Stop
+        }
 
-        # first install a vim plugin manager
+        # First install a vim plugin manager
         Write-Host "Installing vim-plug..."
         $VimPlug = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 
         if ($IsWindows) {
             Invoke-WebRequest -UseBasicParsing $VimPlug | New-Item "${env:LOCALAPPDATA}/nvim/autoload/plug.vim" -Force
         } else {
-            sh -c "curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs ${VimPlug}"
+            sh -c "curl -fLo '${XDG_DATA_HOME:-$HOME/.local/share}'/nvim/site/autoload/plug.vim --create-dirs ${VimPlug}"
         }
 
-        # install all CoC depedencies from init.vim
+        # Prerequisites for CoC
+        corepack enable
+        npm install --global corepack
+        npm install --global npm@latest
+
+        # Install dependencies for CoC
+        npm install --prefix $($IsWindows ? "$env:LOCALAPPDATA\nvim-data\plugged\coc.nvim" : "~/.local/share/nvim/plugged/coc.nvim")
+
+        # Install all CoC dependencies from init.vim
         nvim +"call coc#util#install()" +qa
-        # finally install all plugins
+
+        # Finally install all plugins
         nvim +"PlugInstall --sync" +qa
     }
     #endregion

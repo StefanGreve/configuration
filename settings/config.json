@@ -74,16 +74,22 @@
                 "target": "~/.gnupg/gpg.conf"
             }
         ],
-        "ssh": [
+        "nvim": [
             {
-                "path": "./apps/ssh/macos/config",
-                "target": "~/.ssh/config"
+                "path": "./apps/nvim/macos/init.vim",
+                "target": "~/.config/nvim/init.vim"
             }
         ],
         "profile": [
             {
                 "path": "./macos/usr/.profile",
                 "target": "~/.profile"
+            }
+        ],
+        "ssh": [
+            {
+                "path": "./apps/ssh/macos/config",
+                "target": "~/.ssh/config"
             }
         ]
     }

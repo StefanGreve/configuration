@@ -11,6 +11,7 @@
             "mactex",
             "neofetch",
             "pinentry-mac",
+            "node",
             "nvim",
             "obsidian",
             "pipx",
@@ -74,6 +75,7 @@
             "visualstudioexptteam.intellicode-api-usage-examples",
             "visualstudioexptteam.vscodeintellicode",
             "vscode-icons-team.vscode-icons",
+            "XadillaX.viml",
             "yzhang.markdown-all-in-one"
         ]
     }

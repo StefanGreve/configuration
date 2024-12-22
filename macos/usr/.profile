@@ -2,7 +2,7 @@
 # User-defined environment variables
 #
 
-# === KEYS =====================================================================
+# === VARS =====================================================================
 export GPG_TTY=$(tty)
 export DOTNET_ROOT="~/.dotnet"
 
@@ -13,7 +13,16 @@ export PROFILE_LOAD_CUSTOM_SCRIPTS="~/Documents/Scripts"
 # === PATH =====================================================================
 export PATH="$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
-export PATH="$PATH:~/.local/bin"                    # python packages (pipx)
-export PATH="$PATH:/opt/homebrew/bin"               # brew packages
-export PATH="$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools" # dotnet tools
-export PATH="$PATH:~/.cargo/bin"                    # rust tools
+# python packages (pipx)
+export PATH="$PATH:~/.local/bin"
+
+# brew packages
+export PATH="$PATH:/opt/homebrew/bin"
+
+# dotnet tools
+export PATH="$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools"
+
+# rust tools
+export PATH="$PATH:~/.cargo/bin"
+
+# === MISC =====================================================================

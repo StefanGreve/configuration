@@ -1,6 +1,13 @@
 function Stop-Work {
-    $RemoteDesktopClient = "mstsc"
-    $Apps = @("lync", "ms-teams", "outlook", $RemoteDesktopClient)
+    $Apps = @(
+        "lync"
+        "ms-teams"
+        "outlook"
+        "forticlient"   # VPN client
+        "mstsc"         # default remote desktop client (RDC)
+        "rdcman"        # RDC from system internals suite
+        "postman"
+    )
 
     Get-Process | Where-Object { $Apps.Contains($_.Name.ToLower()) } | Stop-Process -Force
 

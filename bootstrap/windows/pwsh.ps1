@@ -56,7 +56,6 @@ process {
 
     if ($EnableProfileSettings.IsPresent) {
         Write-Host "Configure Profile Environment Variables . . . " -NoNewLine
-        [Environment]::SetEnvironmentVariable("PROFILE_ENABLE_DAILY_TRANSCRIPTS", "1", [EnvironmentVariableTarget]::User)
         [environment]::SetEnvironmentVariable("PROFILE_LOAD_CUSTOM_SCRIPTS", "$HOME/Documents/Scripts", [EnvironmentVariableTarget]::User)
         Write-Host "✓" -ForegroundColor Green
     }

@@ -42,6 +42,15 @@ function Update-System {
             } else {
                 Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
             }
+
+            if (Test-Command cargo) {
+                if ($null -eq $(cargo install --list | Select-String "cargo-install-update" -SimpleMatch)) {
+                    Write-Error "cargo-update is not installed. Run `"cargo install cargo-update`" to install this crate." -Category NotInstalled -ErrorAction Stop
+                }
+
+                # Update all crates that were installed in global scope
+                cargo install-update -a
+            }
         }
     }
 }

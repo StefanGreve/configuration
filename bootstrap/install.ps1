@@ -70,7 +70,7 @@ process {
     #region Cargo
     if ($Cargo.IsPresent -or $All.IsPresent) {
         if (Test-Command "cargo") {
-            # update rustc and cargo because some crates won't install easily
+            # Update rustc and cargo because some crates won't install easily
             # if we continue with an outdated version
             rustup update
         }
@@ -83,7 +83,7 @@ process {
         }
 
         $PackageManagers.Cargo | ForEach-Object {
-            cargo install $_
+            cargo install --force $_
         }
     }
     #endregion

@@ -49,9 +49,10 @@
         ],
         "cargo": [
             "bat",
+            "cargo-update",
+            "git-delta",
             "procs",
-            "tokei",
-            "git-delta"
+            "tokei"
         ]
     },
     "Extensions": {

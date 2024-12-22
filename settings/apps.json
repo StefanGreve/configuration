@@ -8,10 +8,12 @@
             "git",
             "gnupg",
             "gpg2",
+            "mactex",
             "neofetch",
             "pinentry-mac",
             "nvim",
             "obsidian",
+            "pipx",
             "python@3.12",
             "visual-studio-code",
             "wget"
@@ -53,25 +55,26 @@
     },
     "Extensions": {
         "code": [
-            "ms-vscode.hexeditor",
-            "ms-vscode.powershell",
+            "albert.tabout",
+            "eamodio.gitlens",
+            "editorconfig.editorconfig",
+            "ecmel.vscode-html-css",
+            "github.vscode-github-actions",
+            "ionutvmi.reg",
+            "james-yu.latex-workshop",
             "ms-dotnettools.csharp",
             "ms-python.isort",
             "ms-python.python",
             "ms-python.vscode-pylance",
             "ms-toolsai.jupyter",
-            "james-yu.latex-workshop",
-            "editorconfig.editorconfig",
-            "yzhang.markdown-all-in-one",
-            "eamodio.gitlens",
-            "visualstudioexptteam.vscodeintellicode",
-            "visualstudioexptteam.intellicode-api-usage-examples",
-            "albert.tabout",
-            "vscode-icons-team.vscode-icons",
+            "ms-vscode.hexeditor",
+            "ms-vscode.powershell",
+            "redhat.vscode-xml",
             "streetsidesoftware.code-spell-checker",
-            "ecmel.vscode-html-css",
-            "ionutvmi.reg",
-            "redhat.vscode-xml"
+            "visualstudioexptteam.intellicode-api-usage-examples",
+            "visualstudioexptteam.vscodeintellicode",
+            "vscode-icons-team.vscode-icons",
+            "yzhang.markdown-all-in-one"
         ]
     }
 }

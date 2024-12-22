@@ -1,4 +1,8 @@
 function Stop-Work {
+    if (!$IsWindows) {
+        Write-Error "This Cmdlet only works on the Windows Operating System" -Category DeviceError -ErrorAction Stop
+    }
+
     $Apps = @(
         "lync"
         "ms-teams"

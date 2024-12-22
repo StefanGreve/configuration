@@ -47,7 +47,7 @@ process {
         $Links = $Config | Select-Object -ExpandProperty $OperatingSystem
         $Links.PsObject.Properties.Value | Foreach-Object {
             foreach ($Key in $_) {
-                # skip platform-specific settings
+                # Skip settings that don't apply for MacOS
                 if (!$IsMacOS -and $Key.Path.StartsWith("./macos")) { continue }
 
                 $Arguments = @{
@@ -107,7 +107,7 @@ process {
         Write-Host "[$Step/$Total] " -NoNewline -ForegroundColor DarkGray
         Write-Host "Symlink custom PowerShell scripts . . ."
 
-        $Scripts = Get-ChildItem -Path $([Path]::Combine($Root, "scripts")) -Filter *.ps1
+        $Scripts = Get-ChildItem -Path $([Path]::Combine($Root, "scripts")) -Filter *.ps1 -Recurse
         $Scripts | ForEach-Object {
             $Arguments = @{
                 Path = [Path]::Combine($ScriptsFolder, $_.Name)
@@ -115,6 +115,9 @@ process {
                 ItemType = "SymbolicLink"
                 Force = $true
             }
+
+            # Skip Windows-specific scripts
+            if (!$IsWindows -and $Arguments.Value.Contains("windows")) { continue }
 
             Write-Host "[ LINK ] " -ForegroundColor Green -NoNewline
             Write-Host $Arguments.Value -ForegroundColor Cyan -NoNewline

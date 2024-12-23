@@ -61,9 +61,7 @@ process {
         if ($IsWindows) {
             $PackageManagers.WinGet | Install-WinGet
         } elseif ($IsMacOS) {
-            foreach ($Package in $PackageManagers.Brew) {
-                brew install $Package
-            }
+            $PackageManagers.Brew | Install-Brew
         } else {
             Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
         }
@@ -85,9 +83,7 @@ process {
             }
         }
 
-        $PackageManagers.Cargo | ForEach-Object {
-            cargo install --force $_
-        }
+        $PackageManagers.Cargo | Install-Cargo
     }
     #endregion
 
@@ -100,9 +96,7 @@ process {
             python3 -m pip install --user pipx
         }
 
-        $PackageManagers.PipX | ForEach-Object {
-            pipx install --force $_
-        }
+        $PackageManagers.PipX | Install-PipX
     }
     #endregion
 

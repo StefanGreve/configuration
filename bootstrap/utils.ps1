@@ -10,6 +10,48 @@ function Get-OperatingSystem {
     }
 }
 
+function Install-Brew {
+    [OutputType([void])]
+    param(
+        [Parameter(Position = 0, Mandatory, ValueFromPipeline)]
+        [string[]] $Package
+    )
+
+    process {
+        foreach ($p in $Package) {
+            brew install $p
+        }
+    }
+}
+
+function Install-Cargo {
+    [OutputType([void])]
+    param(
+        [Parameter(Position = 0, Mandatory, ValueFromPipeline)]
+        [string[]] $Crate
+    )
+
+    process {
+        foreach ($c in $Crate) {
+            cargo install --force $c
+        }
+    }
+}
+
+function Install-PipX {
+    [OutputType([void])]
+    param(
+        [Parameter(Position = 0, Mandatory, ValueFromPipeline)]
+        [string[]] $Package
+    )
+
+    process {
+        foreach ($p in $Package) {
+            pipx install --force $p
+        }
+    }
+}
+
 function Install-WinGet {
     [OutputType([void])]
     param(

@@ -90,9 +90,9 @@ process {
     #region PipX
     if ($Pipx.IsPresent -or $All.IsPresent) {
         if (!$(Test-Command pipx)) {
-            # On MacOS, pipx will be installed as a brew package. As for windows,
+            # On MacOS, pipx will be installed as a brew package. As for Windows,
             # there is no winget equivalent package available, so we install it
-            # via pip
+            # via pip directly, since scoop is not used in this project.
             python3 -m pip install --user pipx
         }
 
@@ -102,7 +102,7 @@ process {
 
     #region Windows Registry
     if ($PSBoundParameters.Registry -or ($IsWindows -and $All.IsPresent)) {
-        $RegistryFiles = Get-ChildItem -Path $([Path]::Combine($Root, "settings")) -Filter *.reg
+        $RegistryFiles = Get-ChildItem -Path $([Path]::Combine($Root, "settings")) -Filter "*.reg"
         $RegistryFiles | ForEach-Object {
             Write-Verbose $_.FullName
             reg import $_.FullName
@@ -113,11 +113,7 @@ process {
     #region VS Code
     if ($VsCode.IsPresent -or $All.IsPresent) {
         $Extensions = $Apps | Select-Object -ExpandProperty Extensions
-
-        # install vs code extensions
-        $Extensions.Code | ForEach-Object -ThrottleLimit 5 -Parallel {
-            code --install-extension $_ --force
-        }
+        $Extensions.Code | Install-VsCodeExtension
     }
 
     #endregion

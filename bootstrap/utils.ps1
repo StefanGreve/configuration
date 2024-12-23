@@ -52,6 +52,18 @@ function Install-PipX {
     }
 }
 
+function Install-VsCodeExtension {
+    [OutputType([void])]
+    param(
+        [Parameter(Position = 0, Mandatory, ValueFromPipeline)]
+        [string[]] $ExtensionId
+    )
+
+    process ($e in $ExtensionId) {
+        code --install-extension --force $e
+    }
+}
+
 function Install-WinGet {
     [OutputType([void])]
     param(

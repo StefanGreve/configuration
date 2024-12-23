@@ -107,7 +107,7 @@ process {
         Write-Host "[$Step/$Total] " -NoNewline -ForegroundColor DarkGray
         Write-Host "Symlink custom PowerShell scripts . . ."
 
-        $Scripts = Get-ChildItem -Path $([Path]::Combine($Root, "scripts")) -Filter *.ps1 -Recurse
+        $Scripts = Get-ChildItem -Path $([Path]::Combine($Root, "scripts")) -Filter "*.ps1" -Recurse
         $Scripts | ForEach-Object {
             $Arguments = @{
                 Path = [Path]::Combine($ScriptsFolder, $_.Name)

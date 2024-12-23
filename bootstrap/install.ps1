@@ -113,7 +113,7 @@ process {
     #region NeoVim
     if ($NeoVim.IsPresent -or $All.IsPresent) {
         if (!$(Test-Command npm)) {
-            Write-Error "npm is not installed, but it is required to proceed. Please install npm and try again." -Category ObjectNotFound -ErrorAction Stop
+            Write-Error "npm is not installed, but it is required to proceed. Please install npm and try again." -Category NotInstalled -ErrorAction Stop
         }
 
         # First install a vim plugin manager

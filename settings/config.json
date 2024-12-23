@@ -2,57 +2,57 @@
     "Windows": {
         "code": [
             {
-                "path": ".\\apps\\code\\settings.json",
+                "path": ".\\appSettings\\code\\settings.json",
                 "target": "$env:APPDATA\\Code\\User\\settings.json"
             },
             {
-                "path": ".\\apps\\code\\keybindings.json",
+                "path": ".\\appSettings\\code\\keybindings.json",
                 "target": "$env:APPDATA\\Code\\User\\keybindings.json"
             }
         ],
         "git": [
             {
-                "path": ".\\apps\\git\\.gitconfig",
+                "path": ".\\appSettings\\git\\.gitconfig",
                 "target": "$HOME\\.gitconfig"
             }
         ],
         "gnupg": [
             {
-                "path": ".\\apps\\gnupg\\gpg-agent.conf",
+                "path": ".\\appSettings\\gnupg\\gpg-agent.conf",
                 "target": "$HOME\\.gnupg\\gpg-agent.conf"
             },
             {
-                "path": ".\\apps\\gnupg\\gpg.conf",
+                "path": ".\\appSettings\\gnupg\\gpg.conf",
                 "target": "$HOME\\.gnupg\\gpg.conf"
             }
         ],
         "nvim": [
             {
-                "path": ".\\apps\\nvim\\init.vim",
+                "path": ".\\appSettings\\nvim\\init.vim",
                 "target": "$env:LOCALAPPDATA\\nvim\\init.vim"
             }
         ],
         "pip": [
             {
-                "path": ".\\apps\\pip\\pip.ini",
+                "path": ".\\appSettings\\pip\\pip.ini",
                 "target": "$env:APPDATA\\pip\\pip.ini"
             }
         ],
         "ssh": [
             {
-                "path": ".\\apps\\ssh\\config",
+                "path": ".\\appSettings\\ssh\\config",
                 "target": "$HOME\\.ssh\\config"
             }
         ],
         "winget": [
             {
-                "path": ".\\apps\\winget\\settings.json",
+                "path": ".\\appSettings\\winget\\settings.json",
                 "target": "$env:LOCALAPPDATA\\Packages\\Microsoft.DesktopAppInstaller_8wekyb3d8bbwe\\LocalState\\settings.json"
             }
         ],
         "wt": [
             {
-                "path": ".\\apps\\wt\\settings.json",
+                "path": ".\\appSettings\\wt\\settings.json",
                 "target": "$env:LOCALAPPDATA\\Packages\\Microsoft.WindowsTerminal_8wekyb3d8bbwe\\LocalState\\settings.json"
             }
         ]
@@ -60,23 +60,23 @@
     "MacOS": {
         "git": [
             {
-                "path": "./apps/git/macos/.gitconfig",
+                "path": "./appSettings/git/macos/.gitconfig",
                 "target": "~/.gitconfig"
             }
         ],
         "gnupg": [
             {
-                "path": "./apps/gnupg/macos/gpg-agent.conf",
+                "path": "./appSettings/gnupg/macos/gpg-agent.conf",
                 "target": "~/.gnupg/macos/gpg-agent.conf"
             },
             {
-                "path": "./apps/gnupg/gpg.conf",
+                "path": "./appSettings/gnupg/gpg.conf",
                 "target": "~/.gnupg/gpg.conf"
             }
         ],
         "nvim": [
             {
-                "path": "./apps/nvim/macos/init.vim",
+                "path": "./appSettings/nvim/macos/init.vim",
                 "target": "~/.config/nvim/init.vim"
             }
         ],
@@ -88,7 +88,7 @@
         ],
         "ssh": [
             {
-                "path": "./apps/ssh/macos/config",
+                "path": "./appSettings/ssh/macos/config",
                 "target": "~/.ssh/config"
             }
         ]

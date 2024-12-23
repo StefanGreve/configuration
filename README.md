@@ -63,7 +63,7 @@ Symlink config files from the `appSettings` directory by force:
 ```
 
 As a result of running this scripts, a new assets directory will be created in
-`$home/.config/assets`.
+`$HOME/Pictures/configuration/assets`.
 
 ---
 

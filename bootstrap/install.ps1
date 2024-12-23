@@ -12,6 +12,9 @@ param(
     [switch] $Cargo,
 
     [Parameter(ParameterSetName = "Custom")]
+    [switch] $PipX,
+
+    [Parameter(ParameterSetName = "Custom")]
     [switch] $NeoVim,
 
     [Parameter(ParameterSetName = "Custom")]
@@ -84,6 +87,21 @@ process {
 
         $PackageManagers.Cargo | ForEach-Object {
             cargo install --force $_
+        }
+    }
+    #endregion
+
+    #region PipX
+    if ($Pipx.IsPresent -or $All.IsPresent) {
+        if (!$(Test-Command pipx)) {
+            # On MacOS, pipx will be installed as a brew package. As for windows,
+            # there is no winget equivalent package available, so we install it
+            # via pip
+            python3 -m pip install --user pipx
+        }
+
+        $PackageManagers.PipX | ForEach-Object {
+            pipx install --force $_
         }
     }
     #endregion

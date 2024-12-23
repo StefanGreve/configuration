@@ -19,6 +19,16 @@
             "visual-studio-code",
             "wget"
         ],
+        "cargo": [
+            "bat",
+            "cargo-update",
+            "git-delta",
+            "procs",
+            "tokei"
+        ],
+        "pipx": [
+            "uv"
+        ],
         "winget": [
             "1password-cli",
             "NuGet Package Explorer",
@@ -46,13 +56,6 @@
             "Oracle.MySQL",
             "sysinternals",
             "VideoLAN.VLC"
-        ],
-        "cargo": [
-            "bat",
-            "cargo-update",
-            "git-delta",
-            "procs",
-            "tokei"
         ]
     },
     "Extensions": {

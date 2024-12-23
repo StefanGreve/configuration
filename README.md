@@ -33,7 +33,12 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted
 After that, follow the instructions on https://github.com/StefanGreve/profile
 for importing the PowerShell profile (optional).
 
-in addition to the following platform-specific prerequisites:
+Ensure that you have the following commands in your `PATH`:
+
+- `cargo`
+- `pipx`
+
+Additionally, you also need the following platform-specific prerequisites:
 
 ### Windows
 
@@ -51,7 +56,7 @@ NOT IMPLEMENTED
 
 **Run the following scripts to bootstrap your system, preferably in order.**
 
-Symlink config files from the apps directory by force:
+Symlink config files from the `appSettings` directory by force:
 
 ```powershell
 ./bootstrap/configure.ps1 -All

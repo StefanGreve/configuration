@@ -59,8 +59,10 @@ function Install-VsCodeExtension {
         [string[]] $ExtensionId
     )
 
-    process ($e in $ExtensionId) {
-        code --install-extension --force $e
+    process {
+        foreach ($e in $ExtensionId) {
+            code --install-extension --force $e
+        }
     }
 }
 

@@ -3,6 +3,7 @@
         "brew": [
             "1password-cli",
             "discord",
+            "drawio",
             "iterm2",
             "gh",
             "git",

@@ -59,7 +59,7 @@ process {
     #region Packages
     if ($Applications.IsPresent -or $All.IsPresent) {
         if ($IsWindows) {
-            $PackageManagers.WinGet | Install-WinGet
+            $PackageManagers.WinGet | Install-WinGet -Verbose
         } elseif ($IsMacOS) {
             $PackageManagers.Brew | Install-Brew
         } else {

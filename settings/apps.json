@@ -31,8 +31,8 @@
             "uv"
         ],
         "winget": [
-            "1password-cli",
-            "NuGet Package Explorer",
+            "AgileBits.1Password.CLI",
+            "9WZDNCRDMDM3",
             "7zip.7zip",
             "Audacity.Audacity",
             "CoreyButler.NVMforWindows",
@@ -55,7 +55,7 @@
             "Microsoft.WindowsTerminal",
             "OpenJS.NodeJS",
             "Oracle.MySQL",
-            "sysinternals",
+            "Microsoft.Sysinternals",
             "VideoLAN.VLC"
         ]
     },

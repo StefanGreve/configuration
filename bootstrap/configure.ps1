@@ -39,6 +39,12 @@ begin {
     Push-Location -Path $Root
 }
 process {
+    if (!(Get-Module PowerTools)) {
+        Install-Module PowerTools -Force
+    }
+
+    Import-Module PowerTools
+
     #region Symlink Config Files
     if ($LinkConfiguration.IsPresent -or $All.IsPresent) {
         Write-Host "[$Step/$Total] " -NoNewline -ForegroundColor DarkGray
@@ -85,16 +91,14 @@ process {
             }
         } elseif ($IsMacOS) {
             if ($null -eq $env:GIT_SSH) {
+                # Started to use a new key generation algorithm for MacOS
                 ssh-add ~/.ssh/ed_25519
             }
 
             # Update permissions for GNUPG
             $GNUPG =  New-Item ~/.gnupg -ItemType Directory -Force
             chmod 700 $GNUPG.FullName
-
-            # Restart GPG agent
-            gpgconf --kill gpg-agent
-            gpgconf --launch gpg-agent
+            Restart-GpgAgent
         } else {
             Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
         }

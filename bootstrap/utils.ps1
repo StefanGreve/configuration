@@ -49,7 +49,7 @@ function Install-PipX {
 
     process {
         foreach ($p in $Package) {
-            pipx install --force $p
+            pipx install --force $p --verbose
         }
     }
 }

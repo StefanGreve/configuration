@@ -90,10 +90,23 @@ process {
     #region PipX
     if ($Pipx.IsPresent -or $All.IsPresent) {
         if (!$(Test-Command pipx)) {
-            # On MacOS, pipx will be installed as a brew package. As for Windows,
-            # there is no winget equivalent package available, so we install it
-            # via pip directly, since scoop is not used in this project.
-            python3 -m pip install --user pipx
+            & ($IsWindows ? "py" : "python3") -m pip config set global.require-virtualenv False
+
+            if ($IsMacOS) {
+                brew install pipx
+            } elseif ($IsWindows) {
+                py -m pip install --user pipx
+
+                # pipx executable
+                Set-EnvironmentVariable -Key Path -Value "$env:APPDATA\Python\Python312\Scripts" -Scope User
+
+                # apps installed via pipx are exposed here
+                Set-EnvironmentVariable -Key Path -Value "C:\Users\stefan.greve\.local\bin" -Scope User
+            } else {
+                Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
+            }
+
+            & ($IsWindows ? "py" : "python3") -m pip config set global.require-virtualenv True
         }
 
         $PackageManagers.PipX | Install-PipX

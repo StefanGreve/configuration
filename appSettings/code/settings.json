@@ -1,10 +1,4 @@
 {
-    "[powershell]": {
-        "debug.saveBeforeStart": "nonUntitledEditorsInActiveGroup",
-        "editor.defaultFormatter": "ms-vscode.powershell-preview",
-        "editor.semanticHighlighting.enabled": true,
-        "editor.wordSeparators": "`~!@#$%^&*()=+[{]}\\|;:'\",.<>/?"
-    },
     "editor.acceptSuggestionOnEnter": "smart",
     "editor.bracketPairColorization.enabled": true,
     "editor.codeActionsOnSave": {
@@ -40,30 +34,10 @@
     "explorer.confirmDragAndDrop": false,
     "extensions.ignoreRecommendations": true,
     "files.autoGuessEncoding": true,
-    "files.exclude": {
-        "**/.classpath": true,
-        "**/.factorypath": true,
-        "**/.project": true,
-        "**/.settings": true,
-        "**/__pycache__": true,
-        "venv/": true
-    },
     "files.insertFinalNewline": true,
     "files.trimTrailingWhitespace": true,
     "git.inputValidationSubjectLength": 72,
     "html.autoClosingTags": true,
-    "javascript.autoClosingTags": true,
-    "javascript.suggest.autoImports": true,
-    "javascript.updateImportsOnFileMove.enabled": "always",
-    "notebook.lineNumbers": "on",
-    "powershell.buttons.showPanelMovementButtons": false,
-    "powershell.codeFolding.showLastLine": true,
-    "powershell.enableProfileLoading": true,
-    "powershell.integratedConsole.focusConsoleOnExecute": true,
-    "powershell.scriptAnalysis.enable": true,
-    "powershell.sideBar.CommandExplorerVisibility": true,
-    "powershell.startAutomatically": false,
-    "powershell.pester.codeLens": false,
     "redhat.telemetry.enabled": false,
     "security.workspace.trust.untrustedFiles": "open",
     "telemetry.enableTelemetry": false,
@@ -80,9 +54,6 @@
             "source": "PowerShell"
         }
     },
-    "typescript.autoClosingTags": true,
-    "typescript.suggest.autoImports": true,
-    "typescript.updateImportsOnFileMove.enabled": "always",
     "window.menuBarVisibility": "hidden",
     "workbench.colorTheme": "Default Dark Modern",
     "workbench.editor.highlightModifiedTabs": true,
@@ -99,5 +70,38 @@
             "systemId": "https://raw.githubusercontent.com/PowerShell/PowerShell/master/src/Schemas/Types.xsd",
             "pattern": "**/*.Types.ps1xml"
         }
-    ]
+    ],
+    "[javascript]": {
+        "javascript.autoClosingTags": true,
+        "javascript.suggest.autoImports": true,
+        "javascript.updateImportsOnFileMove.enabled": "always"
+    },
+    "[typescript]": {
+        "typescript.autoClosingTags": true,
+        "typescript.suggest.autoImports": true,
+        "typescript.updateImportsOnFileMove.enabled": "always"
+    },
+    "[powershell]": {
+        "debug.saveBeforeStart": "nonUntitledEditorsInActiveGroup",
+        "editor.defaultFormatter": "ms-vscode.powershell-preview",
+        "editor.semanticHighlighting.enabled": true,
+        "powershell.buttons.showPanelMovementButtons": false,
+        "powershell.codeFolding.showLastLine": true,
+        "powershell.enableProfileLoading": true,
+        "powershell.integratedConsole.focusConsoleOnExecute": true,
+        "powershell.scriptAnalysis.enable": true,
+        "powershell.sideBar.CommandExplorerVisibility": true,
+        "powershell.startAutomatically": false,
+        "powershell.pester.codeLens": false
+    },
+    "[python]": {
+        "files.exclude": {
+            "**/.classpath": true,
+            "**/.factorypath": true,
+            "**/.project": true,
+            "**/.settings": true,
+            "**/__pycache__": true,
+            "venv/": true
+        }
+    }
 }

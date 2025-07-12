@@ -12,6 +12,7 @@
         "source.organizeImports": "never"
     },
     "editor.cursorBlinking": "smooth",
+    "editor.cursorStyle": "underline",
     "editor.folding": true,
     "editor.foldingStrategy": "indentation",
     "editor.fontFamily": "Perfect DOS VGA 437 Win",
@@ -31,6 +32,8 @@
     "editor.semanticHighlighting.enabled": true,
     "editor.showFoldingControls": "always",
     "editor.suggestSelection": "first",
+    "editor.suggest.showSnippets": false,
+    "editor.snippetSuggestions": "none",
     "editor.tabSize": 4,
     "editor.wordSeparators": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?",
     "explorer.confirmDelete": false,

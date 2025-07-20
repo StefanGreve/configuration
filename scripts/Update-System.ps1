@@ -13,6 +13,12 @@ function Update-System {
     )
 
     process {
+        $HasInternetConnection = Test-Connection -TargetName "www.google.com" -Count 3
+
+        if (!$HasInternetConnection) {
+            Write-Error "Failed to connect to the internet. Please check your network settings and try again." -ErrorAction Stop -Category ConnectionError
+        }
+
         if ($Help.IsPresent -or $All.IsPresent) {
             Update-Help -UICulture "en-US" -ErrorAction SilentlyContinue -ErrorVariable UpdateErrors -Force
         }

@@ -58,6 +58,10 @@ function Update-System {
                     Write-Error "cargo-update is not installed. Run `"cargo install cargo-update`" to install this crate." -Category NotInstalled -ErrorAction Stop
                 }
 
+                # update rust
+                rustc --version
+                rustup update
+
                 # Update all crates that were installed in global scope
                 cargo install-update -a
             }

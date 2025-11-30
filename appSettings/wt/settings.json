@@ -6,18 +6,18 @@
         {
             "command":
             {
-                "action": "copy",
-                "singleLine": false
-            },
-            "id": "User.copy.644BA8F2"
-        },
-        {
-            "command":
-            {
                 "action": "splitPane",
                 "split": "down"
             },
             "id": "User.splitPane.D5151347"
+        },
+        {
+            "command":
+            {
+                "action": "copy",
+                "singleLine": false
+            },
+            "id": "User.copy.644BA8F2"
         },
         {
             "command":
@@ -33,14 +33,6 @@
         {
             "command":
             {
-                "action": "resizePane",
-                "direction": "left"
-            },
-            "id": "User.resizePane.2A0DA8E0"
-        },
-        {
-            "command":
-            {
                 "action": "moveFocus",
                 "direction": "down"
             },
@@ -49,9 +41,10 @@
         {
             "command":
             {
-                "action": "closeTab"
+                "action": "resizePane",
+                "direction": "left"
             },
-            "id": "User.closeTab.0"
+            "id": "User.resizePane.2A0DA8E0"
         },
         {
             "command":
@@ -60,6 +53,13 @@
                 "split": "right"
             },
             "id": "User.splitPane.864CD510"
+        },
+        {
+            "command":
+            {
+                "action": "closeTab"
+            },
+            "id": "User.closeTab.0"
         },
         {
             "command": "find",
@@ -129,10 +129,6 @@
             "keys": "ctrl+shift+minus"
         },
         {
-            "id": "User.newTab.5DEADB41",
-            "keys": "ctrl+t"
-        },
-        {
             "id": "User.resizePane.6CD791B",
             "keys": "ctrl+shift+k"
         },
@@ -141,12 +137,16 @@
             "keys": "ctrl+c"
         },
         {
-            "id": "User.resizePane.2A0DA8E0",
-            "keys": "ctrl+shift+h"
+            "id": "User.newTab.5DEADB41",
+            "keys": "ctrl+t"
         },
         {
             "id": "User.moveFocus.F747588A",
             "keys": "ctrl+j"
+        },
+        {
+            "id": "User.resizePane.2A0DA8E0",
+            "keys": "ctrl+shift+h"
         },
         {
             "id": "User.splitPane.864CD510",
@@ -157,12 +157,12 @@
             "keys": "ctrl+w"
         },
         {
-            "id": "User.find",
-            "keys": "ctrl+shift+f"
-        },
-        {
             "id": "User.paste",
             "keys": "ctrl+v"
+        },
+        {
+            "id": "User.find",
+            "keys": "ctrl+shift+f"
         },
         {
             "id": "User.moveFocus.2A0DA8E0",
@@ -194,18 +194,22 @@
     "newTabMenu":
     [
         {
+            "icon": null,
             "profile": "{8778dc12-361b-4f51-884c-19318188edba}",
             "type": "profile"
         },
         {
+            "icon": null,
             "profile": "{eef40fca-41a1-4efc-8d15-da1f78909254}",
             "type": "profile"
         },
         {
+            "icon": null,
             "profile": "{41062d2c-d27b-4797-9bcf-de2fb202b7ed}",
             "type": "profile"
         },
         {
+            "icon": null,
             "profile": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
             "type": "profile"
         },
@@ -217,6 +221,7 @@
             "entries":
             [
                 {
+                    "icon": null,
                     "profile": "{6ee2d370-4f6a-4a55-a0ad-8afdbc68d6ca}",
                     "type": "profile"
                 }

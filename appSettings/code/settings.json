@@ -103,5 +103,6 @@
             "**/__pycache__": true,
             "venv/": true
         }
-    }
+    },
+    "powershell.pester.codeLens": false
 }

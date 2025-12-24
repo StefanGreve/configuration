@@ -87,7 +87,7 @@ function Install-WinGet {
         $InstallSucceeded = $?
     }
     clean {
-        if ($InstallSucceeded -or !$SkipCleanup.IsPresent) {
+        if ($InstallSucceeded -and !$SkipCleanup.IsPresent) {
             $OriginalEAP = $ErrorActionPreference
             $ErrorActionPreference = 'SilentlyContinue'
             Remove-Item -Path $WingetDependenciesZip -Force

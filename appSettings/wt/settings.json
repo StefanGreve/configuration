@@ -120,7 +120,7 @@
     ],
     "copyFormatting": "none",
     "copyOnSelect": true,
-    "defaultProfile": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+    "defaultProfile": "{8778dc12-361b-4f51-884c-19318188edba}",
     "experimental.detectURLs": true,
     "keybindings":
     [
@@ -245,7 +245,7 @@
                 "none"
             ],
             "colorScheme": "PowerShellDark",
-            "commandline": "C:\\Program Files\\PowerShell\\7\\pwsh.exe -NoLogo",
+            "commandline": "C:\\Program Files\\PowerShell\\7-preview\\pwsh.exe -NoLogo",
             "cursorShape": "vintage",
             "elevate": true,
             "font":
@@ -269,7 +269,8 @@
         [
             {
                 "guid": "{8778dc12-361b-4f51-884c-19318188edba}",
-                "name": "PowerShell"
+                "name": "PowerShell",
+                "commandline": "C:\\Program Files\\PowerShell\\7-preview\\pwsh.exe -NoLogo"
             },
             {
                 "colorScheme": "AdventureTime",

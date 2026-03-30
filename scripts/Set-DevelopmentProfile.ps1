@@ -28,7 +28,7 @@ function Set-DevelopmentProfile {
                 if ($IsWindows) {
                     git config --local core.autocrlf input
                     git config --local core.sshCommand "C:/Windows/System32/OpenSSH/ssh.exe"
-                    git config --local gpg.program "C:/Program Files (x86)/GnuPG/bin/gpg.exe"
+                    git config --local gpg.program "C:\Program Files\GnuPG\bin\gpg.exe"
                 } elseif ($IsMacOS) {
                     git config --local core.sshCommand $(which ssh)
                     git config --local gpg.program "$(which gpg)"

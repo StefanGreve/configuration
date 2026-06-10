@@ -50,6 +50,7 @@
             "RaspberryPiFoundation.RaspberryPiImager",
             "GoLang.Go",
             "GitHub.cli",
+            "Microsoft.CoreUtils",
             "Microsoft.Teams",
             "Microsoft.PowerToys",
             "Microsoft.VisualStudioCode",

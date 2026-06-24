@@ -55,7 +55,7 @@
         }
     },
     "window.menuBarVisibility": "hidden",
-    "workbench.colorTheme": "Default Dark Modern",
+    "workbench.colorTheme": "Dark Modern",
     "workbench.editor.highlightModifiedTabs": true,
     "workbench.iconTheme": "vscode-icons",
     "workbench.settings.editor": "json",
@@ -104,5 +104,10 @@
             "venv/": true
         }
     },
-    "powershell.pester.codeLens": false
+    "github.copilot.enable": {
+        "*": false,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false
+    }
 }

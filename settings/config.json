@@ -1,5 +1,11 @@
 {
     "Windows": {
+        "claude": [
+            {
+                "path": ".\\appSettings\\claude\\CLAUDE.md",
+                "target": "$HOME\\.claude"
+            }
+        ],
         "code": [
             {
                 "path": ".\\appSettings\\code\\settings.json",
@@ -58,6 +64,12 @@
         ]
     },
     "MacOS": {
+        "claude": [
+            {
+                "path": "./appSettings/claude/CLAUDE.md",
+                "target": "~/.claude"
+            }
+        ],
         "git": [
             {
                 "path": "./appSettings/git/macos/.gitconfig",

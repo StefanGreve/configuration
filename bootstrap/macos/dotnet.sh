@@ -1,6 +1,6 @@
 pushd ~/Downloads
 
-bew update
+brew update
 
 # script prerequisite
 brew install wget

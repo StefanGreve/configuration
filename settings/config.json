@@ -3,7 +3,7 @@
         "claude": [
             {
                 "path": ".\\appSettings\\claude\\CLAUDE.md",
-                "target": "$HOME\\.claude"
+                "target": "$HOME\\.claude\\CLAUDE.md"
             }
         ],
         "code": [
@@ -67,7 +67,7 @@
         "claude": [
             {
                 "path": "./appSettings/claude/CLAUDE.md",
-                "target": "~/.claude"
+                "target": "~/.claude/CLAUDE.md"
             }
         ],
         "git": [

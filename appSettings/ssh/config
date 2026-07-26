@@ -1,3 +1,12 @@
+# Raspberry Pi 3B
+Host rpi3 rpi3.local
+    HostName 192.168.2.111
+    User stefan
+    Port 1995
+    IdentityFile ~/.ssh/rpi3
+    IdentitiesOnly yes
+    AddKeysToAgent yes
+
 # personal account
 Host github.com
     User git

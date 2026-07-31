@@ -1,9 +1,29 @@
+using namespace System.Collections.ObjectModel
+using namespace System.Management.Automation
+
 function Set-DevelopmentProfile {
     param(
-        [ValidateSet("Work", "Personal", "Hentai")]
+        [ValidateSet("Work", "Personal")]
         [Parameter(Mandatory)]
         [string] $Account
     )
+
+    dynamicparam {
+        $ParamDictionary = [RuntimeDefinedParameterDictionary]::new()
+
+        if ($Account -eq "Personal") {
+            $UseLegacySigniningKeyAttribute = [ParameterAttribute]::new()
+
+            $AttributeCollection = [Collection[Attribute]]::new()
+            $AttributeCollection.Add($UseLegacySigniningKeyAttribute)
+
+            $UseLegacySigniningKeyParameter = [RuntimeDefinedParameter]::new("UseLegacySigniningKey", [switch], $AttributeCollection)
+
+            $ParamDictionary.Add("UseLegacySigniningKey", $UseLegacySigniningKeyParameter)
+        }
+
+        return $ParamDictionary
+    }
 
     process {
         switch ($Account) {
@@ -19,28 +39,28 @@ function Set-DevelopmentProfile {
              }
             "Personal" {
                 git config --local user.name "StefanGreve"
-                git config --local user.email "greve.stefan@outlook.jp"
+                git config --local user.email $($UseLegacySigniningKey ? "greve.stefan@outlook.jp" : "stefan.ohlsen.greve@gmail.com")
 
                 # configure commit signing via gpg
                 git config --local commit.gpgsign true
-                git config --local user.signingkey F380062B9F847687
+
+                # use legacy key with previous primary email address
+                if ($UseLegacySigniningKey) {
+                    git config --local user.signingkey F380062B9F847687
+                } else { # prefer a per-device signing key configuration
+                    Write-Host "NOTE: Configure local signing key for this device" -ForegroundColor Yellow
+                }
 
                 if ($IsWindows) {
                     git config --local core.autocrlf input
                     git config --local core.sshCommand "C:/Windows/System32/OpenSSH/ssh.exe"
                     git config --local gpg.program "C:\Program Files\GnuPG\bin\gpg.exe"
-                } elseif ($IsMacOS) {
+                } elseif ($IsMacOS -or $IsLinux) {
                     git config --local core.sshCommand $(which ssh)
                     git config --local gpg.program "$(which gpg)"
-                } elseif ($IsLinux) {
-                    Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
                 } else {
-                    Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
+                    Write-Error "ERROR: Unreachable Path" -Category NotImplemented -ErrorAction Stop
                 }
-            }
-            "Hentai" {
-                git config --local user.name hentai-chan
-                git config --local user.email "dev.hentai-chan@outlok.com"
             }
         }
     }

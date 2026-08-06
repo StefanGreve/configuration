@@ -1,7 +1,12 @@
 function Stop-Work {
     if (!$IsWindows) {
-        Write-Error "This Cmdlet only works on the Windows Operating System" -Category DeviceError -ErrorAction Stop
+        Write-Error "This function only works on the Windows Operating System" -Category DeviceError -ErrorAction Stop
     }
+
+    # Determine elevation directly so the function does not rely on a profile-defined
+    # $IsAdmin ($IsAdmin is not an automatic variable, and the task runs with -NoProfile).
+    $IsAdmin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(
+        [Security.Principal.WindowsBuiltInRole]::Administrator)
 
     $Apps = @(
         "lync"
@@ -24,4 +29,9 @@ function Stop-Work {
         # [2] HKEY_LOCAL_MACHINE/SOFTWARE/Microsoft/Windows/CurrentVersion/Policies/System
         Get-SmbMapping | Remove-SmbMapping -Force
     }
+}
+
+# Invoke when run directly (e.g. via the ClockOutDaemon task's -File).
+if ($MyInvocation.InvocationName -ne ".") {
+    Stop-Work
 }

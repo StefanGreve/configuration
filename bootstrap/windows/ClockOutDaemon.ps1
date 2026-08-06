@@ -6,9 +6,10 @@ $Description = "Reminds you to clock out at 17:30 on weekdays."
 
 # ==============================================================================
 
+$StopWork = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\..\scripts\windows\Stop-Work.ps1"))
 $ActionArgs = @{
     Execute  = "pwsh.exe"
-    Argument = "-NoProfile -Command 'Stop-Work'"
+    Argument = "-NoProfile -ExecutionPolicy Bypass -File `"$StopWork`""
 }
 $Action = New-ScheduledTaskAction @ActionArgs
 

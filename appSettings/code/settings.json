@@ -107,7 +107,7 @@
     },
     "background.editor": {
         "images": [
-            "C:/Users/stefan.greve/Pictures/.configuration/assets/ide/"
+            "~/Pictures/.configuration/assets/ide/"
         ],
         "style": {
             "opacity": 0.6

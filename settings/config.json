@@ -4,6 +4,10 @@
             {
                 "path": ".\\appSettings\\claude\\CLAUDE.md",
                 "target": "$HOME\\.claude\\CLAUDE.md"
+            },
+            {
+                "path": ".\\appSettings\\claude\\statusline.ps1",
+                "target": "$HOME\\.claude\\statusline.ps1"
             }
         ],
         "code": [
@@ -68,6 +72,10 @@
             {
                 "path": "./appSettings/claude/CLAUDE.md",
                 "target": "~/.claude/CLAUDE.md"
+            },
+            {
+                "path": "./appSettings/claude/statusline.ps1",
+                "target": "$HOME/.claude/statusline.ps1"
             }
         ],
         "git": [

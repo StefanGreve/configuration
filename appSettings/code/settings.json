@@ -71,39 +71,30 @@
             "pattern": "**/*.Types.ps1xml"
         }
     ],
-    "[javascript]": {
-        "js.autoClosingTags": true,
-        "javascript.suggest.autoImports": true,
-        "javascript.updateImportsOnFileMove.enabled": "always"
-    },
-    "[typescript]": {
-        "ts.autoClosingTags": true,
-        "typescript.suggest.autoImports": true,
-        "typescript.updateImportsOnFileMove.enabled": "always"
-    },
+    "js/ts.autoClosingTags.enabled": true,
+    "js/ts.suggest.autoImports": true,
+    "js/ts.updateImportsOnFileMove.enabled": "always",
     "[powershell]": {
         "debug.saveBeforeStart": "nonUntitledEditorsInActiveGroup",
         "editor.defaultFormatter": "ms-dotnettools.csharp",
         "editor.semanticHighlighting.enabled": true,
-        "powershell.buttons.showPanelMovementButtons": false,
-        "powershell.codeFolding.showLastLine": true,
-        "powershell.enableProfileLoading": true,
-        "powershell.integratedConsole.focusConsoleOnExecute": true,
-        "powershell.scriptAnalysis.enable": true,
-        "powershell.sideBar.CommandExplorerVisibility": true,
-        "powershell.startAutomatically": false,
-        "powershell.pester.codeLens": false,
-        "powershell.promptToUpdatePowerShell": false
     },
-    "[python]": {
-        "files.exclude": {
-            "**/.classpath": true,
-            "**/.factorypath": true,
-            "**/.project": true,
-            "**/.settings": true,
-            "**/__pycache__": true,
-            "venv/": true
-        }
+    "powershell.buttons.showPanelMovementButtons": false,
+    "powershell.codeFolding.showLastLine": true,
+    "powershell.enableProfileLoading": true,
+    "powershell.integratedConsole.focusConsoleOnExecute": true,
+    "powershell.scriptAnalysis.enable": true,
+    "powershell.sideBar.CommandExplorerVisibility": true,
+    "powershell.startAutomatically": false,
+    "powershell.pester.codeLens": false,
+    "powershell.promptToUpdatePowerShell": false,
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.factorypath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/__pycache__": true,
+        "venv/": true
     },
     "background.editor": {
         "images": [
@@ -120,8 +111,7 @@
         "markdown": false,
         "scminput": false
     },
-    "powershell.promptToUpdatePowerShell": false,
     "remote.SSH.remotePlatform": {
         "rpi3.local": "linux"
-    }
+    },
 }

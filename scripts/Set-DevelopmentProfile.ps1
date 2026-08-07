@@ -12,19 +12,22 @@ function Set-DevelopmentProfile {
         $ParamDictionary = [RuntimeDefinedParameterDictionary]::new()
 
         if ($Account -eq "Personal") {
-            $UseLegacySigniningKeyAttribute = [ParameterAttribute]::new()
+            $UseLegacySigningKeyAttribute = [ParameterAttribute]::new()
 
             $AttributeCollection = [Collection[Attribute]]::new()
-            $AttributeCollection.Add($UseLegacySigniningKeyAttribute)
+            $AttributeCollection.Add($UseLegacySigningKeyAttribute)
 
-            $UseLegacySigniningKeyParameter = [RuntimeDefinedParameter]::new("UseLegacySigniningKey", [switch], $AttributeCollection)
+            $UseLegacySigningKeyParameter = [RuntimeDefinedParameter]::new("UseLegacySigningKey", [switch], $AttributeCollection)
 
-            $ParamDictionary.Add("UseLegacySigniningKey", $UseLegacySigniningKeyParameter)
+            $ParamDictionary.Add("UseLegacySigningKey", $UseLegacySigningKeyParameter)
         }
 
         return $ParamDictionary
     }
 
+    begin {
+        $UseLegacySigningKey = [bool]$PSBoundParameters["UseLegacySigningKey"]
+    }
     process {
         switch ($Account) {
             "Work" {
@@ -39,27 +42,34 @@ function Set-DevelopmentProfile {
              }
             "Personal" {
                 git config --local user.name "StefanGreve"
-                git config --local user.email $($UseLegacySigniningKey ? "greve.stefan@outlook.jp" : "stefan.ohlsen.greve@gmail.com")
+                git config --local user.email $($UseLegacySigningKey ? "greve.stefan@outlook.jp" : "stefan.ohlsen.greve@gmail.com")
 
-                # configure commit signing via gpg
+                # always configure commit signing via gpg on personal accounts
                 git config --local commit.gpgsign true
 
-                # use legacy key with previous primary email address
-                if ($UseLegacySigniningKey) {
+                if ($UseLegacySigningKey) {
+                    # use legacy key with previous primary email address
                     git config --local user.signingkey F380062B9F847687
-                } else { # prefer a per-device signing key configuration
-                    Write-Host "NOTE: Configure local signing key for this device" -ForegroundColor Yellow
+                } else {
+                    switch ($env:COMPUTERNAME) {
+                        "STGR-BE-LAP02" {
+                            git config --local user.signingkey 19328C2B09E1AC4C
+                        }
+                        default {
+                            Write-Warning "Configure a local signing key for this device"
+                        }
+                    }
                 }
 
                 if ($IsWindows) {
                     git config --local core.autocrlf input
                     git config --local core.sshCommand "C:/Windows/System32/OpenSSH/ssh.exe"
-                    git config --local gpg.program "C:\Program Files\GnuPG\bin\gpg.exe"
+                    git config --local gpg.program "C:/Program Files/GnuPG/bin/gpg.exe"
                 } elseif ($IsMacOS -or $IsLinux) {
-                    git config --local core.sshCommand $(which ssh)
+                    git config --local core.sshCommand "$(which ssh)"
                     git config --local gpg.program "$(which gpg)"
                 } else {
-                    Write-Error "ERROR: Unreachable Path" -Category NotImplemented -ErrorAction Stop
+                    Write-Error "ERROR: Unsupported Platform" -Category NotImplemented -ErrorAction Stop
                 }
             }
         }

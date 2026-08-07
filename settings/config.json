@@ -28,11 +28,11 @@
         ],
         "gnupg": [
             {
-                "path": ".\\appSettings\\gnupg\\gpg-agent.conf",
+                "path": ".\\appSettings\\gnupg\\windows\\gpg-agent.conf",
                 "target": "$env:APPDATA\\gnupg\\gpg-agent.conf"
             },
             {
-                "path": ".\\appSettings\\gnupg\\gpg.conf",
+                "path": ".\\appSettings\\gnupg\\windows\\gpg.conf",
                 "target": "$env:APPDATA\\gnupg\\gpg.conf"
             }
         ],
@@ -87,10 +87,10 @@
         "gnupg": [
             {
                 "path": "./appSettings/gnupg/macos/gpg-agent.conf",
-                "target": "~/.gnupg/macos/gpg-agent.conf"
+                "target": "~/.gnupg/gpg-agent.conf"
             },
             {
-                "path": "./appSettings/gnupg/gpg.conf",
+                "path": "./appSettings/gnupg/macos/gpg.conf",
                 "target": "~/.gnupg/gpg.conf"
             }
         ],

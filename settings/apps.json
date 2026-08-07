@@ -42,7 +42,7 @@
             "Discord.Discord",
             "Docker.DockerDesktop",
             "Git.Git",
-            "GnuPG.GnuPG",
+            "GnuPG.Gpg4win",
             "Inkscape.Inkscape",
             "ImageMagick.ImageMagick",
             "Insecure.Nmap",

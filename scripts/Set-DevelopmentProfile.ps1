@@ -27,6 +27,13 @@ function Set-DevelopmentProfile {
 
     begin {
         $UseLegacySigningKey = [bool]$PSBoundParameters["UseLegacySigningKey"]
+
+        # The resolved path is PATH-order dependent. Some toolchains ship their own
+        # SSH: Git for Windows bundles an MSYS build (usr/bin/ssh.exe) that can
+        # shadow the native Windows OpenSSH (System32/OpenSSH) depending on PATH order.
+        function Resolve-ProgramPath([string] $Program) {
+            return $(Resolve-Path (Get-Command $Program).Source).Path -replace '\\','/'
+        }
     }
     process {
         switch ($Account) {
@@ -63,8 +70,8 @@ function Set-DevelopmentProfile {
 
                 if ($IsWindows) {
                     git config --local core.autocrlf input
-                    git config --local core.sshCommand "C:/Windows/System32/OpenSSH/ssh.exe"
-                    git config --local gpg.program "C:/Program Files/GnuPG/bin/gpg.exe"
+                    git config --local core.sshCommand "$(Resolve-ProgramPath ssh)"
+                    git config --local gpg.program "$(Resolve-ProgramPath gpg)"
                 } elseif ($IsMacOS -or $IsLinux) {
                     git config --local core.sshCommand "$(which ssh)"
                     git config --local gpg.program "$(which gpg)"

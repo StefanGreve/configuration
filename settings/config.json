@@ -29,11 +29,11 @@
         "gnupg": [
             {
                 "path": ".\\appSettings\\gnupg\\gpg-agent.conf",
-                "target": "$HOME\\.gnupg\\gpg-agent.conf"
+                "target": "$env:APPDATA\\gnupg\\gpg-agent.conf"
             },
             {
                 "path": ".\\appSettings\\gnupg\\gpg.conf",
-                "target": "$HOME\\.gnupg\\gpg.conf"
+                "target": "$env:APPDATA\\gnupg\\gpg.conf"
             }
         ],
         "nvim": [

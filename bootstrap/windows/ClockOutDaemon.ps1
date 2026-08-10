@@ -31,6 +31,8 @@
     https://learn.microsoft.com/en-us/powershell/module/scheduledtasks/register-scheduledtask
 #>
 
+using namespace System.IO
+
 [CmdletBinding()]
 param (
     [ValidateScript({ $_ -ge [TimeSpan]::Zero -and $_ -lt [TimeSpan]::FromDays(1) },
@@ -46,7 +48,7 @@ $Description = "Reminds you to clock out at $($ClockOutTime.ToString('hh\:mm')) 
 
 # ==============================================================================
 
-$StopWork = [System.IO.Path]::GetFullPath((Join-Path $PSScriptRoot "..\..\scripts\windows\Stop-Work.ps1"))
+$StopWork = [Path]::GetFullPath((Join-Path $PSScriptRoot "..\..\scripts\windows\Stop-Work.ps1"))
 $ActionArgs = @{
     Execute  = "pwsh.exe"
     Argument = "-NoProfile -ExecutionPolicy Bypass -File `"$StopWork`""

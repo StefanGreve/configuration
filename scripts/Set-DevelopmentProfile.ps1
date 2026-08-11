@@ -26,6 +26,14 @@ function Set-DevelopmentProfile {
     }
 
     begin {
+        git rev-parse --is-inside-work-tree *> $null
+
+        if ($LASTEXITCODE -ne 0) {
+            Write-Error "The current directory is not inside a Git repository." `
+                -Category ObjectNotFound `
+                -ErrorAction Stop
+        }
+
         $UseLegacySigningKey = [bool]$PSBoundParameters["UseLegacySigningKey"]
 
         # The resolved path is PATH-order dependent. Some toolchains ship their own

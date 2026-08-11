@@ -1,10 +1,17 @@
+[column]
+    ui = auto
 [user]
-    email = greve.stefan@outlook.jp
+    email = stefan.ohlsen.greve@gmail.com
     name = StefanGreve
+[branch]
+    sort = -committerdate
+[tag]
+    sort = version:refname
 [core]
     editor = nvim
     autocrlf = false
     pager = "delta --syntax-theme='Solarized (dark)' --dark"
+    excludesfile = ~/.gitignore
     longpaths = true
 [interactive]
     diffFilter = delta --color-only --features=interactive
@@ -13,11 +20,14 @@
     light = false
     features = decorations
 [diff]
-    colorMoved = default
+    algorithm = histogram
+    colorMoved = plain
+    mnemonicPrefix = true
 [merge]
     conflictstyle = diff3
 [rerere]
     enabled = true
+    autoupdate = true
 [blame]
     hyperlinks = true
 [init]
@@ -26,6 +36,7 @@
     verbose = true
 [push]
     autoSetupRemote = true
+    followTags = true
 [alias]
     init-empty = !"f() { git init && git commit --allow-empty --allow-empty-message --no-edit; }; f"
     unstage = reset HEAD --
@@ -47,5 +58,5 @@
 [safe]
     directory = *
 [help]
-    autocorrect = 20
+    autocorrect = prompt
     format = html

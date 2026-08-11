@@ -1,5 +1,5 @@
 "
-" (C) 2023 Stefan Greve
+" (C) 2023 - 2026 Stefan Greve
 "
 
 let mapleader=" "
@@ -21,21 +21,28 @@ set expandtab
 set smarttab
 set shiftwidth=4
 set tabstop=4
-set lbr
-set tw=260
-set ai
-set si
+set ignorecase
+set smartcase
+set confirm
+set textwidth=160
+set autoindent
+set smartindent
 set number
+set relativenumber
+set scrolloff=8
 set ruler
+set cursorline
 set hlsearch
 set magic
-set nobackup
-set nowb
+set undofile
 set noswapfile
 set lazyredraw
 set foldmethod=indent
 set foldlevel=99
 set clipboard^=unnamed,unnamedplus
+
+" clear lingering search highlight (hlsearch is on)
+nnoremap <leader><space> :nohlsearch<CR>
 
 " CoC specific settings
 set hidden
@@ -63,21 +70,21 @@ endif
 " enable auto-completion
 set wildmode=longest,list,full
 " disable comment continuation
-autocmd BufNewFile,Bufread * setlocal formatoptions-=cro
+autocmd BufNewFile,BufRead * setlocal formatoptions-=cro
 " return to last modified line after opening a file
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 " automatically delete all trailing white spaces
 autocmd BufWritePre * %s/\s\+$//e
 
 " check spelling
-map <leader>o :setlocal spell! spelllang=en_us<CR>
+nnoremap <leader>o :setlocal spell! spelllang=en_us<CR>
 
-" move focuc between panes
+" move focus between panes
 set splitbelow splitright
-map <C-h> <C-w>h
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-map <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 
 " always show signcolumn
 if has('nvim-0.5.0') || has('patch-8.1.1564')
@@ -106,7 +113,7 @@ endif
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " show documentation
-nnoremap <silent> K : call ShowDocumentation()<CR>
+nnoremap <silent> K :call ShowDocumentation()<CR>
 
 function! ShowDocumentation()
     if CocAction('hasProvider', 'hover')
@@ -119,8 +126,10 @@ endfunction
 " placeholder guide
 nnoremap ,, <Esc>/<++><Enter>"_c4l
 
+" fold toggle
+nnoremap <leader>z za
+
 " python
-nnoremap <Space> za
 let NERDTreeIgnore=['\.pyc$', '\~$']
 
 " misc

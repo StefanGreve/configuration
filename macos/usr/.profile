@@ -4,7 +4,14 @@
 
 # === VARS =====================================================================
 export GPG_TTY=$(tty)
+
+# dotnet
 export DOTNET_ROOT="~/.dotnet"
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
+
+# powershell
+export POWERSHELL_TELEMETRY_OPTOUT=1
+export POWERSHELL_UPDATECHECK="LTS"
 
 # powershell profile settings
 export PROFILE_ENABLE_BRANCH_USERNAME=1

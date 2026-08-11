@@ -9,8 +9,7 @@
                 "action": "splitPane",
                 "split": "down"
             },
-            "id": "User.splitPane.D5151347",
-            "keys": "ctrl+shift+minus"
+            "id": "User.splitPane.D5151347"
         },
         {
             "command":
@@ -18,16 +17,18 @@
                 "action": "copy",
                 "singleLine": false
             },
-            "id": "User.copy.644BA8F2",
-            "keys": "ctrl+c"
+            "id": "User.copy.644BA8F2"
         },
         {
             "command":
             {
                 "action": "newTab"
             },
-            "id": "User.newTab.5DEADB41",
-            "keys": "ctrl+t"
+            "id": "User.newTab.5DEADB41"
+        },
+        {
+            "command": "paste",
+            "id": "User.paste"
         },
         {
             "command":
@@ -35,8 +36,15 @@
                 "action": "moveFocus",
                 "direction": "down"
             },
-            "id": "User.moveFocus.F747588A",
-            "keys": "ctrl+j"
+            "id": "User.moveFocus.F747588A"
+        },
+        {
+            "command":
+            {
+                "action": "resizePane",
+                "direction": "left"
+            },
+            "id": "User.resizePane.2A0DA8E0"
         },
         {
             "command":
@@ -44,35 +52,18 @@
                 "action": "splitPane",
                 "split": "right"
             },
-            "id": "User.splitPane.864CD510",
-            "keys": "ctrl+shift+\\"
+            "id": "User.splitPane.864CD510"
         },
         {
             "command":
             {
                 "action": "closeTab"
             },
-            "id": "User.closeTab.0",
-            "keys": "ctrl+w"
-        },
-        {
-            "command": "paste",
-            "id": "User.paste",
-            "keys": "ctrl+v"
-        },
-        {
-            "command":
-            {
-                "action": "resizePane",
-                "direction": "left"
-            },
-            "id": "User.resizePane.2A0DA8E0",
-            "keys": "ctrl+shift+h"
+            "id": "User.closeTab.0"
         },
         {
             "command": "find",
-            "id": "User.find",
-            "keys": "ctrl+shift+f"
+            "id": "User.find"
         },
         {
             "command":
@@ -80,8 +71,7 @@
                 "action": "moveFocus",
                 "direction": "left"
             },
-            "id": "User.moveFocus.2A0DA8E0",
-            "keys": "ctrl+h"
+            "id": "User.moveFocus.2A0DA8E0"
         },
         {
             "command":
@@ -89,8 +79,7 @@
                 "action": "moveFocus",
                 "direction": "up"
             },
-            "id": "User.moveFocus.6CD791B",
-            "keys": "ctrl+k"
+            "id": "User.moveFocus.6CD791B"
         },
         {
             "command":
@@ -98,8 +87,7 @@
                 "action": "moveFocus",
                 "direction": "right"
             },
-            "id": "User.moveFocus.87C324ED",
-            "keys": "ctrl+l"
+            "id": "User.moveFocus.87C324ED"
         },
         {
             "command":
@@ -107,8 +95,7 @@
                 "action": "resizePane",
                 "direction": "down"
             },
-            "id": "User.resizePane.F747588A",
-            "keys": "ctrl+shift+j"
+            "id": "User.resizePane.F747588A"
         },
         {
             "command":
@@ -116,8 +103,7 @@
                 "action": "resizePane",
                 "direction": "up"
             },
-            "id": "User.resizePane.6CD791B",
-            "keys": "ctrl+shift+k"
+            "id": "User.resizePane.6CD791B"
         },
         {
             "command":
@@ -125,36 +111,105 @@
                 "action": "resizePane",
                 "direction": "right"
             },
-            "id": "User.resizePane.87C324ED",
-            "keys": "ctrl+shift+l"
+            "id": "User.resizePane.87C324ED"
         },
         {
             "command": "closePane",
-            "id": "User.closePane",
-            "keys": "ctrl+shift+w"
+            "id": "User.closePane"
         }
     ],
     "copyFormatting": "none",
     "copyOnSelect": true,
-    "defaultProfile": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+    "defaultProfile": "{8778dc12-361b-4f51-884c-19318188edba}",
     "experimental.detectURLs": true,
+    "keybindings":
+    [
+        {
+            "id": "User.splitPane.D5151347",
+            "keys": "ctrl+shift+minus"
+        },
+        {
+            "id": "User.resizePane.6CD791B",
+            "keys": "ctrl+shift+k"
+        },
+        {
+            "id": "User.copy.644BA8F2",
+            "keys": "ctrl+c"
+        },
+        {
+            "id": "User.newTab.5DEADB41",
+            "keys": "ctrl+t"
+        },
+        {
+            "id": "User.moveFocus.F747588A",
+            "keys": "ctrl+j"
+        },
+        {
+            "id": "User.resizePane.2A0DA8E0",
+            "keys": "ctrl+shift+h"
+        },
+        {
+            "id": "User.splitPane.864CD510",
+            "keys": "ctrl+shift+\\"
+        },
+        {
+            "id": "User.closeTab.0",
+            "keys": "ctrl+w"
+        },
+        {
+            "id": "User.paste",
+            "keys": "ctrl+v"
+        },
+        {
+            "id": "User.find",
+            "keys": "ctrl+shift+f"
+        },
+        {
+            "id": "User.moveFocus.2A0DA8E0",
+            "keys": "ctrl+h"
+        },
+        {
+            "id": "User.moveFocus.6CD791B",
+            "keys": "ctrl+k"
+        },
+        {
+            "id": "User.moveFocus.87C324ED",
+            "keys": "ctrl+l"
+        },
+        {
+            "id": "User.resizePane.F747588A",
+            "keys": "ctrl+shift+j"
+        },
+        {
+            "id": "User.resizePane.87C324ED",
+            "keys": "ctrl+shift+l"
+        },
+        {
+            "id": "User.closePane",
+            "keys": "ctrl+shift+w"
+        }
+    ],
     "language": "en-US",
     "launchMode": "maximized",
     "newTabMenu":
     [
         {
+            "icon": null,
             "profile": "{8778dc12-361b-4f51-884c-19318188edba}",
             "type": "profile"
         },
         {
+            "icon": null,
             "profile": "{eef40fca-41a1-4efc-8d15-da1f78909254}",
             "type": "profile"
         },
         {
+            "icon": null,
             "profile": "{41062d2c-d27b-4797-9bcf-de2fb202b7ed}",
             "type": "profile"
         },
         {
+            "icon": null,
             "profile": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
             "type": "profile"
         },
@@ -166,6 +221,7 @@
             "entries":
             [
                 {
+                    "icon": null,
                     "profile": "{6ee2d370-4f6a-4a55-a0ad-8afdbc68d6ca}",
                     "type": "profile"
                 }
@@ -189,7 +245,7 @@
                 "none"
             ],
             "colorScheme": "PowerShellDark",
-            "commandline": "C:\\Program Files\\PowerShell\\7\\pwsh.exe -NoLogo",
+            "commandline": "C:\\Program Files\\PowerShell\\7-preview\\pwsh.exe -NoLogo",
             "cursorShape": "vintage",
             "elevate": true,
             "font":
@@ -213,7 +269,8 @@
         [
             {
                 "guid": "{8778dc12-361b-4f51-884c-19318188edba}",
-                "name": "PowerShell"
+                "name": "PowerShell",
+                "commandline": "C:\\Program Files\\PowerShell\\7-preview\\pwsh.exe -NoLogo"
             },
             {
                 "colorScheme": "AdventureTime",
@@ -257,7 +314,7 @@
             },
             {
                 "colorScheme": "Atom",
-                "commandline": "pwsh -NoExit -ExecutionPolicy Bypass -File \"%ProgramFiles%\\Microsoft Visual Studio\\2022\\Enterprise\\Common7\\Tools\\Launch-VsDevShell.ps1\"",
+                "commandline": "pwsh -NoExit -ExecutionPolicy Bypass -Command \"&{Import-Module \"\"\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\Common7\\Tools\\Microsoft.VisualStudio.DevShell.dll\"\"\"; Enter-VsDevShell 1cf69916}\"",
                 "guid": "{41062d2c-d27b-4797-9bcf-de2fb202b7ed}",
                 "hidden": false,
                 "icon": "%USERPROFILE%\\.config\\assets\\icons\\vsdevpwsh.png",
@@ -305,8 +362,8 @@
         {
             "background": "#161719",
             "black": "#000000",
-            "blue": "#85BEFD",
-            "brightBlack": "#000000",
+            "blue": "#327DC3",
+            "brightBlack": "#898989",
             "brightBlue": "#96CBFE",
             "brightCyan": "#85BEFD",
             "brightGreen": "#94FA36",

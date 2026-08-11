@@ -12,6 +12,9 @@ param(
     [switch] $Cargo,
 
     [Parameter(ParameterSetName = "Custom")]
+    [switch] $PipX,
+
+    [Parameter(ParameterSetName = "Custom")]
     [switch] $NeoVim,
 
     [Parameter(ParameterSetName = "Custom")]
@@ -56,11 +59,9 @@ process {
     #region Packages
     if ($Applications.IsPresent -or $All.IsPresent) {
         if ($IsWindows) {
-            $PackageManagers.WinGet | Install-WinGet
+            $PackageManagers.WinGet | Install-WinGet -Verbose
         } elseif ($IsMacOS) {
-            foreach ($Package in $PackageManagers.Brew) {
-                brew install $Package
-            }
+            $PackageManagers.Brew | Install-Brew
         } else {
             Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
         }
@@ -70,7 +71,7 @@ process {
     #region Cargo
     if ($Cargo.IsPresent -or $All.IsPresent) {
         if (Test-Command "cargo") {
-            # update rustc and cargo because some crates won't install easily
+            # Update rustc and cargo because some crates won't install easily
             # if we continue with an outdated version
             rustup update
         }
@@ -82,15 +83,39 @@ process {
             }
         }
 
-        $PackageManagers.Cargo | ForEach-Object {
-            cargo install $_
+        $PackageManagers.Cargo | Install-Cargo
+    }
+    #endregion
+
+    #region PipX
+    if ($Pipx.IsPresent -or $All.IsPresent) {
+        if (!$(Test-Command pipx)) {
+            & ($IsWindows ? "py" : "python3") -m pip config set global.require-virtualenv False
+
+            if ($IsMacOS) {
+                brew install pipx
+            } elseif ($IsWindows) {
+                py -m pip install --user pipx
+
+                # pipx executable
+                Set-EnvironmentVariable -Key Path -Value "$env:APPDATA\Python\Python312\Scripts" -Scope User
+
+                # apps installed via pipx are exposed here
+                Set-EnvironmentVariable -Key Path -Value "C:\Users\stefan.greve\.local\bin" -Scope User
+            } else {
+                Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
+            }
+
+            & ($IsWindows ? "py" : "python3") -m pip config set global.require-virtualenv True
         }
+
+        $PackageManagers.PipX | Install-PipX
     }
     #endregion
 
     #region Windows Registry
     if ($PSBoundParameters.Registry -or ($IsWindows -and $All.IsPresent)) {
-        $RegistryFiles = Get-ChildItem -Path $([Path]::Combine($Root, "settings")) -Filter *.reg
+        $RegistryFiles = Get-ChildItem -Path $([Path]::Combine($Root, "settings")) -Filter "*.reg"
         $RegistryFiles | ForEach-Object {
             Write-Verbose $_.FullName
             reg import $_.FullName
@@ -101,11 +126,7 @@ process {
     #region VS Code
     if ($VsCode.IsPresent -or $All.IsPresent) {
         $Extensions = $Apps | Select-Object -ExpandProperty Extensions
-
-        # install vs code extensions
-        $Extensions.Code | ForEach-Object -ThrottleLimit 5 -Parallel {
-            code --install-extension $_ --force
-        }
+        $Extensions.Code | Install-VsCodeExtension
     }
 
     #endregion
@@ -113,7 +134,7 @@ process {
     #region NeoVim
     if ($NeoVim.IsPresent -or $All.IsPresent) {
         if (!$(Test-Command npm)) {
-            Write-Error "npm is not installed, but it is required to proceed. Please install npm and try again." -Category ObjectNotFound -ErrorAction Stop
+            Write-Error "npm is not installed, but it is required to proceed. Please install npm and try again." -Category NotInstalled -ErrorAction Stop
         }
 
         # First install a vim plugin manager

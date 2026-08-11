@@ -39,6 +39,12 @@ begin {
     Push-Location -Path $Root
 }
 process {
+    if (!(Get-Module PowerTools)) {
+        Install-Module PowerTools -Force
+    }
+
+    Import-Module PowerTools
+
     #region Symlink Config Files
     if ($LinkConfiguration.IsPresent -or $All.IsPresent) {
         Write-Host "[$Step/$Total] " -NoNewline -ForegroundColor DarkGray
@@ -47,7 +53,7 @@ process {
         $Links = $Config | Select-Object -ExpandProperty $OperatingSystem
         $Links.PsObject.Properties.Value | Foreach-Object {
             foreach ($Key in $_) {
-                # skip platform-specific settings
+                # Skip settings that don't apply for MacOS
                 if (!$IsMacOS -and $Key.Path.StartsWith("./macos")) { continue }
 
                 $Arguments = @{
@@ -85,16 +91,14 @@ process {
             }
         } elseif ($IsMacOS) {
             if ($null -eq $env:GIT_SSH) {
+                # Started to use a new key generation algorithm for MacOS
                 ssh-add ~/.ssh/ed_25519
             }
 
             # Update permissions for GNUPG
             $GNUPG =  New-Item ~/.gnupg -ItemType Directory -Force
             chmod 700 $GNUPG.FullName
-
-            # Restart GPG agent
-            gpgconf --kill gpg-agent
-            gpgconf --launch gpg-agent
+            Restart-GpgAgent
         } else {
             Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
         }
@@ -107,7 +111,7 @@ process {
         Write-Host "[$Step/$Total] " -NoNewline -ForegroundColor DarkGray
         Write-Host "Symlink custom PowerShell scripts . . ."
 
-        $Scripts = Get-ChildItem -Path $([Path]::Combine($Root, "scripts")) -Filter *.ps1
+        $Scripts = Get-ChildItem -Path $([Path]::Combine($Root, "scripts")) -Filter "*.ps1" -Recurse
         $Scripts | ForEach-Object {
             $Arguments = @{
                 Path = [Path]::Combine($ScriptsFolder, $_.Name)
@@ -115,6 +119,9 @@ process {
                 ItemType = "SymbolicLink"
                 Force = $true
             }
+
+            # Skip Windows-specific scripts
+            if (!$IsWindows -and $Arguments.Value.Contains("windows")) { continue }
 
             Write-Host "[ LINK ] " -ForegroundColor Green -NoNewline
             Write-Host $Arguments.Value -ForegroundColor Cyan -NoNewline
@@ -131,10 +138,15 @@ process {
         $Assets = [Path]::Combine([Environment]::GetFolderPath("MyPictures"), ".configuration", "assets")
         New-Item -Path $Assets -ItemType Directory -Force | Out-Null
 
+        $Icons = New-Item -Path $([Path]::Combine($Assets, "icons")) -ItemType Directory -Force
+        $IDE = New-Item -Path $([Path]::Combine($Assets, "ide")) -ItemType Directory -Force
+
         Write-Host "[$Step/$Total] " -NoNewline -ForegroundColor DarkGray
-        Write-Host "Copy Assets to $Assets . . ."
+        Write-Host "Copy assets to $Assets . . ."
+
         New-Item -ItemType Directory -Path $Assets -Force | Out-Null
-        Copy-Item -Path $([Path]::Combine($Root, "assets", "icons")) -Recurse -Destination $Assets -Force
+        Copy-Item -Path $([Path]::Combine($Root, "assets", "icons", "*")) -Recurse -Destination $Icons -Force
+        Copy-Item -Path $([Path]::Combine($Root, "assets", "ide", "*")) -Recurse -Destination $IDE -Force
         $Step++
     }
     #endregion

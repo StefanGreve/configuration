@@ -1,3 +1,4 @@
 * text=auto eol=lf
 
-*.reg diff eol=crlf
+# .reg files are stored UTF-8 in the repo and checked out as UTF-16 (LE + BOM) on Windows
+*.reg text working-tree-encoding=UTF-16 eol=crlf

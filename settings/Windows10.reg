@@ -52,11 +52,19 @@ Windows Registry Editor Version 5.00
 "DisableTailoredExperiencesWithDiagnosticData"=dword:00000001
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DataCollection]
-; Disable telemetry
+; Disable telemetry (on Pro this is floored to "Required"; see DiagTrack service below)
 "AllowTelemetry"=dword:00000000
 "DisableOneSettingsDownloads"=dword:00000001
 "DoNotShowFeedbackNotifications"=dword:00000001
 "LimitDiagnosticLogCollection"=dword:00000001
+; Limit crash dumps to kernel mini dumps and user mode triage dumps only
+"LimitDumpCollection"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\DiagTrack]
+; Disable the Connected User Experiences and Telemetry service (the diagnostic
+; data uploader). Required on Pro, where AllowTelemetry=0 cannot reach the
+; "off"/Security level and the service otherwise keeps sending Required data.
+"Start"=dword:00000004
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System]
 ; Disable Windows' 10 timeline feature
@@ -64,10 +72,6 @@ Windows Registry Editor Version 5.00
 ; Don't upload or publish user activity
 "UploadUserActivities"=dword:00000000
 "PublishUserActivities"=dword:00000000
-
-[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Feeds]
-; Disable news and interests on the taskbar
-"EnableFeeds"=dword:00000000
 
 [HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Windows Search]
 ; Disable cortana-related features related to windows search

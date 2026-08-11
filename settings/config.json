@@ -100,6 +100,12 @@
                 "target": "~/.config/nvim/init.vim"
             }
         ],
+        "pip": [
+            {
+                "path": "./appSettings/pip/pip.ini",
+                "target": "~/.pip/pip.conf"
+            }
+        ],
         "profile": [
             {
                 "path": "./macos/usr/.profile",

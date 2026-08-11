@@ -23,6 +23,9 @@ function Update-System {
         [Parameter(ParameterSetName = "Option")]
         [switch] $Npm,
 
+        [Parameter(ParameterSetName = "Option")]
+        [switch] $CleanUp,
+
         [Parameter(ParameterSetName = "All")]
         [switch] $All
     )
@@ -115,6 +118,22 @@ function Update-System {
                 npm update --global
             } elseif ($Npm.IsPresent) {
                 Write-Error "npm is not installed." -Category NotInstalled
+            }
+        }
+
+        if ($CleanUp.IsPresent) {
+            if ($IsMacOS) {
+                if (Test-Command xcrun) {
+                    # Delete every simulator marked as "unavailable" (e.g. left behind by removed runtimes)
+                    xcrun simctl delete unavailable
+                } else {
+                    Write-Error "xcrun is not available. Install the Xcode command line tools with `"xcode-select --install`"." -Category NotInstalled
+                }
+            } elseif ($IsWindows) {
+                # Purge temporary files, thumbnail caches and Windows Update leftovers (without any user interaction).
+                cleanmgr /verylowdisk
+            } else {
+                Write-Error "Clean-up is not implemented for this platform." -Category NotImplemented
             }
         }
     }

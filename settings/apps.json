@@ -30,6 +30,23 @@
             "procs",
             "tokei"
         ],
+        "dotnettool": [
+            "csharp-ls",
+            "dotnet-counters",
+            "dotnet-coverage",
+            "dotnet-debug",
+            "dotnet-dsrouter",
+            "dotnet-dump",
+            "dotnet-gcdump",
+            "dotnet-monitor",
+            "dotnet-ef",
+            "dotnet-script",
+            "dotnet-sos",
+            "dotnet-suggest",
+            "dotnet-symbol",
+            "dotnet-trace",
+            "sourcelink"
+        ],
         "pipx": [
             "uv"
         ],

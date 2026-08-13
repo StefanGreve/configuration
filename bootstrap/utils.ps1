@@ -40,6 +40,20 @@ function Install-Cargo {
     }
 }
 
+function Install-DotnetTool {
+    [OutputType([void])]
+    param(
+        [Parameter(Position = 0, Mandatory, ValueFromPipeline)]
+        [string[]] $Name
+    )
+
+    process {
+        foreach ($n in $Name) {
+            dotnet tool install $n --global
+        }
+    }
+}
+
 function Install-PipX {
     [OutputType([void])]
     param(

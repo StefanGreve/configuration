@@ -12,6 +12,9 @@ param(
     [switch] $Cargo,
 
     [Parameter(ParameterSetName = "Custom")]
+    [switch] $DotnetTool,
+
+    [Parameter(ParameterSetName = "Custom")]
     [switch] $PipX,
 
     [Parameter(ParameterSetName = "Custom")]
@@ -56,7 +59,6 @@ process {
 
     Import-Module PowerTools
 
-    #region Packages
     if ($Applications.IsPresent -or $All.IsPresent) {
         if ($IsWindows) {
             $PackageManagers.WinGet | Install-WinGet -Verbose
@@ -66,9 +68,7 @@ process {
             Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
         }
     }
-    #endregion
 
-    #region Cargo
     if ($Cargo.IsPresent -or $All.IsPresent) {
         if (Test-Command "cargo") {
             # Update rustc and cargo because some crates won't install easily
@@ -79,15 +79,21 @@ process {
             if ($IsWindows) {
                 Install-WinGet -Id "rustlang.rustup"
             } else {
-                Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
+                Write-Error "TODO: install cargo" -Category NotImplemented -ErrorAction Stop
             }
         }
 
         $PackageManagers.Cargo | Install-Cargo
     }
-    #endregion
 
-    #region PipX
+    if ($DotnetTool.IsPresent -or $All.IsPresent) {
+        if (Test-Command "dotnet") {
+            $PackageManagers.DotnetTool | Install-DotnetTool
+        } else {
+            Write-Error "TODO: install dotnet" -Category NotImplemented -ErrorAction Stop
+        }
+    }
+
     if ($Pipx.IsPresent -or $All.IsPresent) {
         if (!$(Test-Command pipx)) {
             & ($IsWindows ? "py" : "python3") -m pip config set global.require-virtualenv False
@@ -103,7 +109,7 @@ process {
                 # apps installed via pipx are exposed here
                 Set-EnvironmentVariable -Key Path -Value "C:\Users\stefan.greve\.local\bin" -Scope User
             } else {
-                Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
+                Write-Error "TODO: install pipx" -Category NotImplemented -ErrorAction Stop
             }
 
             & ($IsWindows ? "py" : "python3") -m pip config set global.require-virtualenv True
@@ -111,9 +117,7 @@ process {
 
         $PackageManagers.PipX | Install-PipX
     }
-    #endregion
 
-    #region Windows Registry
     if ($PSBoundParameters.Registry -or ($IsWindows -and $All.IsPresent)) {
         $RegistryFiles = Get-ChildItem -Path $([Path]::Combine($Root, "settings")) -Filter "*.reg"
         $RegistryFiles | ForEach-Object {
@@ -121,17 +125,12 @@ process {
             reg import $_.FullName
         }
     }
-    #endregion
 
-    #region VS Code
     if ($VsCode.IsPresent -or $All.IsPresent) {
         $Extensions = $Apps | Select-Object -ExpandProperty Extensions
         $Extensions.Code | Install-VsCodeExtension
     }
 
-    #endregion
-
-    #region NeoVim
     if ($NeoVim.IsPresent -or $All.IsPresent) {
         if (!$(Test-Command npm)) {
             Write-Error "npm is not installed, but it is required to proceed. Please install npm and try again." -Category NotInstalled -ErrorAction Stop
@@ -161,7 +160,6 @@ process {
         # Finally install all plugins
         nvim +"PlugInstall --sync" +qa
     }
-    #endregion
 }
 clean {
     Pop-Location

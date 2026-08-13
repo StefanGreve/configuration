@@ -45,7 +45,6 @@ process {
 
     Import-Module PowerTools
 
-    #region Symlink Config Files
     if ($LinkConfiguration.IsPresent -or $All.IsPresent) {
         Write-Host "[$Step/$Total] " -NoNewline -ForegroundColor DarkGray
         Write-Host "Symlink configuration files . . ."
@@ -53,8 +52,9 @@ process {
         $Links = $Config | Select-Object -ExpandProperty $OperatingSystem
         $Links.PsObject.Properties.Value | Foreach-Object {
             foreach ($Key in $_) {
-                # Skip settings that don't apply for MacOS
+                if (!$IsWindows -and $Key.Path.StartsWith("./windows")) { continue }
                 if (!$IsMacOS -and $Key.Path.StartsWith("./macos")) { continue }
+                if (!$IsLinux -and $Key.Path.StartsWith("./linux")) { continue }
 
                 $Arguments = @{
                     Path = $ExecutionContext.InvokeCommand.ExpandString($Key.Target)
@@ -72,7 +72,6 @@ process {
 
         $Step++
     }
-    #endregion
 
     if ($AddUserSettings.IsPresent -or $All.IsPresent) {
         Write-Host "[$Step/$Total] " -NoNewline -ForegroundColor DarkGray
@@ -87,6 +86,7 @@ process {
             if ($null -eq $env:GIT_SSH) {
                 ssh-add $HOME/.ssh/id_rsa
                 Set-Service ssh-agent -StartupType Automatic
+                Start-Service ssh-agent
                 [Environment]::SetEnvironmentVariable("GIT_SSH", "C:/Windows/System32/OpenSSH/ssh.exe", [EnvironmentVariableTarget]::User)
             }
         } elseif ($IsMacOS) {
@@ -106,7 +106,6 @@ process {
         $Step++
     }
 
-    #region Symlink Scripts
     if ($LinkScripts.IsPresent -or $All.IsPresent) {
         Write-Host "[$Step/$Total] " -NoNewline -ForegroundColor DarkGray
         Write-Host "Symlink custom PowerShell scripts . . ."
@@ -120,8 +119,9 @@ process {
                 Force = $true
             }
 
-            # Skip Windows-specific scripts
-            if (!$IsWindows -and $Arguments.Value.Contains("windows")) { continue }
+            if (!$IsWindows -and $Arguments.Value.Contains("windows")) { return }
+            if (!$IsMacOS -and $Arguments.Value.Contains("macos")) { return }
+            if (!$IsLinux -and $Arguments.Value.Contains("linux")) { return }
 
             Write-Host "[ LINK ] " -ForegroundColor Green -NoNewline
             Write-Host $Arguments.Value -ForegroundColor Cyan -NoNewline
@@ -131,9 +131,7 @@ process {
 
         $Step++
     }
-    #endregion
 
-    #region Copy Assets
     if ($CopyAssets.IsPresent -or $All.IsPresent) {
         $Assets = [Path]::Combine([Environment]::GetFolderPath("MyPictures"), ".configuration", "assets")
         New-Item -Path $Assets -ItemType Directory -Force | Out-Null
@@ -149,7 +147,6 @@ process {
         Copy-Item -Path $([Path]::Combine($Root, "assets", "ide", "*")) -Recurse -Destination $IDE -Force
         $Step++
     }
-    #endregion
 }
 clean {
     Pop-Location

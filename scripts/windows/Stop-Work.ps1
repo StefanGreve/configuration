@@ -29,6 +29,8 @@ function Stop-Work {
         # [2] HKEY_LOCAL_MACHINE/SOFTWARE/Microsoft/Windows/CurrentVersion/Policies/System
         Get-SmbMapping | Remove-SmbMapping -Force
     }
+
+    Get-Job -Name LazyJob | Stop-Job | Remove-Job
 }
 
 # Invoke when run directly (e.g. via the ClockOutDaemon task's -File).

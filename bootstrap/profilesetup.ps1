@@ -1,3 +1,33 @@
+<#
+    .SYNOPSIS
+    Installs the PowerShell profile and links it to the current user's profile path.
+
+    .DESCRIPTION
+    Downloads the latest profile.ps1 from the StefanGreve/profile repository into
+    ~/Desktop/repos/profile, installs the PowerTools module, and creates a symbolic
+    link from the CurrentUserAllHosts profile path to the downloaded file. Works on
+    any platform with pwsh installed, including macOS and Linux.
+
+    .PARAMETER Update
+    If specified, only the latest profile.ps1 is downloaded from the master branch;
+    dependency installation, the symbolic link, and environment variable setup are
+    skipped.
+
+    .PARAMETER EnableProfileSettings
+    If specified, sets the user-scoped PROFILE_LOAD_CUSTOM_SCRIPTS environment
+    variable to $HOME/Documents/Scripts.
+
+    .INPUTS
+    None. You cannot pipe objects to this script.
+
+    .OUTPUTS
+    None. This script does not produce any output.
+
+    .NOTES
+    Creating the symbolic link may require elevated privileges or Developer Mode on
+    Windows prior to the Windows 10 Creators Update.
+#>
+
 using namespace System
 using namespace System.IO
 
@@ -43,7 +73,7 @@ process {
 
     if ($EnableProfileSettings.IsPresent) {
         Write-Host "Configure Profile Environment Variables . . . " -NoNewLine
-        [environment]::SetEnvironmentVariable("PROFILE_LOAD_CUSTOM_SCRIPTS", "$HOME/Documents/Scripts", [EnvironmentVariableTarget]::User)
+        [Environment]::SetEnvironmentVariable("PROFILE_LOAD_CUSTOM_SCRIPTS", "$HOME/Documents/Scripts", [EnvironmentVariableTarget]::User)
         Write-Host "✓" -ForegroundColor Green
     }
 }

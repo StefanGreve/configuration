@@ -1,3 +1,5 @@
+#Requires -Version 7.4
+
 function Update-System {
     [OutputType([void])]
     [CmdletBinding()]

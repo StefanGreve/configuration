@@ -1,3 +1,5 @@
+#Requires -Version 7.4
+
 function Get-LiveEventLog {
     [CmdletBinding()]
     [OutputType([System.Diagnostics.Eventing.Reader.EventLogRecord])]

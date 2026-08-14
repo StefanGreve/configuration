@@ -1,3 +1,5 @@
+#Requires -Version 7.4
+
 function Stop-Work {
     if (!$IsWindows) {
         Write-Error "This function only works on the Windows Operating System" -Category DeviceError -ErrorAction Stop

@@ -1,3 +1,5 @@
+#Requires -Version 7.4
+
 <#
     .SYNOPSIS
     Installs the PowerShell profile and links it to the current user's profile path.

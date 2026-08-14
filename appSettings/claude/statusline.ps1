@@ -1,4 +1,5 @@
 #!/usr/bin/env pwsh
+#Requires -Version 7.4
 
 # Claude Code status line
 # (( model )) @ [reponame] (context remaining) [NNNk in / NNk out]

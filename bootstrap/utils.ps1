@@ -1,3 +1,5 @@
+#Requires -Version 7.4
+
 using namespace System.Collections.Generic
 
 function Get-OperatingSystem {

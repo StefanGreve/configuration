@@ -1,3 +1,5 @@
+#Requires -Version 7.4
+
 using namespace System.Collections.ObjectModel
 using namespace System.Management.Automation
 

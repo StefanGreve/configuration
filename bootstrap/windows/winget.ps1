@@ -1,3 +1,5 @@
+#Requires -Version 7.4
+
 <#
     .SYNOPSIS
     Installs Windows Package Manager (WinGet) and its required dependencies.
@@ -45,13 +47,13 @@ begin {
     Push-Location -Path $([Path]::Combine($HOME, "Downloads"))
 }
 process {
-    $WinGetAssets = Invoke-RestMethod -Uri "https://api.github.com/repos/microsoft/winget-cli/releases/latest" -Verbose:$false `
+    $WinGetAssets = Invoke-RestMethod -Uri "https://api.github.com/repos/microsoft/winget-cli/releases/latest" -Verbose:$false
         | Select-Object -ExpandProperty "assets"
 
     Write-Verbose "Download WinGet installer dependencies"
     $WinGetDependenciesZip = "WingetDependencies.zip"
-    $DesktopAppInstallerDependencies = $WinGetAssets `
-        | Where-Object { $_.name -eq "DesktopAppInstaller_Dependencies.zip" } `
+    $DesktopAppInstallerDependencies = $WinGetAssets
+        | Where-Object { $_.name -eq "DesktopAppInstaller_Dependencies.zip" }
         | Select-Object -ExpandProperty browser_download_url
 
     Invoke-WebRequest -Uri $DesktopAppInstallerDependencies `
@@ -62,13 +64,13 @@ process {
 
     $DependenciesPath = Join-Path -Path $([Path]::ChangeExtension($WinGetDependenciesZip, $null)) `
         -ChildPath $Architecture
-    $Dependencies = Get-ChildItem -Path $DependenciesPath -Filter "*.appx*" `
+    $Dependencies = Get-ChildItem -Path $DependenciesPath -Filter "*.appx*"
         | Select-Object -ExpandProperty FullName
 
     Write-Verbose "Download WinGet"
     $WinGet = "winget.msixbundle"
-    $DesktopAppInstallerMsixBundle = $WinGetAssets `
-        | Where-Object { $_.name -like "Microsoft.DesktopAppInstaller_*.msixbundle" } `
+    $DesktopAppInstallerMsixBundle = $WinGetAssets
+        | Where-Object { $_.name -like "Microsoft.DesktopAppInstaller_*.msixbundle" }
         | Select-Object -ExpandProperty browser_download_url
 
     Invoke-WebRequest -Uri $DesktopAppInstallerMsixBundle `

@@ -13,8 +13,11 @@
     packages) are preserved on disk after a successful installation. By default,
     all temporary artifacts are removed when installation completes successfully.
 
+    .INPUTS
+    None. You cannot pipe objects to this script.
+
     .OUTPUTS
-    None. This function does not produce any output.
+    None. This script does not produce any output.
 
     .NOTES
     Requires administrative privileges.
@@ -46,18 +49,18 @@ process {
         | Select-Object -ExpandProperty "assets"
 
     Write-Verbose "Download WinGet installer dependencies"
-    $WingetDependenciesZip = "WingetDependencies.zip"
+    $WinGetDependenciesZip = "WingetDependencies.zip"
     $DesktopAppInstallerDependencies = $WinGetAssets `
         | Where-Object { $_.name -eq "DesktopAppInstaller_Dependencies.zip" } `
         | Select-Object -ExpandProperty browser_download_url
 
     Invoke-WebRequest -Uri $DesktopAppInstallerDependencies `
-        -OutFile $WingetDependenciesZip `
+        -OutFile $WinGetDependenciesZip `
         -Verbose:$false
-    Write-Verbose "Unzip ${WingetDependenciesZip}"
-    Expand-Archive -Path $WingetDependenciesZip -Force
+    Write-Verbose "Unzip ${WinGetDependenciesZip}"
+    Expand-Archive -Path $WinGetDependenciesZip -Force
 
-    $DependenciesPath = Join-Path -Path $([Path]::ChangeExtension($WingetDependenciesZip, $null)) `
+    $DependenciesPath = Join-Path -Path $([Path]::ChangeExtension($WinGetDependenciesZip, $null)) `
         -ChildPath $Architecture
     $Dependencies = Get-ChildItem -Path $DependenciesPath -Filter "*.appx*" `
         | Select-Object -ExpandProperty FullName
@@ -89,9 +92,9 @@ clean {
     if ($InstallSucceeded -and !$SkipCleanup.IsPresent) {
         $OriginalEAP = $ErrorActionPreference
         $ErrorActionPreference = 'SilentlyContinue'
-        Remove-Item -Path $WingetDependenciesZip -Force
-        Remove-Item -Path $DependenciesPath -Recurse -Force
-        Remove-Item -Path $DesktopAppInstallerMsixBundle -Force
+        Remove-Item -Path $WinGetDependenciesZip -Force
+        Remove-Item -Path $(Split-Path -Parent $DependenciesPath) -Recurse -Force
+        Remove-Item -Path $WinGet -Force
         $ErrorActionPreference = $OriginalEAP
     }
 

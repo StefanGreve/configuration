@@ -2,6 +2,7 @@
 
 using namespace System.Drawing
 using namespace System.Drawing.Imaging
+using namespace System.Management.Automation
 
 function Export-SystemIcons {
     <#
@@ -52,6 +53,54 @@ function Export-SystemIcons {
     [OutputType([System.IO.FileInfo])]
     param(
         [Parameter()]
+        [ArgumentCompleter({
+            param($CommandName, $ParameterName, $WordToComplete, $CommandAst, $FakeBoundParameters)
+
+            # Curated list of well-known icon libraries (path relative to %SystemRoot%, icon count).
+            # Seeded statically so completion is instant; no directory scan or P/Invoke at Tab time.
+            $KnownIconLibraries = @(
+                @{ Rel = "System32\imageres.dll";         Count = 369 }
+                @{ Rel = "System32\shell32.dll";          Count = 335 }
+                @{ Rel = "System32\netshell.dll";         Count = 165 }
+                @{ Rel = "System32\wmploc.dll";           Count = 159 }
+                @{ Rel = "System32\ddores.dll";           Count = 151 }
+                @{ Rel = "System32\moricons.dll";         Count = 113 }
+                @{ Rel = "System32\ieframe.dll";          Count = 102 }
+                @{ Rel = "System32\compstui.dll";         Count = 101 }
+                @{ Rel = "System32\setupapi.dll";         Count = 62  }
+                @{ Rel = "System32\pifmgr.dll";           Count = 38  }
+                @{ Rel = "System32\dsuiext.dll";          Count = 36  }
+                @{ Rel = "explorer.exe";                  Count = 23  }
+                @{ Rel = "System32\wiashext.dll";         Count = 22  }
+                @{ Rel = "System32\accessibilitycpl.dll"; Count = 22  }
+                @{ Rel = "System32\sensorscpl.dll";       Count = 22  }
+                @{ Rel = "System32\wpdshext.dll";         Count = 22  }
+                @{ Rel = "System32\comres.dll";           Count = 20  }
+                @{ Rel = "System32\urlmon.dll";           Count = 18  }
+                @{ Rel = "System32\dmdskres.dll";         Count = 18  }
+                @{ Rel = "System32\mmres.dll";            Count = 18  }
+                @{ Rel = "System32\main.cpl";             Count = 16  }
+                @{ Rel = "System32\mssvp.dll";            Count = 15  }
+                @{ Rel = "System32\mstscax.dll";          Count = 15  }
+                @{ Rel = "System32\netcenter.dll";        Count = 11  }
+                @{ Rel = "System32\powercpl.dll";         Count = 6   }
+            )
+
+            # Strip any quote already typed, then match on the file name.
+            $Word = $WordToComplete.Trim("'", '"')
+
+            $KnownIconLibraries
+                | Where-Object { (Split-Path -Path $_.Rel -Leaf) -like "*${Word}*" }
+                | ForEach-Object {
+                    $Path = Join-Path -Path $env:SystemRoot -ChildPath $_.Rel
+                    [CompletionResult]::new(
+                        "'${Path}'",
+                        "${Path} ($($_.Count) icons)",
+                        [CompletionResultType]::ParameterValue,
+                        "${Path}`n$($_.Count) icons"
+                    )
+                }
+        })]
         [ValidateNotNullOrEmpty()]
         [string] $Source = "$env:SystemRoot\System32\imageres.dll",
 
@@ -76,7 +125,7 @@ function Export-SystemIcons {
         Add-Type -AssemblyName System.Drawing
 
         # Guard against re-adding the type when the script is dot-sourced more than once per session.
-        if (!("Win32.Ico" -as [type])) {
+        if (!("Win32.Ico" -as [Type])) {
             Add-Type -Namespace Win32 -Name Ico -MemberDefinition @"
 [DllImport("shell32.dll", CharSet = CharSet.Unicode)]
 public static extern int ExtractIconEx(string file, int index, IntPtr[] large, IntPtr[] small, int count);

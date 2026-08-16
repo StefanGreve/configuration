@@ -114,16 +114,20 @@
                 "target": "~/.pip/pip.conf"
             }
         ],
-        "profile": [
-            {
-                "path": "./macos/usr/.profile",
-                "target": "~/.profile"
-            }
-        ],
         "ssh": [
             {
                 "path": "./appSettings/ssh/macos/config",
                 "target": "~/.ssh/config"
+            }
+        ],
+        "usr": [
+            {
+                "path": "./macos/usr/.profile",
+                "target": "~/.profile"
+            },
+            {
+                "path": "./macos/usr/.zshrc",
+                "target": "~/.zshrc"
             }
         ]
     }

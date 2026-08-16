@@ -1,4 +1,4 @@
-#Requires -Version 7.4
+#Requires -Version 5.1
 
 function Get-LiveEventLog {
     [CmdletBinding()]
@@ -44,7 +44,7 @@ function Get-LiveEventLog {
             $Id1 = $Id2
         }
     }
-    clean {
+    end {
         Write-Verbose "Stopped event monitoring."
     }
 }

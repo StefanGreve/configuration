@@ -41,12 +41,6 @@ begin {
     Push-Location -Path $Root
 }
 process {
-    if (!(Get-Module PowerTools)) {
-        Install-Module PowerTools -Force
-    }
-
-    Import-Module PowerTools
-
     if ($LinkConfiguration.IsPresent -or $All.IsPresent) {
         Write-Host "[$Step/$Total] " -NoNewline -ForegroundColor DarkGray
         Write-Host "Symlink configuration files . . ."
@@ -100,7 +94,10 @@ process {
             # Update permissions for GNUPG
             $GNUPG =  New-Item ~/.gnupg -ItemType Directory -Force
             chmod 700 $GNUPG.FullName
-            Restart-GpgAgent
+
+            # Restart the GPG agent so it picks up the refreshed permissions.
+            gpgconf --kill gpg-agent
+            gpgconf --launch gpg-agent
         } else {
             Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
         }

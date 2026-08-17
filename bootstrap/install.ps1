@@ -55,12 +55,6 @@ begin {
     Push-Location -Path $Root
 }
 process {
-    if (!(Get-Module PowerTools)) {
-        Install-Module PowerTools -Force
-    }
-
-    Import-Module PowerTools
-
     if ($Applications.IsPresent -or $All.IsPresent) {
         if ($IsWindows) {
             $PackageManagers.WinGet | Install-WinGet -Verbose
@@ -72,7 +66,7 @@ process {
     }
 
     if ($Cargo.IsPresent -or $All.IsPresent) {
-        if (Test-Command "cargo") {
+        if (Get-Command cargo -ErrorAction SilentlyContinue) {
             # Update rustc and cargo because some crates won't install easily
             # if we continue with an outdated version
             rustup update
@@ -89,7 +83,7 @@ process {
     }
 
     if ($DotnetTool.IsPresent -or $All.IsPresent) {
-        if (Test-Command "dotnet") {
+        if (Get-Command dotnet -ErrorAction SilentlyContinue) {
             $PackageManagers.DotnetTool | Install-DotnetTool
         } else {
             Write-Error "TODO: install dotnet" -Category NotImplemented -ErrorAction Stop
@@ -97,7 +91,7 @@ process {
     }
 
     if ($Pipx.IsPresent -or $All.IsPresent) {
-        if (!$(Test-Command pipx)) {
+        if (!(Get-Command pipx -ErrorAction SilentlyContinue)) {
             & ($IsWindows ? "py" : "python3") -m pip config set global.require-virtualenv False
 
             if ($IsMacOS) {
@@ -105,11 +99,14 @@ process {
             } elseif ($IsWindows) {
                 py -m pip install --user pipx
 
-                # pipx executable
-                Set-EnvironmentVariable -Key Path -Value "$env:APPDATA\Python\Python312\Scripts" -Scope User
-
-                # apps installed via pipx are exposed here
-                Set-EnvironmentVariable -Key Path -Value "C:\Users\stefan.greve\.local\bin" -Scope User
+                # Append the pipx executable directory and the user-scope app directory to PATH,
+                # skipping any entry that is already present so repeated runs do not create duplicates.
+                foreach ($Directory in @("$env:APPDATA\Python\Python312\Scripts", "C:\Users\stefan.greve\.local\bin")) {
+                    $UserPath = [Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User)
+                    if (($UserPath -split ";") -notcontains $Directory) {
+                        [Environment]::SetEnvironmentVariable("Path", "$UserPath;$Directory", [EnvironmentVariableTarget]::User)
+                    }
+                }
             } else {
                 Write-Error "TODO: install pipx" -Category NotImplemented -ErrorAction Stop
             }
@@ -134,7 +131,7 @@ process {
     }
 
     if ($NeoVim.IsPresent -or $All.IsPresent) {
-        if (!$(Test-Command npm)) {
+        if (!(Get-Command npm -ErrorAction SilentlyContinue)) {
             Write-Error "npm is not installed, but it is required to proceed. Please install npm and try again." -Category NotInstalled -ErrorAction Stop
         }
 

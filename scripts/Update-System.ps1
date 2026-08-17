@@ -44,7 +44,7 @@ function Update-System {
         }
 
         if ($WinGet.IsPresent -or $All.IsPresent) {
-            if ($IsWindows -and (Test-Command winget)) {
+            if ($IsWindows -and (Get-Command winget -ErrorAction SilentlyContinue)) {
                 winget upgrade --all `
                     --source winget `
                     --silent `
@@ -80,7 +80,7 @@ function Update-System {
         }
 
         if ($Pipx.IsPresent -or $All.IsPresent) {
-            if (Test-Command pipx) {
+            if (Get-Command pipx -ErrorAction SilentlyContinue) {
                 pipx upgrade-all
             } elseif ($Pipx.IsPresent) {
                 Write-Error "pipx is not installed." -Category NotInstalled
@@ -88,7 +88,7 @@ function Update-System {
         }
 
         if ($Cargo.IsPresent -or $All.IsPresent) {
-            if (Test-Command cargo) {
+            if (Get-Command cargo -ErrorAction SilentlyContinue) {
                 if ($null -eq $(cargo install --list | Select-String "cargo-install-update" -SimpleMatch)) {
                     Write-Error "cargo-update is not installed. Run `"cargo install cargo-update`" to install this crate." `
                         -Category NotInstalled `
@@ -107,7 +107,7 @@ function Update-System {
         }
 
         if ($DotnetTools.IsPresent -or $All.IsPresent) {
-            if (Test-Command dotnet) {
+            if (Get-Command dotnet -ErrorAction SilentlyContinue) {
                 dotnet tool update --global --all
             } elseif ($DotnetTools.IsPresent) {
                 Write-Error "The .NET SDK is not installed." -Category NotInstalled
@@ -115,7 +115,7 @@ function Update-System {
         }
 
         if ($Npm.IsPresent -or $All.IsPresent) {
-            if (Test-Command npm) {
+            if (Get-Command npm -ErrorAction SilentlyContinue) {
                 # Update npm itself first
                 npm install --global npm@latest
 
@@ -128,7 +128,7 @@ function Update-System {
 
         if ($CleanUp.IsPresent) {
             if ($IsMacOS) {
-                if (Test-Command xcrun) {
+                if (Get-Command xcrun -ErrorAction SilentlyContinue) {
                     # Delete every simulator marked as "unavailable" (e.g. left behind by removed runtimes)
                     xcrun simctl delete unavailable
                 } else {

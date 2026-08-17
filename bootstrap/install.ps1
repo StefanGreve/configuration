@@ -57,6 +57,10 @@ begin {
 process {
     if ($Applications.IsPresent -or $All.IsPresent) {
         if ($IsWindows) {
+            # Prefer the winget community source over msstore (default priority 0); higher wins.
+            # Needs the "sourcePriority" experimental feature and winget 1.29.280+.
+            winget source edit --name winget --priority 100
+
             $PackageManagers.WinGet | Install-WinGet -Verbose
         } elseif ($IsMacOS) {
             $PackageManagers.Brew | Install-Brew

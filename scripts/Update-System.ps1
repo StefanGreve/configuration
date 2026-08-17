@@ -44,14 +44,17 @@ function Update-System {
         }
 
         if ($WinGet.IsPresent -or $All.IsPresent) {
-            if ($IsWindows) {
-                # Some programs may require some user interaction for GUI installer wizards (e.g. Jet Brains products)
+            if ($IsWindows -and (Test-Command winget)) {
                 winget upgrade --all `
+                    --source winget `
                     --silent `
                     --accept-package-agreements `
                     --accept-source-agreements `
                     --include-unknown `
-                    --disable-interactivity
+                    --disable-interactivity `
+                    --force
+            } elseif ($IsWindows) {
+                Write-Error "winget is not installed." -Category NotInstalled
             } elseif ($WinGet.IsPresent) {
                 Write-Error "winget is only available on Windows." -Category InvalidOperation
             }

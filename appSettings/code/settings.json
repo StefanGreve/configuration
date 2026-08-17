@@ -38,6 +38,10 @@
     "files.trimTrailingWhitespace": true,
     "git.inputValidationSubjectLength": 72,
     "html.autoClosingTags": true,
+    "json.schemaDownload.trustedDomains": {
+        "https://aka.ms/": true,
+        "https://raw.githubusercontent.com/": true
+    },
     "redhat.telemetry.enabled": false,
     "security.workspace.trust.untrustedFiles": "open",
     "telemetry.telemetryLevel": "off",

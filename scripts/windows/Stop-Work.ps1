@@ -32,7 +32,7 @@ function Stop-Work {
         Get-SmbMapping | Remove-SmbMapping -Force
     }
 
-    Get-Job -Name LazyJob | Stop-Job | Remove-Job
+    Get-Job -Name LazyJob -ErrorAction SilentlyContinue | Stop-Job | Remove-Job
 }
 
 # Invoke when run directly (e.g. via the ClockOutDaemon task's -File).

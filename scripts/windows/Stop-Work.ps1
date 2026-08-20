@@ -32,7 +32,8 @@ function Stop-Work {
         Get-SmbMapping | Remove-SmbMapping -Force
     }
 
-    Get-Job -Name LazyJob -ErrorAction SilentlyContinue | Stop-Job | Remove-Job
+    # Using the force flag removes a job even if it is still running
+    Get-Job -Name "LazyJob" -ErrorAction SilentlyContinue | Remove-Job -Force
 }
 
 # Invoke when run directly (e.g. via the ClockOutDaemon task's -File).

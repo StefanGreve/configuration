@@ -1,21 +1,16 @@
 {
-    "editor.acceptSuggestionOnEnter": "smart",
-    "editor.bracketPairColorization.enabled": true,
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "never",
         "source.organizeImports": "never"
     },
     "editor.cursorBlinking": "smooth",
     "editor.cursorStyle": "underline",
-    "editor.folding": true,
     "editor.foldingStrategy": "indentation",
     "editor.fontFamily": "Perfect DOS VGA 437 Win",
-    "editor.formatOnSave": false,
     "editor.linkedEditing": true,
     "editor.minimap.enabled": false,
     "editor.mouseWheelZoom": true,
     "editor.renderControlCharacters": true,
-    "editor.renderFinalNewline": "on",
     "editor.renderLineHighlight": "none",
     "editor.renderWhitespace": "all",
     "editor.rulers": [
@@ -25,11 +20,8 @@
     ],
     "editor.semanticHighlighting.enabled": true,
     "editor.showFoldingControls": "always",
-    "editor.suggestSelection": "first",
     "editor.suggest.showSnippets": false,
     "editor.snippetSuggestions": "none",
-    "editor.tabSize": 4,
-    "editor.wordSeparators": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?",
     "explorer.confirmDelete": false,
     "explorer.confirmDragAndDrop": false,
     "extensions.ignoreRecommendations": true,
@@ -37,7 +29,6 @@
     "files.insertFinalNewline": true,
     "files.trimTrailingWhitespace": true,
     "git.inputValidationSubjectLength": 72,
-    "html.autoClosingTags": true,
     "json.schemaDownload.trustedDomains": {
         "https://aka.ms/": true,
         "https://raw.githubusercontent.com/": true
@@ -75,23 +66,14 @@
             "pattern": "**/*.Types.ps1xml"
         }
     ],
-    "js/ts.autoClosingTags.enabled": true,
-    "js/ts.suggest.autoImports": true,
     "js/ts.updateImportsOnFileMove.enabled": "always",
     "[powershell]": {
         "debug.saveBeforeStart": "nonUntitledEditorsInActiveGroup",
-        "editor.defaultFormatter": "ms-dotnettools.csharp",
-        "editor.semanticHighlighting.enabled": true,
+        "editor.defaultFormatter": "ms-vscode.powershell"
     },
-    "powershell.buttons.showPanelMovementButtons": false,
-    "powershell.codeFolding.showLastLine": true,
-    "powershell.enableProfileLoading": true,
-    "powershell.integratedConsole.focusConsoleOnExecute": true,
-    "powershell.scriptAnalysis.enable": true,
-    "powershell.sideBar.CommandExplorerVisibility": true,
-    "powershell.startAutomatically": false,
     "powershell.pester.codeLens": false,
     "powershell.promptToUpdatePowerShell": false,
+    "powershell.integratedConsole.showOnStartup": false,
     "files.exclude": {
         "**/.classpath": true,
         "**/.factorypath": true,
@@ -114,8 +96,5 @@
         "plaintext": false,
         "markdown": false,
         "scminput": false
-    },
-    "remote.SSH.remotePlatform": {
-        "rpi3.local": "linux"
-    },
+    }
 }

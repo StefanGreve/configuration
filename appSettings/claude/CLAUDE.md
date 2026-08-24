@@ -26,6 +26,8 @@
 ## Comments and Documentation
 
 - Only use ASCII characters in documentation.
+- When a public member's behavior changes, verify that its documentation (if any) still matches the
+  implementation.
 - Keep documentation short and concise. The target audience is well-versed with the .NET ecosystem.
 - Do not translate German terminology into English in code or documentation. When in doubt,
   ask the user for permission.

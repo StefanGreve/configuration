@@ -38,3 +38,13 @@
   - For test methods, a `<summary>` tag alone is sufficient; omit all other tags.
   - Follow Microsoft's XML documentation style and language conventions. Match the tone of the
     surrounding file, and suggest deviations from Microsoft's guidelines as improvements.
+
+## Task Management
+
+- Track tasks in a `todo.md` file at the repository root.
+- Once a task is completed and acknowledged by the author, delete it instead of marking it as done.
+- After completing a task, suggest a commit message in one of two forms:
+  - Short: a single-line summary for small, self-contained changes.
+  - Verbose: a summary line followed by `*` bullet points, for larger changes that span multiple files.
+- In a verbose commit message, add yourself as a contributor (including your current model) whenever you wrote the
+  majority of the code.

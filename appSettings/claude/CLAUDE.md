@@ -23,6 +23,19 @@
 
 - Prefer to use PowerShell (`pwsh`) for executing commands on Windows.
 
+## PowerShell
+
+- Use PascalCase and follow Microsoft's PowerShell coding conventions.
+- Ask the user whether scripts should be implemented as proper cmdlets.
+- When using `Write-Error`, always specify a suitable error category via the `-Category` parameter.
+- When possible, prefer `using namespace` declarations at the top of each file to shorten type references
+  (known exception: type literals used as attribute arguments, such as `[OutputType([...])]`, are resolved by
+  the parser before `using namespace` applies, so they must be fully qualified).
+- For scripts (not modules), declare the required version with a `#Requires -Version` statement. Prefer
+  PowerShell 7.4 and up; use Windows PowerShell only when the cmdlet is Windows-only (e.g. it relies on COM
+  libraries). When in doubt, ask the user which version to target, but assume `pwsh` by default unless stated
+  otherwise.
+
 ## Comments and Documentation
 
 - Only use ASCII characters in documentation.

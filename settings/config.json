@@ -52,6 +52,12 @@
                 "target": "$env:APPDATA\\pip\\pip.ini"
             }
         ],
+        "profile": [
+            {
+                "path": ".\\appSettings\\profile\\settings.json",
+                "target": "$HOME\\Documents\\PowerShell\\profile.ps1"
+            }
+        ],
         "ssh": [
             {
                 "path": ".\\appSettings\\ssh\\config",

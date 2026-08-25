@@ -1,0 +1,20 @@
+{
+    "$schema": "https://raw.githubusercontent.com/StefanGreve/profile/master/settings.schema.json",
+    "DefaultCulture": "en-US",
+    "DefaultEncoding": "utf8",
+    "DotSourceDirectory": "~/Documents/Scripts",
+    "EnableClassicProgressbar": true,
+    "Modules": [
+        "PowerTools"
+    ],
+    "Prompt": {
+        "EnableBatteryStatus": true,
+        "EnableGitUserName": true,
+        "EnableTimestamp": true
+    },
+    "RegisterNativeCompletions": [
+        "gh",
+        "pip",
+        "winget"
+    ]
+}

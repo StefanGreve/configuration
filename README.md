@@ -18,39 +18,19 @@ in mind.
 
 ## Prerequisites
 
-The setting files are configured to use the classic Code Page 437 character set
-from the original IBM PCs; the respective DOS VGA font can be downloaded from here:
-<https://cp437.github.io/>.
+Install [`pwsh`](https://github.com/PowerShell/PowerShell) and allow local scripts
+to run:
 
-You will need to have [`pwsh`](https://github.com/PowerShell/PowerShell) installed
-on your platform of choice in order to run any of the scripts, as well as an
-appropriate execution policy, e.g.
-
-```powershell
+```pwsh
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted
 ```
 
-After that, follow the instructions on <https://github.com/StefanGreve/profile>
-for importing the PowerShell profile (optional).
+The bootstrap scripts expect `cargo`, `pipx`, and a platform package manager
+(`winget` on Windows, `brew` on MacOS; Linux is not implemented) on your `PATH`.
 
-Ensure that you have the following commands in your `PATH`:
-
-- `cargo`
-- `pipx`
-
-Additionally, you also need the following platform-specific prerequisites:
-
-### Windows
-
-- `winget`
-
-### MacOS
-
-- `brew`
-
-### Linux
-
-NOT IMPLEMENTED
+The setting files use the classic Code Page 437 character set; the matching DOS VGA
+font is available at <https://cp437.github.io/>. Optionally, follow
+<https://github.com/StefanGreve/profile> to import the PowerShell profile.
 
 ## Usage
 
@@ -58,7 +38,7 @@ NOT IMPLEMENTED
 
 Symlink config files from the `appSettings` directory by force:
 
-```powershell
+```pwsh
 ./bootstrap/configure.ps1 -All
 ```
 
@@ -69,7 +49,7 @@ As a result of running this scripts, a new assets directory will be created in
 
 Install all required programs:
 
-```powershell
+```pwsh
 ./bootstrap/install.ps1 -All
 ```
 
@@ -81,7 +61,7 @@ terminal session for the changes to take effect fully.
 
 Use this Cmdlet to maintain the system.
 
-```powershell
+```pwsh
 Update-System -All
 ```
 
@@ -94,7 +74,7 @@ Update-System -All
 - The SSH config file is configured to look for two separate SSH keys
 - Import the GPG key for signing commits with the following command:
 
-```powershell
+```pwsh
 gpg --import .\gpg-private-key.asc
 ```
 

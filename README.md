@@ -31,9 +31,7 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted
 ```
 
 After that, follow the instructions on <https://github.com/StefanGreve/profile>
-for importing the PowerShell profile (optional) or run the `profilesetup.ps1`
-script (located in `./bootstrap`) for a user-friendly installation. The script
-works on any platform with `pwsh` installed, including macOS and Linux.
+for importing the PowerShell profile (optional).
 
 Ensure that you have the following commands in your `PATH`:
 

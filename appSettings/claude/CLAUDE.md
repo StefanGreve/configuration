@@ -31,6 +31,8 @@
 - If a changelog exists, record changes to the public API surface there, following its established
   writing conventions.
 - Keep documentation short and concise. The target audience is well-versed with the .NET ecosystem.
+- Do not add superfluous comments that merely restate the code; comment only where it adds insight, and
+  prefer to explain why something happens rather than what happens.
 - Do not translate German terminology into English in code or documentation. When in doubt,
   ask the user for permission.
 - Wrap lines at 120 characters.

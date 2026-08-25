@@ -28,11 +28,13 @@
 - Only use ASCII characters in documentation.
 - When a public member's behavior changes, verify that its documentation (if any) still matches the
   implementation.
+- If a changelog exists, record changes to the public API surface there, following its established
+  writing conventions.
 - Keep documentation short and concise. The target audience is well-versed with the .NET ecosystem.
 - Do not translate German terminology into English in code or documentation. When in doubt,
   ask the user for permission.
 - Wrap lines at 120 characters.
-- In C# projects follow these additiional rules:
+- In C# projects follow these additional rules:
   - Always add XML doc strings to `public` and `internal` members when generating code.
   - Ask the user before adding doc strings to `private` members.
   - For test methods, a `<summary>` tag alone is sufficient; omit all other tags.

@@ -123,9 +123,25 @@ process {
 
     if ($PSBoundParameters.Registry -or ($IsWindows -and $All.IsPresent)) {
         $RegistryFiles = Get-ChildItem -Path $([Path]::Combine($Root, "settings")) -Filter "*.reg"
-        $RegistryFiles | ForEach-Object {
-            Write-Verbose $_.FullName
-            reg import $_.FullName
+
+        $IsElevated = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(
+            [Security.Principal.WindowsBuiltInRole]::Administrator)
+
+        if ($IsElevated) {
+            $RegistryFiles | ForEach-Object {
+                Write-Verbose $_.FullName
+                reg import $_.FullName
+            }
+        } else {
+            # Some .reg files write HKLM policy keys, which require elevation. Re-run every
+            # import in a single elevated child process so only one UAC prompt is shown. HKCU
+            # keys land in the invoking user's hive, so this assumes same-user elevation.
+            Write-Warning "Registry import requires administrator rights; requesting elevation..."
+            $Commands = ($RegistryFiles | ForEach-Object { "reg import `"$($_.FullName)`"" }) -join "`n"
+            $Encoded = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($Commands))
+            Start-Process -FilePath (Get-Process -Id $PID).Path -Verb RunAs -Wait -ArgumentList @(
+                "-NoProfile", "-EncodedCommand", $Encoded
+            )
         }
     }
 

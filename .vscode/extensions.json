@@ -3,6 +3,7 @@
         "EditorConfig.EditorConfig",
         "ionutvmi.reg",
         "ms-vscode.powershell",
+        "redhat.vscode-xml",
         "XadillaX.viml",
     ]
 }

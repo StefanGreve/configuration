@@ -82,14 +82,30 @@
         "**/__pycache__": true,
         "venv/": true
     },
+    "background.enabled": true,
     "background.editor": {
         "images": [
-            "~/Pictures/.configuration/assets/ide/"
+            "~/Pictures/.configuration/assets/ide/background"
         ],
         "style": {
-            "opacity": 0.6
+            "opacity": 0.2,
+            "background-size": "cover",
+            "background-position": "center",
+            "background-repeat": "no-repeat"
         },
-        "random": true
+        "random": true,
+        "interval": 3600
+    },
+    "background.sidebar": {
+        "images": [
+            "~/Pictures/.configuration/assets/ide/mascot"
+        ],
+        "style": {
+            "opacity": 0.8
+        },
+        "size": "auto",
+        "random": true,
+        "position": "bottom right"
     },
     "github.copilot.enable": {
         "*": false,

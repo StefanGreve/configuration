@@ -6,6 +6,10 @@
                 "target": "$HOME\\.claude\\CLAUDE.md"
             },
             {
+                "path": ".\\appSettings\\claude\\settings.json",
+                "target": "$HOME\\.claude\\settings.json"
+            },
+            {
                 "path": ".\\appSettings\\claude\\statusline.ps1",
                 "target": "$HOME\\.claude\\statusline.ps1"
             }
@@ -82,6 +86,10 @@
             {
                 "path": "./appSettings/claude/CLAUDE.md",
                 "target": "~/.claude/CLAUDE.md"
+            },
+            {
+                "path": "./appSettings/claude/settings.json",
+                "target": "~/.claude/settings.json"
             },
             {
                 "path": "./appSettings/claude/statusline.ps1",

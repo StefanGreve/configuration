@@ -29,6 +29,9 @@
     "files.insertFinalNewline": true,
     "files.trimTrailingWhitespace": true,
     "git.inputValidationSubjectLength": 72,
+    "git.blame.editorDecoration.enabled": true,
+    "git.blame.editorDecoration.template": "${subject}, ${authorName} (${authorDateAgo})",
+    "git.blame.statusBarItem.enabled": true,
     "json.schemaDownload.trustedDomains": {
         "https://aka.ms/": true,
         "https://raw.githubusercontent.com/": true
@@ -50,6 +53,9 @@
         }
     },
     "window.menuBarVisibility": "hidden",
+    "workbench.colorCustomizations": {
+        "git.blame.editorDecorationForeground": "#f8f8ff3f"
+    },
     "workbench.colorTheme": "Dark Modern",
     "workbench.editor.highlightModifiedTabs": true,
     "workbench.iconTheme": "vscode-icons",

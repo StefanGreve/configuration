@@ -84,7 +84,6 @@
     "Extensions": {
         "code": [
             "albert.tabout",
-            "eamodio.gitlens",
             "editorconfig.editorconfig",
             "ecmel.vscode-html-css",
             "github.vscode-github-actions",

@@ -13,18 +13,17 @@
     "editor.renderControlCharacters": true,
     "editor.renderLineHighlight": "none",
     "editor.renderWhitespace": "all",
-    "editor.rulers": [
-        80,
-        120,
-        160
-    ],
     "editor.semanticHighlighting.enabled": true,
     "editor.showFoldingControls": "always",
     "editor.suggest.showSnippets": false,
     "editor.snippetSuggestions": "none",
+    "editor.stickyScroll.enabled": true,
+    "explorer.compactFolders": false,
     "explorer.confirmDelete": false,
     "explorer.confirmDragAndDrop": false,
     "extensions.ignoreRecommendations": true,
+    "extensions.autoCheckUpdates": false,
+    "extensions.autoUpdate": false,
     "files.autoGuessEncoding": true,
     "files.insertFinalNewline": true,
     "files.trimTrailingWhitespace": true,
@@ -39,6 +38,7 @@
     "redhat.telemetry.enabled": false,
     "security.workspace.trust.untrustedFiles": "open",
     "telemetry.telemetryLevel": "off",
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
     "terminal.integrated.fontFamily": "Consolas",
     "terminal.integrated.persistentSessionReviveProcess": "never",
     "terminal.integrated.enablePersistentSessions": false,
@@ -58,8 +58,12 @@
     },
     "workbench.colorTheme": "Dark Modern",
     "workbench.editor.highlightModifiedTabs": true,
+    "workbench.editor.limit.enabled": true,
+    "workbench.editor.limit.value": 10,
+    "workbench.enableExperiments": false,
     "workbench.iconTheme": "vscode-icons",
     "workbench.settings.editor": "json",
+    "workbench.settings.enableNaturalLanguageSearch": false,
     "workbench.sideBar.location": "right",
     "workbench.startupEditor": "none",
     "xml.fileAssociations": [
@@ -73,6 +77,7 @@
         }
     ],
     "js/ts.updateImportsOnFileMove.enabled": "always",
+    "npm.fetchOnlinePackageInfo": false,
     "[powershell]": {
         "debug.saveBeforeStart": "nonUntitledEditorsInActiveGroup",
         "editor.defaultFormatter": "ms-vscode.powershell"
@@ -86,7 +91,19 @@
         "**/.project": true,
         "**/.settings": true,
         "**/__pycache__": true,
+        "**/bin": true,
+        "**/obj": true,
+        "**/.vs": true,
         "venv/": true
+    },
+    "search.exclude": {
+        "**/bin": true,
+        "**/obj": true,
+        "**/*.dll": true
+    },
+    "files.watcherExclude": {
+        "**/bin/**": true,
+        "**/obj/**": true
     },
     "background.enabled": true,
     "background.editor": {

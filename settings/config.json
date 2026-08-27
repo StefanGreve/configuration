@@ -59,7 +59,7 @@
         "profile": [
             {
                 "path": ".\\appSettings\\profile\\settings.json",
-                "target": "$HOME\\Documents\\PowerShell\\profile.ps1"
+                "target": "$HOME\\Documents\\PowerShell\\settings.json"
             }
         ],
         "ssh": [

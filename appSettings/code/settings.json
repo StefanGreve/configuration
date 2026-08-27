@@ -17,9 +17,7 @@
         "images": [
             "~/Pictures/.configuration/assets/ide/mascot"
         ],
-        "style": {
-            "opacity": 0.8
-        },
+        "opacity": 0.8,
         "size": "auto",
         "random": true,
         "position": "bottom right"

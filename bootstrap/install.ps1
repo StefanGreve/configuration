@@ -20,6 +20,9 @@ param(
     [switch] $PipX,
 
     [Parameter(ParameterSetName = "Custom")]
+    [switch] $PSModule,
+
+    [Parameter(ParameterSetName = "Custom")]
     [switch] $NeoVim,
 
     [Parameter(ParameterSetName = "Custom")]
@@ -119,6 +122,10 @@ process {
         }
 
         $PackageManagers.PipX | Install-PipX
+    }
+
+    if ($PSModule.IsPresent -or $All.IsPresent) {
+        $PackageManagers.PSModule | Install-PSModule
     }
 
     if ($PSBoundParameters.Registry -or ($IsWindows -and $All.IsPresent)) {

@@ -70,6 +70,20 @@ function Install-PipX {
     }
 }
 
+function Install-PSModule {
+    [OutputType([void])]
+    param(
+        [Parameter(Position = 0, Mandatory, ValueFromPipeline)]
+        [string[]] $Name
+    )
+
+    process {
+        foreach ($n in $Name) {
+            Install-Module -Name $n -Scope CurrentUser -Repository PSGallery -Force -AcceptLicense
+        }
+    }
+}
+
 function Install-VsCodeExtension {
     [OutputType([void])]
     param(

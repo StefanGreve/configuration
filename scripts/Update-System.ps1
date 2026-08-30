@@ -26,6 +26,9 @@ function Update-System {
         [switch] $Npm,
 
         [Parameter(ParameterSetName = "Option")]
+        [switch] $PSModule,
+
+        [Parameter(ParameterSetName = "Option")]
         [switch] $CleanUp,
 
         [Parameter(ParameterSetName = "All")]
@@ -185,6 +188,26 @@ function Update-System {
                 }
             } elseif ($Npm.IsPresent) {
                 Write-Error "npm is not installed." -Category NotInstalled
+            }
+        }
+
+        if ($PSModule.IsPresent -or $All.IsPresent) {
+            if (Get-Command Update-Module -ErrorAction SilentlyContinue) {
+                # Names of PowerShell modules to exclude from the update.
+                $PSModuleBlacklist = @()
+
+                if ($PSModuleBlacklist.Count -eq 0) {
+                    Update-Module -Force -AcceptLicense
+                } else {
+                    $InstalledModules = (Get-InstalledModule).Name
+
+                    foreach ($Module in $InstalledModules) {
+                        if ($Module -in $PSModuleBlacklist) { continue }
+                        Update-Module -Name $Module -Force -AcceptLicense
+                    }
+                }
+            } elseif ($PSModule.IsPresent) {
+                Write-Error "PowerShellGet (Update-Module) is not available." -Category NotInstalled
             }
         }
 

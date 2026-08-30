@@ -50,6 +50,14 @@
         "pipx": [
             "uv"
         ],
+        "psmodule": [
+            "ClassExplorer",
+            "Microsoft.WinGet.Client",
+            "Pester",
+            "PowerTools",
+            "PSScriptAnalyzer",
+            "Sixel"
+        ],
         "winget": [
             "9WZDNCRDMDM3",
             "7zip.7zip",

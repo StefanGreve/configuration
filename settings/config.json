@@ -68,8 +68,8 @@
                 "target": "$HOME\\Documents\\PowerShell\\powershell.config.json"
             },
             {
-                "path": ".\\appSettings\\profile\\settings.json",
-                "target": "$HOME\\Documents\\PowerShell\\settings.json"
+                "path": ".\\appSettings\\profile\\profile.config.json",
+                "target": "$HOME\\Documents\\PowerShell\\profile.config.json"
             }
         ],
         "ssh": [

@@ -29,8 +29,8 @@ begin {
     $OperatingSystem = Get-OperatingSystem
 
     $Config = Get-Content -Path $([Path]::Combine($Root, "settings", "config.json")) -Raw | ConvertFrom-Json
-    $ProfileSettings = Get-Content -Path $([Path]::Combine($Root, "appSettings", "profile", "settings.json")) -Raw | ConvertFrom-Json
-    $ScriptsFolder = $ProfileSettings.DotSourceDirectory.Replace("~", $HOME)
+    $ProfileConfigPath = Get-Content -Path $([Path]::Combine($Root, "appSettings", "profile", "profile.config.json")) -Raw | ConvertFrom-Json
+    $ScriptsFolder = $ProfileConfigPath.DotSourceDirectory.Replace("~", $HOME)
 
     $Total = $All.IsPresent ? 4 : $PSBoundParameters.Count
     $Step = 1

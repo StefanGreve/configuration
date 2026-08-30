@@ -48,6 +48,7 @@
             "sourcelink"
         ],
         "pipx": [
+            "markitdown[pdf]",
             "uv"
         ],
         "psmodule": [

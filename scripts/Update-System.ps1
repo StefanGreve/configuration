@@ -146,6 +146,7 @@ function Update-System {
                 # Package Ids of global .NET tools to exclude from the update.
                 $DotnetToolsBlacklist = @(
                     "dependencyvisualizertool"  # corporate tool for dependency-track
+                    "nexus.claude.analysis"     # corporate tracking tool
                 )
 
                 if ($DotnetToolsBlacklist.Count -eq 0) {

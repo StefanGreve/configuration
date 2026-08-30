@@ -119,6 +119,11 @@
         }
     ],
     "copyFormatting": "none",
+    "showTabsInTitlebar": true,
+    "tabWidthMode": "equal",
+    "language": "en-US",
+    "launchMode": "maximized",
+    "alwaysOnTop": true,
     "copyOnSelect": true,
     "defaultProfile": "{8778dc12-361b-4f51-884c-19318188edba}",
     "experimental.detectURLs": true,
@@ -189,8 +194,6 @@
             "keys": "ctrl+shift+w"
         }
     ],
-    "language": "en-US",
-    "launchMode": "maximized",
     "newTabMenu":
     [
         {
@@ -314,7 +317,7 @@
             },
             {
                 "colorScheme": "Atom",
-                "commandline": "pwsh -NoExit -ExecutionPolicy Bypass -Command \"&{Import-Module \"\"\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\Common7\\Tools\\Microsoft.VisualStudio.DevShell.dll\"\"\"; Enter-VsDevShell 1cf69916}\"",
+                "commandline": "pwsh -NoExit -ExecutionPolicy Bypass -Command \"&{Import-Module \"\"\"%PROGRAMFILES%\\Microsoft Visual Studio\\2022\\Professional\\Common7\\Tools\\Microsoft.VisualStudio.DevShell.dll\"\"\"; Enter-VsDevShell 1cf69916}\"",
                 "guid": "{41062d2c-d27b-4797-9bcf-de2fb202b7ed}",
                 "hidden": false,
                 "icon": "%USERPROFILE%\\.config\\assets\\icons\\vsdevpwsh.png",
@@ -475,7 +478,5 @@
             "yellow": "#FFFA6A"
         }
     ],
-    "showTabsInTitlebar": true,
-    "tabWidthMode": "equal",
     "themes": []
 }

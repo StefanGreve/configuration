@@ -1,6 +1,5 @@
 {
     "$schema": "https://raw.githubusercontent.com/fastfetch-cli/fastfetch/dev/doc/json_schema.json",
-
     "logo": {
         "source": "~/Pictures/.configuration/assets/misc/waifu32.raw",
         "padding": {
@@ -9,7 +8,6 @@
             "left": 2
         }
     },
-
     "display": {
         "separator": " ",
         "percent": {
@@ -22,7 +20,6 @@
             "width": 12
         }
     },
-
     "modules": [
         "break",
         "break",
@@ -89,7 +86,6 @@
         {
             "type": "colors",
             "symbol": "block"
-
         }
     ]
 }

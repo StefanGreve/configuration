@@ -245,7 +245,7 @@
                 "none"
             ],
             "colorScheme": "PowerShellDark",
-            "commandline": "C:\\Program Files\\PowerShell\\7-preview\\pwsh.exe -NoLogo",
+            "commandline": "%LOCALAPPDATA%\\Microsoft\\WindowsApps\\pwsh.exe -NoLogo",
             "cursorShape": "vintage",
             "elevate": true,
             "font":
@@ -270,7 +270,7 @@
             {
                 "guid": "{8778dc12-361b-4f51-884c-19318188edba}",
                 "name": "PowerShell",
-                "commandline": "C:\\Program Files\\PowerShell\\7-preview\\pwsh.exe -NoLogo"
+                "commandline": "%LOCALAPPDATA%\\Microsoft\\WindowsApps\\pwsh.exe -NoLogo"
             },
             {
                 "colorScheme": "AdventureTime",

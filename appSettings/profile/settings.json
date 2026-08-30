@@ -13,6 +13,8 @@
         "EnableTimestamp": true
     },
     "RegisterNativeCompletions": [
+        "dotnet",
+        "dotnet-suggest",
         "gh",
         "pip",
         "winget"

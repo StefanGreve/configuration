@@ -64,6 +64,10 @@
         ],
         "profile": [
             {
+                "path": ".\\appSettings\\profile\\powershell.config.json",
+                "target": "$HOME\\Documents\\PowerShell\\powershell.config.json"
+            },
+            {
                 "path": ".\\appSettings\\profile\\settings.json",
                 "target": "$HOME\\Documents\\PowerShell\\settings.json"
             }

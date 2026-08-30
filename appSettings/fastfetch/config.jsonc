@@ -1,0 +1,95 @@
+{
+    "$schema": "https://raw.githubusercontent.com/fastfetch-cli/fastfetch/dev/doc/json_schema.json",
+
+    "logo": {
+        "source": "~/Pictures/.configuration/assets/misc/waifu32.raw",
+        "padding": {
+            "top": 2,
+            "right": 36,
+            "left": 2
+        }
+    },
+
+    "display": {
+        "separator": " ",
+        "percent": {
+            "type": 3
+        },
+        "size": {
+            "binaryPrefix": "iec"
+        },
+        "key": {
+            "width": 12
+        }
+    },
+
+    "modules": [
+        "break",
+        "break",
+        {
+            "type": "title",
+            "keyWidth": 10,
+            "color": {
+                "user": "36",
+                "at": "37",
+                "host": "32"
+            }
+        },
+        "break",
+        {
+            "type": "os",
+            "key": "OS",
+            "keyColor": "33"
+        },
+        {
+            "type": "kernel",
+            "key": "Kernel",
+            "keyColor": "33"
+        },
+        {
+            "type": "shell",
+            "key": "Shell",
+            "keyColor": "33"
+        },
+        {
+            "type": "terminal",
+            "key": "Terminal",
+            "keyColor": "33"
+        },
+        {
+            "type": "wm",
+            "key": "WM",
+            "keyColor": "33"
+        },
+        {
+            "type": "uptime",
+            "key": "Uptime",
+            "keyColor": "33"
+        },
+        "break",
+        {
+            "type": "cpu",
+            "key": "CPU",
+            "format": "{name} @ {freq-max}",
+            "keyColor": "33"
+        },
+        {
+            "type": "gpu",
+            "key": "GPU",
+            "format": "{name}",
+            "hideType": "discrete",
+            "keyColor": "33"
+        },
+        {
+            "type": "memory",
+            "key": "Memory",
+            "keyColor": "33"
+        },
+        "break",
+        {
+            "type": "colors",
+            "symbol": "block"
+
+        }
+    ]
+}

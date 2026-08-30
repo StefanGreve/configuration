@@ -24,6 +24,12 @@
                 "target": "$env:APPDATA\\Code\\User\\keybindings.json"
             }
         ],
+        "fastfetch": [
+            {
+                "path": ".\\appSettings\\fastfetch\\config.jsonc",
+                "target": "$HOME\\.config\\fastfetch\\config.jsonc"
+            }
+        ],
         "git": [
             {
                 "path": ".\\appSettings\\git\\.gitconfig",

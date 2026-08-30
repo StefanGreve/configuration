@@ -138,6 +138,7 @@ process {
 
         $Icons = New-Item -Path $([Path]::Combine($Assets, "icons")) -ItemType Directory -Force
         $IDE = New-Item -Path $([Path]::Combine($Assets, "ide")) -ItemType Directory -Force
+        $Misc = New-Item -Path $([Path]::Combine($Assets, "misc")) -ItemType Directory -Force
 
         Write-Host "[$Step/$Total] " -NoNewline -ForegroundColor DarkGray
         Write-Host "Copy assets to $Assets . . ."
@@ -145,6 +146,7 @@ process {
         New-Item -ItemType Directory -Path $Assets -Force | Out-Null
         Copy-Item -Path $([Path]::Combine($Root, "assets", "icons", "*")) -Recurse -Destination $Icons -Force
         Copy-Item -Path $([Path]::Combine($Root, "assets", "ide", "*")) -Recurse -Destination $IDE -Force
+        Copy-Item -Path $([Path]::Combine($Root, "assets", "misc", "*")) -Recurse -Destination $Misc -Force
         $Step++
     }
 }

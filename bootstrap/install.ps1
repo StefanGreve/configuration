@@ -131,6 +131,11 @@ process {
     if ($PSBoundParameters.Registry -or ($IsWindows -and $All.IsPresent)) {
         $RegistryFiles = Get-ChildItem -Path $([Path]::Combine($Root, "settings")) -Filter "*.reg"
 
+        # Windows10.reg is the shared baseline; Windows11.reg is Windows 11-only (build 22000+).
+        if ([Environment]::OSVersion.Version.Build -lt 22000) {
+            $RegistryFiles = $RegistryFiles | Where-Object { $_.Name -ne "Windows11.reg" }
+        }
+
         $IsElevated = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(
             [Security.Principal.WindowsBuiltInRole]::Administrator)
 

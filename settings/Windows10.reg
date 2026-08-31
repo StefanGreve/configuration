@@ -77,6 +77,12 @@ Windows Registry Editor Version 5.00
 ; "off"/Security level and the service otherwise keeps sending Required data.
 "Start"=dword:00000004
 
+; Disable the Autologger-DiagTrack-Listener ETW session (BSI 5.4.1.2). The DiagTrack service above is
+; already disabled; this closes the remaining boot-time collection path. The actual subkey is
+; "Diagtrack-Listener" (the BSI doc's "AutoLogger-" prefix does not match the live registry).
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\Autologger\Diagtrack-Listener]
+"Start"=dword:00000000
+
 ; --- activity feed / timeline -------------------------------------------------
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System]
 ; Disable Windows' 10 timeline feature

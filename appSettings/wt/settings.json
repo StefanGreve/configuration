@@ -123,7 +123,7 @@
     "tabWidthMode": "equal",
     "language": "en-US",
     "launchMode": "maximized",
-    "alwaysOnTop": true,
+    "alwaysOnTop": false,
     "copyOnSelect": true,
     "defaultProfile": "{8778dc12-361b-4f51-884c-19318188edba}",
     "experimental.detectURLs": true,

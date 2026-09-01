@@ -1,13 +1,19 @@
 {
+    "$schema": "https://json.schemastore.org/claude-code-settings.json",
     "env": {
+        "DO_NOT_TRACK": "1",
         "CLAUDE_CODE_USE_POWERSHELL_TOOL": "1",
+        "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
         "DOTNET_CLI_TELEMETRY_OPTOUT": "1",
         "DISABLE_ERROR_REPORTING": "1",
-        "DISABLE_NON_ESSENTIAL_MODEL_CALLS": "1"
+        "DISABLE_TELEMETRY": "1"
     },
     "permissions": {
         "allow": [
             "Bash(dotnet build *)",
+            "Bash(git status *)",
+            "Bash(git diff *)",
+            "Bash(git log *)",
             "PowerShell(dotnet build *)",
             "PowerShell(git status *)",
             "PowerShell(git diff *)",
@@ -19,7 +25,10 @@
             "PowerShell(git push *)",
             "PowerShell(git commit *)"
         ],
-        "defaultMode": "plan"
+        "defaultMode": "plan",
+        "additionalDirectories": [
+            "~/Desktop/repos"
+        ]
     },
     "statusLine": {
         "type": "command",
@@ -28,14 +37,21 @@
     "enabledPlugins": {
         "csharp-lsp@claude-plugins-official": true
     },
-    "autoCompactEnabled": false,
+    "autoCompactEnabled": true,
     "autoUpdatesChannel": "stable",
     "cleanupPeriodDays": 14,
+    "defaultShell": "powershell",
     "editorMode": "vim",
     "effortLevel": "high",
     "includeCoAuthoredBy": false,
+    "language": "english",
     "model": "opus[1m]",
     "outputStyle": "Explanatory",
+    "showThinkingSummaries": true,
+    "spellcheck": {
+        "enabled": true,
+        "language": "en_US"
+    },
     "spinnerTipsEnabled": false,
     "tui": "fullscreen"
 }

@@ -86,6 +86,26 @@ process {
                 Start-Service ssh-agent
                 [Environment]::SetEnvironmentVariable("GIT_SSH", "C:/Windows/System32/OpenSSH/ssh.exe", [EnvironmentVariableTarget]::User)
             }
+
+            # The Hunspell package ships without dictionaries, and Claude Code invokes the checker as
+            # `hunspell -a -i utf-8 -d en_US`, i.e. with a bare dictionary name rather than a path. Its
+            # compiled-in search path only covers C:\Hunspell\ (needs elevation) and long-dead OpenOffice
+            # 2.x locations, so DICPATH is the only practical way to make en_US resolvable. MacOS uses
+            # aspell instead, which bundles its own English dictionary and ignores DICPATH.
+            $DictionaryUrl = "https://raw.githubusercontent.com/LibreOffice/dictionaries/master/en"
+            $Dictionaries = [Path]::Combine([Environment]::GetFolderPath("LocalApplicationData"), "hunspell")
+
+            foreach ($Extension in "aff", "dic") {
+                $Dictionary = [Path]::Combine($Dictionaries, "en_US.$Extension")
+                if (Test-Path -Path $Dictionary) { continue }
+
+                New-Item -Path $Dictionaries -ItemType Directory -Force | Out-Null
+                Invoke-WebRequest -Uri "$DictionaryUrl/en_US.$Extension" -OutFile $Dictionary -Verbose:$false
+            }
+
+            if ($null -eq [Environment]::GetEnvironmentVariable("DICPATH", [EnvironmentVariableTarget]::User)) {
+                [Environment]::SetEnvironmentVariable("DICPATH", $Dictionaries, [EnvironmentVariableTarget]::User)
+            }
         } elseif ($IsMacOS) {
             if ($null -eq $env:GIT_SSH) {
                 # Started to use a new key generation algorithm for MacOS

@@ -112,7 +112,12 @@
     "terminal.integrated.smoothScrolling": true,
     "window.menuBarVisibility": "hidden",
     "workbench.colorCustomizations": {
-        "git.blame.editorDecorationForeground": "#f8f8ff3f"
+        "git.blame.editorDecorationForeground": "#f8f8ff3f",
+        "[Dark Modern]": {
+            "statusBar.background": "#303030",
+            "statusBar.noFolderBackground": "#222225",
+            "statusBar.debuggingBackground": "#511f1f"
+        }
     },
     "workbench.colorTheme": "Dark Modern",
     "workbench.editor.highlightModifiedTabs": true,

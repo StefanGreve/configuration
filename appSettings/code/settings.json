@@ -29,6 +29,7 @@
     },
     "editor.cursorBlinking": "smooth",
     "editor.cursorStyle": "underline",
+    "editor.cursorSmoothCaretAnimation": "on",
     "editor.foldingStrategy": "indentation",
     "editor.fontFamily": "'Perfect DOS VGA 437 Win', Consolas, monospace",
     "editor.linkedEditing": true,
@@ -39,6 +40,7 @@
     "editor.renderWhitespace": "all",
     "editor.semanticHighlighting.enabled": true,
     "editor.showFoldingControls": "always",
+    "editor.smoothScrolling": true,
     "editor.snippetSuggestions": "none",
     "editor.stickyScroll.enabled": true,
     "explorer.compactFolders": false,
@@ -92,6 +94,7 @@
     },
     "security.workspace.trust.untrustedFiles": "open",
     "telemetry.telemetryLevel": "off",
+    "terminal.integrated.cursorBlinking": true,
     "terminal.integrated.defaultProfile.windows": "PowerShell",
     "terminal.integrated.enablePersistentSessions": false,
     "terminal.integrated.fontFamily": "Consolas, monospace",
@@ -106,6 +109,7 @@
             "source": "PowerShell"
         }
     },
+    "terminal.integrated.smoothScrolling": true,
     "window.menuBarVisibility": "hidden",
     "workbench.colorCustomizations": {
         "git.blame.editorDecorationForeground": "#f8f8ff3f"
@@ -116,6 +120,7 @@
     "workbench.editor.limit.value": 10,
     "workbench.enableExperiments": false,
     "workbench.iconTheme": "vscode-icons",
+    "workbench.list.smoothScrolling": true,
     "workbench.settings.editor": "json",
     "workbench.settings.enableNaturalLanguageSearch": false,
     "workbench.sideBar.location": "right",

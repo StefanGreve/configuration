@@ -93,7 +93,7 @@ function Install-VsCodeExtension {
 
     process {
         foreach ($e in $ExtensionId) {
-            code --install-extension --force $e
+            code --install-extension $e --force
         }
     }
 }

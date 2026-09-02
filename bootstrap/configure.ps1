@@ -32,7 +32,8 @@ begin {
     $ProfileConfigPath = Get-Content -Path $([Path]::Combine($Root, "appSettings", "profile", "profile.config.json")) -Raw | ConvertFrom-Json
     $ScriptsFolder = $ProfileConfigPath.DotSourceDirectory.Replace("~", $HOME)
 
-    $Total = $All.IsPresent ? 4 : $PSBoundParameters.Count
+    $Steps = @($LinkConfiguration, $AddUserSettings, $LinkScripts, $CopyAssets)
+    $Total = $All.IsPresent ? $Steps.Count : @($Steps | Where-Object { $_.IsPresent }).Count
     $Step = 1
 
     if ($Total -eq 0) {
@@ -49,10 +50,6 @@ process {
         $Links = $Config | Select-Object -ExpandProperty $OperatingSystem
         $Links.PsObject.Properties.Value | Foreach-Object {
             foreach ($Key in $_) {
-                if (!$IsWindows -and $Key.Path.StartsWith("./windows")) { continue }
-                if (!$IsMacOS -and $Key.Path.StartsWith("./macos")) { continue }
-                if (!$IsLinux -and $Key.Path.StartsWith("./linux")) { continue }
-
                 $Arguments = @{
                     Path = $ExecutionContext.InvokeCommand.ExpandString($Key.Target)
                     Value = [Path]::Combine($Root, $Key.Path)

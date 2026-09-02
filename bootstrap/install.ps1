@@ -108,7 +108,9 @@ process {
 
                 # Append the pipx executable directory and the user-scope app directory to PATH,
                 # skipping any entry that is already present so repeated runs do not create duplicates.
-                foreach ($Directory in @("$env:APPDATA\Python\Python312\Scripts", "C:\Users\stefan.greve\.local\bin")) {
+                $UserScripts = py -c "import sysconfig; print(sysconfig.get_path('scripts', 'nt_user'))"
+
+                foreach ($Directory in @($UserScripts, [Path]::Combine($HOME, ".local", "bin"))) {
                     $UserPath = [Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User)
                     if (($UserPath -split ";") -notcontains $Directory) {
                         [Environment]::SetEnvironmentVariable("Path", "$UserPath;$Directory", [EnvironmentVariableTarget]::User)

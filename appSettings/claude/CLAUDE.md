@@ -59,9 +59,17 @@
 ## Task Management
 
 - Track tasks in a `todo.md` file at the repository root.
-- Once a task is completed and acknowledged by the author, delete it instead of marking it as done.
+- When a task is finished, delete its entry outright (including title and all detail lines).
+  Never mark it `- [x]`, and never ask permission first: the deletion is part of finishing
+  the task, not a separate decision.
+  - If only some bullets of a multi-bullet entry are done, delete those and leave the rest.
+  - If the entry's proposed approach turned out to be wrong but its goal was achieved, delete
+    it anyway and explain in chat why the approach did not work.
+  - If the entry turns out to be already resolved by other work, or not worth doing, delete it
+    and say which of the two it was.
 - After completing a task, suggest a commit message in one of two forms:
   - Short: a single-line summary for small, self-contained changes.
-  - Verbose: a summary line followed by `*` bullet points, for larger changes that span multiple files.
-- In a verbose commit message, add yourself as a contributor (including your current model) whenever you wrote the
-  majority of the code.
+  - Verbose: a summary line followed by `*` bullet points, for larger changes spanning
+    multiple files.
+- When you wrote the majority of the code, end a verbose message with a trailer naming the model
+  you are running as, for example: `Co-authored-by: Claude Opus 5 <noreply@anthropic.com>`

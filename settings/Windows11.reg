@@ -58,8 +58,61 @@ Windows Registry Editor Version 5.00
 [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\UserProfileEngagement]
 "ScoobeSystemSettingEnabled"=dword:00000000
 
-; --- widgets / news feed ------------------------------------------------------
-; hide the Widgets button on the taskbar (per-user); the HKLM Dsh policy for
-; News and Interests is ACL-locked by MDM on managed machines and cannot be set
-[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
-"TaskbarDa"=dword:00000000
+; --- security hardening -------------------------------------------------------
+; the entries below come from claude-hardening.md. items that cannot be expressed as
+; static registry data (per-interface NetbiosOptions, firewall profile scoping, auditpol,
+; Set-ProcessMitigation, certificate removal, wlan profiles) are documented there instead.
+
+; restore mark-of-the-web on downloaded files. SaveZoneInformation=2 stops Windows from
+; writing the Zone.Identifier stream, which silently disables SmartScreen, Office Protected
+; View and the corporate BlockContentExecutionFromInternet policy. deleting the value
+; restores the default (write MOTW).
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Attachments]
+"SaveZoneInformation"=-
+
+; --- name resolution ----------------------------------------------------------
+; disable mDNS. LLMNR is already off by GPO; NetBIOS over TCP/IP must be disabled per
+; interface (NetbiosOptions=2) and the subkeys are machine-specific GUIDs, so not here.
+; note: breaks .local discovery (AirPrint, some IoT/embedded workflows).
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Dnscache\Parameters]
+"EnableMDNS"=dword:00000000
+
+; --- windows script host ------------------------------------------------------
+; allow only signed WSH scripts (BSI 5.5.2.1). for the stricter HD variant set
+; "Enabled"=dword:00000000 and "Remote"=dword:00000000 instead.
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Script Host\Settings]
+"TrustPolicy"=dword:00000002
+
+; --- powershell logging -------------------------------------------------------
+; record compiled script blocks in Microsoft-Windows-PowerShell/Operational. no GPO
+; governs this key. invocation logging is deliberately left off: far too noisy.
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging]
+"EnableScriptBlockLogging"=dword:00000001
+
+; --- print spooler ------------------------------------------------------------
+; stop the spooler accepting inbound remote RPC; local and outbound printing are unaffected
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\Printers]
+"RegisterSpoolerRemoteRpcEndPoint"=dword:00000000
+
+; pin the PrintNightmare point-and-print mitigation rather than relying on the default
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\Printers\PointAndPrint]
+"RestrictDriverInstallationToAdministrators"=dword:00000001
+
+; --- location -----------------------------------------------------------------
+; deny machine-wide location access
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location]
+"Value"="Deny"
+
+; --- office macros ------------------------------------------------------------
+; disable all VBA macros without notification (4). use 3 to still allow signed macros.
+[HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Office\16.0\Word\Security]
+"VBAWarnings"=dword:00000004
+
+[HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Office\16.0\Excel\Security]
+"VBAWarnings"=dword:00000004
+
+[HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Office\16.0\PowerPoint\Security]
+"VBAWarnings"=dword:00000004
+
+[HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Office\16.0\Access\Security]
+"VBAWarnings"=dword:00000004

@@ -47,6 +47,10 @@ function Update-System {
             Update-Help -UICulture "en-US" -ErrorAction SilentlyContinue -ErrorVariable UpdateErrors -Force
         }
 
+        if ($IsWindows -and $All.IsPresent) {
+            wsl.exe --update
+        }
+
         if ($WinGet.IsPresent -or $All.IsPresent) {
             if ($IsWindows -and (Get-Command winget -ErrorAction SilentlyContinue)) {
                 # Package Ids of winget packages to pin so "upgrade --all" skips them.

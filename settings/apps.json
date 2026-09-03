@@ -112,6 +112,7 @@
             "ms-vscode.hexeditor",
             "ms-vscode.powershell",
             "ms-vscode-remote.remote-ssh",
+            "ms-vscode-remote.remote-wsl",
             "redhat.vscode-xml",
             "shalldie.background",
             "streetsidesoftware.code-spell-checker",

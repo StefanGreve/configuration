@@ -266,7 +266,7 @@
             "startingDirectory": "%USERPROFILE%\\Desktop",
             "tabColor": "#1E2127",
             "tabTitle": "PowerShell",
-            "useAcrylic": true
+            "useAcrylic": false
         },
         "list":
         [

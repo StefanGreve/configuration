@@ -1,8 +1,12 @@
 #Requires -Version 7.4
 
+using namespace System.Collections.ObjectModel
+using namespace System.Management.Automation
+using namespace System.Security.Principal
+
 function Update-System {
     [OutputType([void])]
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = "Option", SupportsShouldProcess, ConfirmImpact = "High")]
     param(
         [Parameter(ParameterSetName = "Option")]
         [switch] $Help,
@@ -35,7 +39,27 @@ function Update-System {
         [switch] $All
     )
 
+    dynamicparam {
+        $ParamDictionary = [RuntimeDefinedParameterDictionary]::new()
+
+        if ($IsWindows) {
+            $WindowsUpdateAttribute = [ParameterAttribute]::new()
+            $WindowsUpdateAttribute.ParameterSetName = "Option"
+
+            $AttributeCollection = [Collection[Attribute]]::new()
+            $AttributeCollection.Add($WindowsUpdateAttribute)
+
+            $WindowsUpdateParameter = [RuntimeDefinedParameter]::new("WindowsUpdate", [switch], $AttributeCollection)
+
+            $ParamDictionary.Add("WindowsUpdate", $WindowsUpdateParameter)
+        }
+
+        return $ParamDictionary
+    }
+
     begin {
+        $WindowsUpdate = [switch]$PSBoundParameters["WindowsUpdate"]
+
         $HasInternetConnection = Test-Connection -TargetName "www.google.com" -Count 3 -Quiet
 
         if (!$HasInternetConnection) {
@@ -49,6 +73,116 @@ function Update-System {
 
         if ($IsWindows -and $All.IsPresent) {
             wsl.exe --update
+        }
+
+        if ($WindowsUpdate.IsPresent) {
+            $Principal = [WindowsPrincipal]::new([WindowsIdentity]::GetCurrent())
+
+            if (!$Principal.IsInRole([WindowsBuiltInRole]::Administrator)) {
+                Write-Error "Installing Windows updates requires an elevated session." `
+                    -Category PermissionDenied `
+                    -ErrorAction Stop
+            }
+
+            $Session = New-Object -ComObject Microsoft.Update.Session
+            $Session.ClientApplicationID = "Update-System"
+
+            $Installer = $Session.CreateUpdateInstaller()
+
+            if ($Installer.IsBusy) {
+                Write-Error "The Windows Update agent is busy. Try again once the current operation has finished." `
+                    -Category ResourceBusy `
+                    -ErrorAction Stop
+            }
+
+            Write-Verbose "Searching for applicable Windows updates."
+
+            $SearchResult = $Session.CreateUpdateSearcher().Search("IsInstalled=0 and Type='Software' and IsHidden=0")
+            $Batch = New-Object -ComObject Microsoft.Update.UpdateColl
+
+            Write-Verbose "The search returned $($SearchResult.Updates.Count) applicable update(s)."
+
+            for ($Index = 0; $Index -lt $SearchResult.Updates.Count; $Index++) {
+                $Update = $SearchResult.Updates.Item($Index)
+
+                # An unattended run cannot answer prompts, so these updates are left to the scheduler.
+                if ($Update.InstallationBehavior.CanRequestUserInput) {
+                    Write-Warning "Skipping `"$($Update.Title)`" because it requires user input."
+                    continue
+                }
+
+                # An impact of 2 marks the update as exclusive: it has to be installed on its own.
+                if ($Update.InstallationBehavior.Impact -eq 2 -and $Batch.Count -gt 0) {
+                    Write-Verbose "Deferring `"$($Update.Title)`" because it must be installed on its own."
+                    continue
+                }
+
+                if (!$Update.EulaAccepted) {
+                    $Update.AcceptEula()
+                    Write-Verbose "Accepted the license agreement for `"$($Update.Title)`"."
+                }
+
+                $Batch.Add($Update) | Out-Null
+                Write-Verbose "Queued `"$($Update.Title)`"."
+
+                if ($Update.InstallationBehavior.Impact -eq 2) {
+                    Write-Verbose "Queued an exclusive update; the remaining updates are left to the next run."
+                    break
+                }
+            }
+
+            if ($Batch.Count -eq 0) {
+                Write-Host "There are no applicable Windows updates."
+            } else {
+                Write-Verbose "Downloading $($Batch.Count) update(s)."
+
+                $Downloader = $Session.CreateUpdateDownloader()
+                $Downloader.Updates = $Batch
+                $Downloader.Download() | Out-Null
+
+                $Pending = New-Object -ComObject Microsoft.Update.UpdateColl
+
+                for ($Index = 0; $Index -lt $Batch.Count; $Index++) {
+                    $Update = $Batch.Item($Index)
+
+                    if ($Update.IsDownloaded) {
+                        $Pending.Add($Update) | Out-Null
+                    } else {
+                        Write-Warning "Skipping `"$($Update.Title)`" because it failed to download."
+                    }
+                }
+
+                if ($Pending.Count -eq 0) {
+                    Write-Error "None of the applicable Windows updates could be downloaded." -Category OperationStopped
+                } else {
+                    Write-Verbose "Installing $($Pending.Count) update(s)."
+
+                    $Installer.Updates = $Pending
+                    $InstallationResult = $Installer.Install()
+
+                    for ($Index = 0; $Index -lt $Pending.Count; $Index++) {
+                        $UpdateResult = $InstallationResult.GetUpdateResult($Index)
+
+                        $Outcome = switch ($UpdateResult.ResultCode) {
+                            2 { "Succeeded" }
+                            3 { "Succeeded with errors" }
+                            4 { "Failed" }
+                            5 { "Cancelled" }
+                            default { "Unexpected ($($UpdateResult.ResultCode))" }
+                        }
+
+                        Write-Host "$($Pending.Item($Index).Title): $Outcome"
+                    }
+
+                    if ($InstallationResult.RebootRequired) {
+                        if ($PSCmdlet.ShouldProcess($env:COMPUTERNAME, "Restart to finish installing updates")) {
+                            Restart-Computer -Force -Confirm:$false
+                        } else {
+                            Write-Warning "A restart is required to finish installing the Windows updates."
+                        }
+                    }
+                }
+            }
         }
 
         if ($WinGet.IsPresent -or $All.IsPresent) {

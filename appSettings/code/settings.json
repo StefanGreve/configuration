@@ -1,50 +1,105 @@
 {
-    "editor.acceptSuggestionOnEnter": "smart",
-    "editor.bracketPairColorization.enabled": true,
+    "background.editor": {
+        "images": [
+            "~/Pictures/.configuration/assets/ide/background"
+        ],
+        "style": {
+            "opacity": 0.2,
+            "background-size": "cover",
+            "background-position": "center",
+            "background-repeat": "no-repeat"
+        },
+        "random": true,
+        "interval": 3600
+    },
+    "background.enabled": true,
+    "background.sidebar": {
+        "images": [
+            "~/Pictures/.configuration/assets/ide/mascot"
+        ],
+        "opacity": 0.8,
+        "size": "auto",
+        "random": true,
+        "position": "bottom right"
+    },
+    "dotnetAcquisitionExtension.enableTelemetry": false,
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "never",
         "source.organizeImports": "never"
     },
     "editor.cursorBlinking": "smooth",
     "editor.cursorStyle": "underline",
-    "editor.folding": true,
+    "editor.cursorSmoothCaretAnimation": "on",
     "editor.foldingStrategy": "indentation",
-    "editor.fontFamily": "Perfect DOS VGA 437 Win",
-    "editor.formatOnSave": false,
+    "editor.fontFamily": "'Perfect DOS VGA 437 Win', Consolas, monospace",
     "editor.linkedEditing": true,
     "editor.minimap.enabled": false,
     "editor.mouseWheelZoom": true,
     "editor.renderControlCharacters": true,
-    "editor.renderFinalNewline": "on",
     "editor.renderLineHighlight": "none",
     "editor.renderWhitespace": "all",
-    "editor.rulers": [
-        80,
-        120,
-        160
-    ],
     "editor.semanticHighlighting.enabled": true,
     "editor.showFoldingControls": "always",
-    "editor.suggestSelection": "first",
-    "editor.suggest.showSnippets": false,
+    "editor.smoothScrolling": true,
     "editor.snippetSuggestions": "none",
-    "editor.tabSize": 4,
-    "editor.wordSeparators": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?",
+    "editor.stickyScroll.enabled": true,
+    "explorer.compactFolders": false,
     "explorer.confirmDelete": false,
     "explorer.confirmDragAndDrop": false,
+    "extensions.autoCheckUpdates": false,
+    "extensions.autoUpdate": "off",
     "extensions.ignoreRecommendations": true,
     "files.autoGuessEncoding": true,
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.factorypath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.vs": true,
+        "**/__pycache__": true,
+        "**/bin": true,
+        "**/obj": true,
+        "**/venv": true
+    },
     "files.insertFinalNewline": true,
     "files.trimTrailingWhitespace": true,
+    "files.watcherExclude": {
+        "**/bin/**": true,
+        "**/obj/**": true
+    },
+    "git.blame.editorDecoration.enabled": true,
+    "git.blame.editorDecoration.template": "${subject}, ${authorName} (${authorDateAgo})",
+    "git.blame.statusBarItem.enabled": true,
     "git.inputValidationSubjectLength": 72,
-    "html.autoClosingTags": true,
+    "github.copilot.enable": {
+        "*": false,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false
+    },
+    "js/ts.updateImportsOnFileMove.enabled": "always",
+    "json.schemaDownload.trustedDomains": {
+        "https://aka.ms/": true,
+        "https://raw.githubusercontent.com/": true
+    },
+    "npm.fetchOnlinePackageInfo": false,
+    "powershell.integratedConsole.showOnStartup": false,
+    "powershell.pester.codeLens": false,
+    "powershell.promptToUpdatePowerShell": false,
     "redhat.telemetry.enabled": false,
+    "search.exclude": {
+        "**/bin": true,
+        "**/obj": true,
+        "**/*.dll": true
+    },
     "security.workspace.trust.untrustedFiles": "open",
     "telemetry.telemetryLevel": "off",
-    "terminal.integrated.fontFamily": "Consolas",
-    "terminal.integrated.persistentSessionReviveProcess": "never",
+    "terminal.integrated.cursorBlinking": true,
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
     "terminal.integrated.enablePersistentSessions": false,
+    "terminal.integrated.fontFamily": "Consolas, monospace",
     "terminal.integrated.hideOnStartup": "always",
+    "terminal.integrated.persistentSessionReviveProcess": "never",
     "terminal.integrated.profiles.windows": {
         "PowerShell": {
             "args": [
@@ -54,11 +109,25 @@
             "source": "PowerShell"
         }
     },
+    "terminal.integrated.smoothScrolling": true,
     "window.menuBarVisibility": "hidden",
+    "workbench.colorCustomizations": {
+        "git.blame.editorDecorationForeground": "#f8f8ff3f",
+        "[Dark Modern]": {
+            "statusBar.background": "#303030",
+            "statusBar.noFolderBackground": "#222225",
+            "statusBar.debuggingBackground": "#511f1f"
+        }
+    },
     "workbench.colorTheme": "Dark Modern",
     "workbench.editor.highlightModifiedTabs": true,
+    "workbench.editor.limit.enabled": true,
+    "workbench.editor.limit.value": 10,
+    "workbench.enableExperiments": false,
     "workbench.iconTheme": "vscode-icons",
+    "workbench.list.smoothScrolling": true,
     "workbench.settings.editor": "json",
+    "workbench.settings.enableNaturalLanguageSearch": false,
     "workbench.sideBar.location": "right",
     "workbench.startupEditor": "none",
     "xml.fileAssociations": [
@@ -71,47 +140,8 @@
             "pattern": "**/*.Types.ps1xml"
         }
     ],
-    "js/ts.autoClosingTags.enabled": true,
-    "js/ts.suggest.autoImports": true,
-    "js/ts.updateImportsOnFileMove.enabled": "always",
     "[powershell]": {
         "debug.saveBeforeStart": "nonUntitledEditorsInActiveGroup",
-        "editor.defaultFormatter": "ms-dotnettools.csharp",
-        "editor.semanticHighlighting.enabled": true,
-    },
-    "powershell.buttons.showPanelMovementButtons": false,
-    "powershell.codeFolding.showLastLine": true,
-    "powershell.enableProfileLoading": true,
-    "powershell.integratedConsole.focusConsoleOnExecute": true,
-    "powershell.scriptAnalysis.enable": true,
-    "powershell.sideBar.CommandExplorerVisibility": true,
-    "powershell.startAutomatically": false,
-    "powershell.pester.codeLens": false,
-    "powershell.promptToUpdatePowerShell": false,
-    "files.exclude": {
-        "**/.classpath": true,
-        "**/.factorypath": true,
-        "**/.project": true,
-        "**/.settings": true,
-        "**/__pycache__": true,
-        "venv/": true
-    },
-    "background.editor": {
-        "images": [
-            "~/Pictures/.configuration/assets/ide/"
-        ],
-        "style": {
-            "opacity": 0.6
-        },
-        "random": true
-    },
-    "github.copilot.enable": {
-        "*": false,
-        "plaintext": false,
-        "markdown": false,
-        "scminput": false
-    },
-    "remote.SSH.remotePlatform": {
-        "rpi3.local": "linux"
-    },
+        "editor.defaultFormatter": "ms-vscode.powershell"
+    }
 }

@@ -29,9 +29,11 @@ begin {
     $OperatingSystem = Get-OperatingSystem
 
     $Config = Get-Content -Path $([Path]::Combine($Root, "settings", "config.json")) -Raw | ConvertFrom-Json
-    $ScriptsFolder = $env:PROFILE_LOAD_CUSTOM_SCRIPTS ?? [Path]::Combine($HOME, "Documents", "Scripts")
+    $ProfileConfigPath = Get-Content -Path $([Path]::Combine($Root, "appSettings", "profile", "profile.config.json")) -Raw | ConvertFrom-Json
+    $ScriptsFolder = $ProfileConfigPath.DotSourceDirectory.Replace("~", $HOME)
 
-    $Total = $All.IsPresent ? 4 : $PSBoundParameters.Count
+    $Steps = @($LinkConfiguration, $AddUserSettings, $LinkScripts, $CopyAssets)
+    $Total = $All.IsPresent ? $Steps.Count : @($Steps | Where-Object { $_.IsPresent }).Count
     $Step = 1
 
     if ($Total -eq 0) {
@@ -41,12 +43,6 @@ begin {
     Push-Location -Path $Root
 }
 process {
-    if (!(Get-Module PowerTools)) {
-        Install-Module PowerTools -Force
-    }
-
-    Import-Module PowerTools
-
     if ($LinkConfiguration.IsPresent -or $All.IsPresent) {
         Write-Host "[$Step/$Total] " -NoNewline -ForegroundColor DarkGray
         Write-Host "Symlink configuration files . . ."
@@ -54,10 +50,6 @@ process {
         $Links = $Config | Select-Object -ExpandProperty $OperatingSystem
         $Links.PsObject.Properties.Value | Foreach-Object {
             foreach ($Key in $_) {
-                if (!$IsWindows -and $Key.Path.StartsWith("./windows")) { continue }
-                if (!$IsMacOS -and $Key.Path.StartsWith("./macos")) { continue }
-                if (!$IsLinux -and $Key.Path.StartsWith("./linux")) { continue }
-
                 $Arguments = @{
                     Path = $ExecutionContext.InvokeCommand.ExpandString($Key.Target)
                     Value = [Path]::Combine($Root, $Key.Path)
@@ -91,6 +83,26 @@ process {
                 Start-Service ssh-agent
                 [Environment]::SetEnvironmentVariable("GIT_SSH", "C:/Windows/System32/OpenSSH/ssh.exe", [EnvironmentVariableTarget]::User)
             }
+
+            # The Hunspell package ships without dictionaries, and Claude Code invokes the checker as
+            # `hunspell -a -i utf-8 -d en_US`, i.e. with a bare dictionary name rather than a path. Its
+            # compiled-in search path only covers C:\Hunspell\ (needs elevation) and long-dead OpenOffice
+            # 2.x locations, so DICPATH is the only practical way to make en_US resolvable. MacOS uses
+            # aspell instead, which bundles its own English dictionary and ignores DICPATH.
+            $DictionaryUrl = "https://raw.githubusercontent.com/LibreOffice/dictionaries/master/en"
+            $Dictionaries = [Path]::Combine([Environment]::GetFolderPath("LocalApplicationData"), "hunspell")
+
+            foreach ($Extension in "aff", "dic") {
+                $Dictionary = [Path]::Combine($Dictionaries, "en_US.$Extension")
+                if (Test-Path -Path $Dictionary) { continue }
+
+                New-Item -Path $Dictionaries -ItemType Directory -Force | Out-Null
+                Invoke-WebRequest -Uri "$DictionaryUrl/en_US.$Extension" -OutFile $Dictionary -Verbose:$false
+            }
+
+            if ($null -eq [Environment]::GetEnvironmentVariable("DICPATH", [EnvironmentVariableTarget]::User)) {
+                [Environment]::SetEnvironmentVariable("DICPATH", $Dictionaries, [EnvironmentVariableTarget]::User)
+            }
         } elseif ($IsMacOS) {
             if ($null -eq $env:GIT_SSH) {
                 # Started to use a new key generation algorithm for MacOS
@@ -100,7 +112,10 @@ process {
             # Update permissions for GNUPG
             $GNUPG =  New-Item ~/.gnupg -ItemType Directory -Force
             chmod 700 $GNUPG.FullName
-            Restart-GpgAgent
+
+            # Restart the GPG agent so it picks up the refreshed permissions.
+            gpgconf --kill gpg-agent
+            gpgconf --launch gpg-agent
         } else {
             Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
         }
@@ -138,15 +153,13 @@ process {
         $Assets = [Path]::Combine([Environment]::GetFolderPath("MyPictures"), ".configuration", "assets")
         New-Item -Path $Assets -ItemType Directory -Force | Out-Null
 
-        $Icons = New-Item -Path $([Path]::Combine($Assets, "icons")) -ItemType Directory -Force
-        $IDE = New-Item -Path $([Path]::Combine($Assets, "ide")) -ItemType Directory -Force
-
         Write-Host "[$Step/$Total] " -NoNewline -ForegroundColor DarkGray
         Write-Host "Copy assets to $Assets . . ."
 
-        New-Item -ItemType Directory -Path $Assets -Force | Out-Null
-        Copy-Item -Path $([Path]::Combine($Root, "assets", "icons", "*")) -Recurse -Destination $Icons -Force
-        Copy-Item -Path $([Path]::Combine($Root, "assets", "ide", "*")) -Recurse -Destination $IDE -Force
+        Get-ChildItem -Path $([Path]::Combine($Root, "assets")) -Directory | ForEach-Object {
+            $Destination = New-Item -Path $([Path]::Combine($Assets, $_.Name)) -ItemType Directory -Force
+            Copy-Item -Path $([Path]::Combine($_.FullName, "*")) -Recurse -Destination $Destination -Force
+        }
         $Step++
     }
 }

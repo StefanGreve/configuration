@@ -9,4 +9,5 @@ indent_size = 4
 indent_style = space
 
 [*.reg]
+end_of_line = crlf
 charset = utf-16le

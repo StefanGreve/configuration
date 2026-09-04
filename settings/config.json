@@ -6,6 +6,10 @@
                 "target": "$HOME\\.claude\\CLAUDE.md"
             },
             {
+                "path": ".\\appSettings\\claude\\settings.json",
+                "target": "$HOME\\.claude\\settings.json"
+            },
+            {
                 "path": ".\\appSettings\\claude\\statusline.ps1",
                 "target": "$HOME\\.claude\\statusline.ps1"
             }
@@ -18,6 +22,12 @@
             {
                 "path": ".\\appSettings\\code\\keybindings.json",
                 "target": "$env:APPDATA\\Code\\User\\keybindings.json"
+            }
+        ],
+        "fastfetch": [
+            {
+                "path": ".\\appSettings\\fastfetch\\config.jsonc",
+                "target": "$HOME\\.config\\fastfetch\\config.jsonc"
             }
         ],
         "git": [
@@ -52,6 +62,16 @@
                 "target": "$env:APPDATA\\pip\\pip.ini"
             }
         ],
+        "profile": [
+            {
+                "path": ".\\appSettings\\profile\\powershell.config.json",
+                "target": "$HOME\\Documents\\PowerShell\\powershell.config.json"
+            },
+            {
+                "path": ".\\appSettings\\profile\\profile.config.json",
+                "target": "$HOME\\Documents\\PowerShell\\profile.config.json"
+            }
+        ],
         "ssh": [
             {
                 "path": ".\\appSettings\\ssh\\config",
@@ -76,6 +96,10 @@
             {
                 "path": "./appSettings/claude/CLAUDE.md",
                 "target": "~/.claude/CLAUDE.md"
+            },
+            {
+                "path": "./appSettings/claude/settings.json",
+                "target": "~/.claude/settings.json"
             },
             {
                 "path": "./appSettings/claude/statusline.ps1",
@@ -114,16 +138,20 @@
                 "target": "~/.pip/pip.conf"
             }
         ],
-        "profile": [
-            {
-                "path": "./macos/usr/.profile",
-                "target": "~/.profile"
-            }
-        ],
         "ssh": [
             {
                 "path": "./appSettings/ssh/macos/config",
                 "target": "~/.ssh/config"
+            }
+        ],
+        "usr": [
+            {
+                "path": "./macos/usr/.profile",
+                "target": "~/.profile"
+            },
+            {
+                "path": "./macos/usr/.zshrc",
+                "target": "~/.zshrc"
             }
         ]
     }

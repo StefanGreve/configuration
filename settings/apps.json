@@ -2,16 +2,17 @@
     "PackageManagers": {
         "brew": [
             "1password-cli",
+            "aspell",
             "discord",
             "drawio",
-            "iterm2",
+            "fastfetch",
             "gh",
             "git",
             "gnupg",
             "gpg2",
+            "iterm2",
             "mactex",
             "mono-libgdiplus",
-            "neofetch",
             "node",
             "nvim",
             "obsidian",
@@ -48,16 +49,28 @@
             "sourcelink"
         ],
         "pipx": [
+            "markitdown[pdf]",
             "uv"
         ],
+        "psmodule": [
+            "ClassExplorer",
+            "Microsoft.WinGet.Client",
+            "Pester",
+            "PowerTools",
+            "PSScriptAnalyzer",
+            "Sixel"
+        ],
         "winget": [
-            "AgileBits.1Password.CLI",
             "9WZDNCRDMDM3",
             "7zip.7zip",
+            "AgileBits.1Password.CLI",
+            "Anki.Anki",
             "Audacity.Audacity",
             "CoreyButler.NVMforWindows",
             "Discord.Discord",
             "Docker.DockerDesktop",
+            "Fastfetch-cli.Fastfetch",
+            "FSFhu.Hunspell",
             "Git.Git",
             "GnuPG.Gpg4win",
             "Inkscape.Inkscape",
@@ -84,10 +97,10 @@
     "Extensions": {
         "code": [
             "albert.tabout",
-            "eamodio.gitlens",
             "editorconfig.editorconfig",
             "ecmel.vscode-html-css",
             "github.vscode-github-actions",
+            "hediet.debug-visualizer",
             "ionutvmi.reg",
             "james-yu.latex-workshop",
             "ms-dotnettools.csdevkit",
@@ -99,9 +112,11 @@
             "ms-vscode.hexeditor",
             "ms-vscode.powershell",
             "ms-vscode-remote.remote-ssh",
+            "ms-vscode-remote.remote-wsl",
             "redhat.vscode-xml",
             "shalldie.background",
             "streetsidesoftware.code-spell-checker",
+            "usernamehw.errorlens",
             "visualstudioexptteam.intellicode-api-usage-examples",
             "visualstudioexptteam.vscodeintellicode",
             "vscode-icons-team.vscode-icons",

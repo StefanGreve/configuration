@@ -16,10 +16,6 @@ export POWERSHELL_UPDATECHECK="LTS"
 # brew
 export HOMEBREW_NO_ANALYTICS=1
 
-# powershell profile settings
-export PROFILE_ENABLE_BRANCH_USERNAME=1
-export PROFILE_LOAD_CUSTOM_SCRIPTS="~/Documents/Scripts"
-
 # === PATH =====================================================================
 export PATH="$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 

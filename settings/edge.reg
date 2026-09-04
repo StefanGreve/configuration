@@ -1,0 +1,128 @@
+Windows Registry Editor Version 5.00
+
+; ======================================================================
+; MICROSOFT EDGE POLICIES
+; ======================================================================
+
+[HKEY_CURRENT_USER\Software\Policies\Microsoft\Edge]
+
+; --- autofill / forms ---
+; disable machine learning powered autofill suggestions in web form fields
+"EdgeAutofillMlEnabled"=dword:00000000
+; disable the basic autofill dropdown for names/addresses/generic fields
+"AutofillAddressEnabled"=dword:00000000
+; disable the autofill dropdown for payment/card fields
+"AutofillCreditCardEnabled"=dword:00000000
+; stop sites from querying whether payment methods are saved
+"PaymentMethodQueryEnabled"=dword:00000000
+
+; --- passwords ---
+; disable the built-in password manager and save-password prompts
+"PasswordManagerEnabled"=dword:00000000
+; keep leaked-password (breach) detection on
+"PasswordLeakDetectionEnabled"=dword:00000001
+
+; --- search / address bar ---
+; disable search + site suggestions as you type
+"SearchSuggestEnabled"=dword:00000000
+
+; --- default search provider ---
+; force Google as the default address-bar search engine
+"DefaultSearchProviderEnabled"=dword:00000001
+"DefaultSearchProviderName"="Google"
+"DefaultSearchProviderKeyword"="google.com"
+"DefaultSearchProviderSearchURL"="https://www.google.com/search?q={searchTerms}"
+"DefaultSearchProviderSuggestURL"="https://www.google.com/complete/search?output=chrome&q={searchTerms}"
+; make the new tab page search box use the address bar (Google) instead of Bing
+"NewTabPageSearchBox"="redirect"
+
+; --- startup / ui ---
+; hide the home button on the toolbar
+"ShowHomeButton"=dword:00000000
+; restore the previous session on startup (1 = reopen last session)
+"RestoreOnStartup"=dword:00000001
+; show the favorites (bookmark) bar
+"FavoritesBarEnabled"=dword:00000001
+
+; --- features ---
+; enable Collections
+"EdgeCollectionsEnabled"=dword:00000001
+; enable the built-in page translation prompt
+"TranslateEnabled"=dword:00000001
+; disable the shopping assistant (price comparison / coupons)
+"EdgeShoppingAssistantEnabled"=dword:00000000
+
+; --- privacy / security ---
+; enable Microsoft Defender SmartScreen
+"SmartScreenEnabled"=dword:00000001
+; disable SmartScreen blocking of potentially unwanted apps (PUA)
+"SmartScreenPuaEnabled"=dword:00000000
+; send Do Not Track requests
+"ConfigureDoNotTrack"=dword:00000001
+; do not send browsing data to Microsoft for personalization/ads
+"PersonalizationReportingEnabled"=dword:00000000
+; tracking prevention level (3 = strict)
+"TrackingPrevention"=dword:00000003
+; do not send failed URLs to a web service for 'similar site' suggestions
+"AlternateErrorPagesEnabled"=dword:00000000
+; do not use a web service to resolve navigation errors
+"ResolveNavigationErrorsUseWebService"=dword:00000000
+; never preload/predict pages (2 = don't predict network actions)
+"NetworkPredictionOptions"=dword:00000002
+; do not send site info to Microsoft to improve services
+"SendSiteInfoToImproveServices"=dword:00000000
+; diagnostic data (0 = off, required + optional)
+"DiagnosticData"=dword:00000000
+; do not report visited URLs in optional diagnostic data
+"UrlDiagnosticDataEnabled"=dword:00000000
+; disable the in-browser feedback feature
+"UserFeedbackAllowed"=dword:00000000
+; disable spotlight experiences and recommendations
+"SpotlightExperiencesAndRecommendationsEnabled"=dword:00000000
+
+; --- generative AI / Copilot ---
+; (several apply only to Entra/work-account profiles; harmless on MSA)
+; hide the sidebar entirely (hosts the Copilot/Discover pane)
+"HubsSidebarEnabled"=dword:00000000
+; hide the Copilot Chat icon in the toolbar (Entra profiles)
+"Microsoft365CopilotChatIconEnabled"=dword:00000000
+; disable 'browsing with Copilot' (Copilot Vision)
+"AllowBrowsingWithCopilot"=dword:00000000
+; disable the Copilot new tab page (Entra profiles)
+"CopilotNewTabPageEnabled"=dword:00000000
+; deny Copilot access to page content (Entra profiles)
+"CopilotPageContext"=dword:00000000
+; deny Copilot-with-Commercial-Data-Protection access to page content (Entra)
+"CopilotCDPPageContext"=dword:00000000
+; disable Copilot writing assistance / Rewrite (Entra profiles)
+"ComposeInlineEnabled"=dword:00000000
+; disable AI-enhanced search in browsing history
+"EdgeHistoryAISearchEnabled"=dword:00000000
+; disable DALL-E AI generated browser themes
+"AIGenThemesEnabled"=dword:00000000
+; do not download / use the local GenAI foundational model (1 = disallowed)
+"GenAILocalFoundationalModelSettings"=dword:00000001
+
+; --- microsoft office / m365 integration ---
+; disable the Microsoft Office menu (deprecated but still honored)
+"MicrosoftOfficeMenuEnabled"=dword:00000000
+; download Office files instead of opening them in the in-browser viewer
+"QuickViewOfficeFilesEnabled"=dword:00000000
+; hide the Office.com shortcut in the favorites bar (deprecated)
+"ShowOfficeShortcutInFavoritesBar"=dword:00000000
+; disable the Outlook menu (NOTE: obsolete after Edge 105 - no effect)
+"OutlookHubMenuEnabled"=dword:00000000
+
+; --- new tab page ---
+; hide the content feed (news / weather / widgets)
+"NewTabPageContentEnabled"=dword:00000000
+; hide the quick links / shortcuts tiles
+"NewTabPageQuickLinksEnabled"=dword:00000000
+; hide the pre-populated default top sites (1 = hide)
+"NewTabPageHideDefaultTopSites"=dword:00000001
+; disable all background image types (3 = disable all)
+"NewTabPageAllowedBackgroundTypes"=dword:00000003
+
+; force-enable spellcheck for en-US only (list policy -> subkey)
+[HKEY_CURRENT_USER\Software\Policies\Microsoft\Edge\SpellcheckLanguage]
+"1"="en-US"

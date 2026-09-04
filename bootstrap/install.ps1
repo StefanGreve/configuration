@@ -20,6 +20,9 @@ param(
     [switch] $PipX,
 
     [Parameter(ParameterSetName = "Custom")]
+    [switch] $PSModule,
+
+    [Parameter(ParameterSetName = "Custom")]
     [switch] $NeoVim,
 
     [Parameter(ParameterSetName = "Custom")]
@@ -55,14 +58,12 @@ begin {
     Push-Location -Path $Root
 }
 process {
-    if (!(Get-Module PowerTools)) {
-        Install-Module PowerTools -Force
-    }
-
-    Import-Module PowerTools
-
     if ($Applications.IsPresent -or $All.IsPresent) {
         if ($IsWindows) {
+            # Prefer the winget community source over msstore (default priority 0); higher wins.
+            # Needs the "sourcePriority" experimental feature and winget 1.29.280+.
+            winget source edit --name winget --priority 100
+
             $PackageManagers.WinGet | Install-WinGet -Verbose
         } elseif ($IsMacOS) {
             $PackageManagers.Brew | Install-Brew
@@ -72,7 +73,7 @@ process {
     }
 
     if ($Cargo.IsPresent -or $All.IsPresent) {
-        if (Test-Command "cargo") {
+        if (Get-Command cargo -ErrorAction SilentlyContinue) {
             # Update rustc and cargo because some crates won't install easily
             # if we continue with an outdated version
             rustup update
@@ -89,7 +90,7 @@ process {
     }
 
     if ($DotnetTool.IsPresent -or $All.IsPresent) {
-        if (Test-Command "dotnet") {
+        if (Get-Command dotnet -ErrorAction SilentlyContinue) {
             $PackageManagers.DotnetTool | Install-DotnetTool
         } else {
             Write-Error "TODO: install dotnet" -Category NotImplemented -ErrorAction Stop
@@ -97,7 +98,7 @@ process {
     }
 
     if ($Pipx.IsPresent -or $All.IsPresent) {
-        if (!$(Test-Command pipx)) {
+        if (!(Get-Command pipx -ErrorAction SilentlyContinue)) {
             & ($IsWindows ? "py" : "python3") -m pip config set global.require-virtualenv False
 
             if ($IsMacOS) {
@@ -105,11 +106,16 @@ process {
             } elseif ($IsWindows) {
                 py -m pip install --user pipx
 
-                # pipx executable
-                Set-EnvironmentVariable -Key Path -Value "$env:APPDATA\Python\Python312\Scripts" -Scope User
+                # Append the pipx executable directory and the user-scope app directory to PATH,
+                # skipping any entry that is already present so repeated runs do not create duplicates.
+                $UserScripts = py -c "import sysconfig; print(sysconfig.get_path('scripts', 'nt_user'))"
 
-                # apps installed via pipx are exposed here
-                Set-EnvironmentVariable -Key Path -Value "C:\Users\stefan.greve\.local\bin" -Scope User
+                foreach ($Directory in @($UserScripts, [Path]::Combine($HOME, ".local", "bin"))) {
+                    $UserPath = [Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::User)
+                    if (($UserPath -split ";") -notcontains $Directory) {
+                        [Environment]::SetEnvironmentVariable("Path", "$UserPath;$Directory", [EnvironmentVariableTarget]::User)
+                    }
+                }
             } else {
                 Write-Error "TODO: install pipx" -Category NotImplemented -ErrorAction Stop
             }
@@ -120,11 +126,36 @@ process {
         $PackageManagers.PipX | Install-PipX
     }
 
+    if ($PSModule.IsPresent -or $All.IsPresent) {
+        $PackageManagers.PSModule | Install-PSModule
+    }
+
     if ($PSBoundParameters.Registry -or ($IsWindows -and $All.IsPresent)) {
         $RegistryFiles = Get-ChildItem -Path $([Path]::Combine($Root, "settings")) -Filter "*.reg"
-        $RegistryFiles | ForEach-Object {
-            Write-Verbose $_.FullName
-            reg import $_.FullName
+
+        # Windows10.reg is the shared baseline; Windows11.reg is Windows 11-only (build 22000+).
+        if ([Environment]::OSVersion.Version.Build -lt 22000) {
+            $RegistryFiles = $RegistryFiles | Where-Object { $_.Name -ne "Windows11.reg" }
+        }
+
+        $IsElevated = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(
+            [Security.Principal.WindowsBuiltInRole]::Administrator)
+
+        if ($IsElevated) {
+            $RegistryFiles | ForEach-Object {
+                Write-Verbose $_.FullName
+                reg import $_.FullName
+            }
+        } else {
+            # Some .reg files write HKLM policy keys, which require elevation. Re-run every
+            # import in a single elevated child process so only one UAC prompt is shown. HKCU
+            # keys land in the invoking user's hive, so this assumes same-user elevation.
+            Write-Warning "Registry import requires administrator rights; requesting elevation..."
+            $Commands = ($RegistryFiles | ForEach-Object { "reg import `"$($_.FullName)`"" }) -join "`n"
+            $Encoded = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($Commands))
+            Start-Process -FilePath (Get-Process -Id $PID).Path -Verb RunAs -Wait -ArgumentList @(
+                "-NoProfile", "-EncodedCommand", $Encoded
+            )
         }
     }
 
@@ -134,7 +165,7 @@ process {
     }
 
     if ($NeoVim.IsPresent -or $All.IsPresent) {
-        if (!$(Test-Command npm)) {
+        if (!(Get-Command npm -ErrorAction SilentlyContinue)) {
             Write-Error "npm is not installed, but it is required to proceed. Please install npm and try again." -Category NotInstalled -ErrorAction Stop
         }
 

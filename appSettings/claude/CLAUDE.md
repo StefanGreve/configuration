@@ -46,6 +46,9 @@
 - Keep documentation short and concise. The target audience is well-versed with the .NET ecosystem.
 - Do not add superfluous comments that merely restate the code; comment only where it adds insight, and
   prefer to explain why something happens rather than what happens.
+- When changing source code, do not add comments by default. Add one only when the rationale is not
+  recoverable from the code itself; assume the reader is a senior developer who does not need routine
+  constructs explained.
 - Do not translate German terminology into English in code or documentation. When in doubt,
   ask the user for permission.
 - Wrap lines at 120 characters.

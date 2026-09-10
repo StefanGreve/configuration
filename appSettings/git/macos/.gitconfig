@@ -1,6 +1,7 @@
 [user]
-    email = greve.stefan@outlook.jp
+    email = stefan.ohlsen.greve@gmail.com
     name = StefanGreve
+    signingkey = 3D37004E3A1EE085
 [core]
     editor = nvim
     autocrlf = false

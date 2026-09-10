@@ -226,7 +226,7 @@ function Update-System {
                     $Outdated = brew outdated --quiet | Where-Object { $_ -and $_ -notin $BrewBlacklist }
 
                     if ($Outdated) {
-                        brew upgrade $Outdated
+                        brew upgrade $Outdated --yes
                     }
                 }
 

@@ -3,6 +3,7 @@
         "brew": [
             "1password-cli",
             "aspell",
+            "claude-code",
             "discord",
             "drawio",
             "fastfetch",
@@ -13,6 +14,7 @@
             "iterm2",
             "mactex",
             "mono-libgdiplus",
+            "nmap",
             "node",
             "nvim",
             "obsidian",

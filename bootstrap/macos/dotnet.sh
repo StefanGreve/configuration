@@ -19,8 +19,8 @@ sudo ./dotnet-install.sh --install-dir /usr/local/share/dotnet \
     --os macos \
     --channel LTS
 
-echo "Set the following two environment variables in your shell profile:"
-echo "export DOTNET_ROOT=\$HOME/.dotnet"
-echo "export PATH=\$PATH:\$DOTNET_ROOT:\$DOTNET_ROOT/tools"
+# The installer drops /etc/paths.d/dotnet, so path_helper puts the SDK on PATH; macos/usr/.zshenv exports
+# the matching DOTNET_ROOT and macos/usr/.profile adds the global tool directory
+echo "Restart your shell to pick up dotnet (DOTNET_ROOT is exported by macos/usr/.zshenv)."
 
 popd

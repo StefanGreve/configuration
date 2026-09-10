@@ -150,6 +150,14 @@
                 "target": "~/.profile"
             },
             {
+                "path": "./macos/usr/.zshenv",
+                "target": "~/.zshenv"
+            },
+            {
+                "path": "./macos/usr/.zprofile",
+                "target": "~/.zprofile"
+            },
+            {
                 "path": "./macos/usr/.zshrc",
                 "target": "~/.zshrc"
             }

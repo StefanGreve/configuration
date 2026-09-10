@@ -1,34 +1,19 @@
 #
-# User-defined environment variables
+# PATH additions, kept POSIX-compatible so bash and sh sessions can reuse it.
+#
+# Sourced from both .zprofile and .zshrc so that login and non-login shells agree; `typeset -U path` in
+# .zshenv makes the repeated sourcing a no-op.
 #
 
-# === VARS =====================================================================
-export GPG_TTY=$(tty)
-
-# dotnet
-export DOTNET_ROOT="~/.dotnet"
-export DOTNET_CLI_TELEMETRY_OPTOUT=1
-
-# powershell
-export POWERSHELL_TELEMETRY_OPTOUT=1
-export POWERSHELL_UPDATECHECK="LTS"
-
-# brew
-export HOMEBREW_NO_ANALYTICS=1
-
 # === PATH =====================================================================
-export PATH="$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+
+# rust (rustup)
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
 # python packages (pipx)
-export PATH="$PATH:~/.local/bin"
+PATH="$HOME/.local/bin:$PATH"
 
-# brew packages
-export PATH="$PATH:/opt/homebrew/bin"
+# dotnet global tools; the SDK itself arrives via /etc/paths.d/dotnet
+PATH="$HOME/.dotnet/tools:$PATH"
 
-# dotnet tools
-export PATH="$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools"
-
-# rust tools
-export PATH="$PATH:~/.cargo/bin"
-
-# === MISC =====================================================================
+export PATH

@@ -19,10 +19,6 @@
 - When asked to review a file or check a revision, re-read it first to pick up any changes
   made since it was last read.
 
-## Commands
-
-- Prefer to use PowerShell (`pwsh`) for executing commands on Windows.
-
 ## PowerShell
 
 - Use PascalCase and follow Microsoft's PowerShell coding conventions.

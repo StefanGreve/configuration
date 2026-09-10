@@ -26,6 +26,29 @@ setopt SHARE_HISTORY HIST_IGNORE_ALL_DUPS HIST_IGNORE_SPACE HIST_REDUCE_BLANKS
 # === OPTIONS ==================================================================
 setopt AUTO_CD EXTENDED_GLOB INTERACTIVE_COMMENTS NO_BEEP
 
+# === PROMPT ===================================================================
+autoload -Uz add-zsh-hook
+
+_prompt_precmd() {
+    local branch ref=""
+
+    if branch=$(git branch --show-current 2>/dev/null); then
+        [[ -z $branch ]] && branch=$(git rev-parse --short HEAD 2>/dev/null)
+        [[ -n $branch ]] && ref=" %F{4}(${branch//\%/%%})%F{7}"
+    fi
+
+    # [username@hostname directory] (branch) >
+    PROMPT="["
+    PROMPT+="%F{14}%n"      # username, BrightCyan
+    PROMPT+="%F{7}@%m"      # hostname, White
+    PROMPT+=" %F{2}%1~"     # directory, Green
+    PROMPT+="%F{7}]"
+    PROMPT+="${ref}"        # (branch), Blue
+    PROMPT+=" %(!.#.>)%f "  # root gets #, everyone else >
+}
+
+add-zsh-hook precmd _prompt_precmd
+
 # === COMPLETION ===============================================================
 fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
 

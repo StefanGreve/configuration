@@ -29,7 +29,10 @@ begin {
     $OperatingSystem = Get-OperatingSystem
 
     $Config = Get-Content -Path $([Path]::Combine($Root, "settings", "config.json")) -Raw | ConvertFrom-Json
-    $ProfileConfigPath = Get-Content -Path $([Path]::Combine($Root, "appSettings", "profile", "profile.config.json")) -Raw | ConvertFrom-Json
+    $ProfileConfigFile = [Path]::Combine(
+        $Root, "appSettings", "profile", $OperatingSystem.ToLower(), "profile.config.json"
+    )
+    $ProfileConfigPath = Get-Content -Path $ProfileConfigFile -Raw | ConvertFrom-Json
     $ScriptsFolder = $ProfileConfigPath.DotSourceDirectory.Replace("~", $HOME)
 
     $Steps = @($LinkConfiguration, $AddUserSettings, $LinkScripts, $CopyAssets)

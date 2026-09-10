@@ -68,7 +68,7 @@
                 "target": "$HOME\\Documents\\PowerShell\\powershell.config.json"
             },
             {
-                "path": ".\\appSettings\\profile\\profile.config.json",
+                "path": ".\\appSettings\\profile\\windows\\profile.config.json",
                 "target": "$HOME\\Documents\\PowerShell\\profile.config.json"
             }
         ],
@@ -106,6 +106,22 @@
                 "target": "$HOME/.claude/statusline.ps1"
             }
         ],
+        "code": [
+            {
+                "path": "./appSettings/code/settings.json",
+                "target": "~/Library/Application Support/Code/User/settings.json"
+            },
+            {
+                "path": "./appSettings/code/keybindings.json",
+                "target": "~/Library/Application Support/Code/User/keybindings.json"
+            }
+        ],
+        "fastfetch": [
+            {
+                "path": "./appSettings/fastfetch/config.jsonc",
+                "target": "~/.config/fastfetch/config.jsonc"
+            }
+        ],
         "git": [
             {
                 "path": "./appSettings/git/macos/.gitconfig",
@@ -126,6 +142,12 @@
                 "target": "~/.gnupg/gpg.conf"
             }
         ],
+        "launchagents": [
+            {
+                "path": "./macos/LaunchAgents/com.stefangreve.environment.plist",
+                "target": "~/Library/LaunchAgents/com.stefangreve.environment.plist"
+            }
+        ],
         "nvim": [
             {
                 "path": "./appSettings/nvim/macos/init.vim",
@@ -136,6 +158,12 @@
             {
                 "path": "./appSettings/pip/pip.ini",
                 "target": "~/.pip/pip.conf"
+            }
+        ],
+        "profile": [
+            {
+                "path": "./appSettings/profile/macos/profile.config.json",
+                "target": "~/.config/powershell/profile.config.json"
             }
         ],
         "ssh": [

@@ -22,4 +22,8 @@ export POWERSHELL_UPDATECHECK="LTS"
 # brew
 export HOMEBREW_NO_ANALYTICS=1
 
+# programs
 export EDITOR="nvim"
+
+# guarded: .zshenv also runs without a terminal, where tty(1) yields "not a tty"
+[[ -t 0 ]] && export GPG_TTY=${TTY:-$(tty)}

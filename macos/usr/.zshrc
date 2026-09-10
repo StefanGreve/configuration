@@ -16,9 +16,6 @@ fi
 # to stay POSIX, so re-assign here to collapse the entries it added twice
 path=($path)
 
-# $TTY is set by zsh itself, which avoids forking `tty` on every shell start
-export GPG_TTY=$TTY
-
 # === HISTORY ==================================================================
 HISTFILE=~/.zsh_history
 HISTSIZE=10000

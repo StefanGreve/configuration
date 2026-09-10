@@ -119,6 +119,13 @@ process {
             # Restart the GPG agent so it picks up the refreshed permissions.
             gpgconf --kill gpg-agent
             gpgconf --launch gpg-agent
+
+            # The aspell formula ships its own en_US dictionary, so unlike hunspell on Windows there is
+            # nothing to download; a missing binary is the only way spellchecking fails, and it fails
+            # silently.
+            if (!(Get-Command aspell -ErrorAction SilentlyContinue)) {
+                Write-Warning "aspell is not installed; run install.ps1 -Applications to enable spellchecking."
+            }
         } else {
             Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
         }

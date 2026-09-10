@@ -27,6 +27,8 @@
     verbose = true
 [push]
     autoSetupRemote = true
+[pull]
+    rebase = true
 [alias]
     init-empty = !"f() { git init && git commit --allow-empty --allow-empty-message --no-edit; }; f"
     unstage = reset HEAD --

@@ -23,7 +23,7 @@ function Install-Brew {
 
     process {
         foreach ($p in $Package) {
-            brew install $p
+            brew install --yes $p
         }
     }
 }

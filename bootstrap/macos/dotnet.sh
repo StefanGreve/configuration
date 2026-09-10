@@ -3,10 +3,10 @@ pushd ~/Downloads
 brew update
 
 # script prerequisite
-brew install wget
+brew install --yes wget
 
 # required for .NET applications that use System.Drawing.Common
-brew install mono-libgdiplus
+brew install --yes mono-libgdiplus
 
 if [ ! -e "dotnet-install.sh" ]; then
     wget https://dot.net/v1/dotnet-install.sh

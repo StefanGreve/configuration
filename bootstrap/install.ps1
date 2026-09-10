@@ -102,7 +102,7 @@ process {
             & ($IsWindows ? "py" : "python3") -m pip config set global.require-virtualenv False
 
             if ($IsMacOS) {
-                brew install pipx
+                brew install --yes pipx
             } elseif ($IsWindows) {
                 py -m pip install --user pipx
 

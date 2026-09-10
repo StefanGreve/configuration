@@ -219,14 +219,14 @@ function Update-System {
                 brew update
 
                 if ($BrewBlacklist.Count -eq 0) {
-                    brew upgrade
+                    brew upgrade --yes
                 } else {
                     # "brew upgrade" cannot skip individual packages, so enumerate the outdated ones and
                     # upgrade only those that are not blacklisted.
                     $Outdated = brew outdated --quiet | Where-Object { $_ -and $_ -notin $BrewBlacklist }
 
                     if ($Outdated) {
-                        brew upgrade $Outdated --yes
+                        brew upgrade --yes $Outdated
                     }
                 }
 

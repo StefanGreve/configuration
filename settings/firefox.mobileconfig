@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+    Firefox enterprise policies, mirroring settings/edge.reg where an equivalent exists.
+
+    Firefox reads policies from the org.mozilla.firefox preference domain on MacOS, so unlike a
+    policies.json inside Firefox.app this survives a cask upgrade, which replaces the whole bundle.
+    Install it once by hand (see README.md); the policy names were validated against the schema
+    shipped with Firefox 155.
+-->
+<plist version="1.0">
+<dict>
+    <key>PayloadContent</key>
+    <array>
+        <dict>
+            <key>PayloadType</key>
+            <string>org.mozilla.firefox</string>
+            <key>PayloadIdentifier</key>
+            <string>org.mozilla.firefox.policies</string>
+            <key>PayloadUUID</key>
+            <string>CCA46A4B-56AB-4033-A80B-71F260590E77</string>
+            <key>PayloadVersion</key>
+            <integer>1</integer>
+            <key>PayloadDisplayName</key>
+            <string>Firefox Policies</string>
+            <key>PayloadEnabled</key>
+            <true/>
+
+            <key>EnterprisePoliciesEnabled</key>
+            <true/>
+
+            <!-- passwords: PasswordManagerEnabled -->
+            <key>PasswordManagerEnabled</key>
+            <false/>
+            <key>OfferToSaveLogins</key>
+            <false/>
+
+            <!-- autofill / forms: AutofillAddressEnabled, AutofillCreditCardEnabled -->
+            <key>DisableFormHistory</key>
+            <true/>
+
+            <!-- search / address bar: SearchSuggestEnabled, DefaultSearchProviderName -->
+            <key>SearchSuggestEnabled</key>
+            <false/>
+            <key>SearchEngines</key>
+            <dict>
+                <key>Default</key>
+                <string>Google</string>
+            </dict>
+
+            <!-- diagnostics: DiagnosticData, UrlDiagnosticDataEnabled, PersonalizationReportingEnabled -->
+            <key>DisableTelemetry</key>
+            <true/>
+            <!-- UserFeedbackAllowed -->
+            <key>DisableFeedbackCommands</key>
+            <true/>
+
+            <!-- NetworkPredictionOptions -->
+            <key>NetworkPrediction</key>
+            <false/>
+
+            <!-- TrackingPrevention (3 = strict) -->
+            <key>EnableTrackingProtection</key>
+            <dict>
+                <key>Value</key>
+                <true/>
+                <key>Locked</key>
+                <true/>
+                <key>Cryptomining</key>
+                <true/>
+                <key>Fingerprinting</key>
+                <true/>
+                <key>EmailTracking</key>
+                <true/>
+                <key>Category</key>
+                <string>strict</string>
+            </dict>
+
+            <!-- FavoritesBarEnabled -->
+            <key>DisplayBookmarksToolbar</key>
+            <string>always</string>
+
+            <!-- TranslateEnabled -->
+            <key>TranslateEnabled</key>
+            <true/>
+
+            <!-- new tab page: NewTabPageContentEnabled, NewTabPageQuickLinksEnabled,
+                 NewTabPageHideDefaultTopSites -->
+            <key>FirefoxHome</key>
+            <dict>
+                <key>Search</key>
+                <true/>
+                <key>TopSites</key>
+                <false/>
+                <key>SponsoredTopSites</key>
+                <false/>
+                <key>Stories</key>
+                <false/>
+                <key>SponsoredStories</key>
+                <false/>
+                <key>Pocket</key>
+                <false/>
+                <key>SponsoredPocket</key>
+                <false/>
+                <key>Highlights</key>
+                <false/>
+                <key>Snippets</key>
+                <false/>
+                <key>Weather</key>
+                <false/>
+                <key>Locked</key>
+                <true/>
+            </dict>
+            <key>DisablePocket</key>
+            <true/>
+
+            <!-- SpotlightExperiencesAndRecommendationsEnabled -->
+            <key>UserMessaging</key>
+            <dict>
+                <key>WhatsNew</key>
+                <false/>
+                <key>ExtensionRecommendations</key>
+                <false/>
+                <key>FeatureRecommendations</key>
+                <false/>
+                <key>UrlbarInterventions</key>
+                <false/>
+                <key>MoreFromMozilla</key>
+                <false/>
+                <key>Locked</key>
+                <true/>
+            </dict>
+
+            <key>Preferences</key>
+            <dict>
+                <!-- AutofillAddressEnabled -->
+                <key>extensions.formautofill.addresses.enabled</key>
+                <dict>
+                    <key>Value</key>
+                    <false/>
+                    <key>Status</key>
+                    <string>locked</string>
+                </dict>
+                <!-- AutofillCreditCardEnabled -->
+                <key>extensions.formautofill.creditCards.enabled</key>
+                <dict>
+                    <key>Value</key>
+                    <false/>
+                    <key>Status</key>
+                    <string>locked</string>
+                </dict>
+                <!-- PaymentMethodQueryEnabled -->
+                <key>dom.payments.request.enabled</key>
+                <dict>
+                    <key>Value</key>
+                    <false/>
+                    <key>Status</key>
+                    <string>locked</string>
+                </dict>
+                <!-- PasswordLeakDetectionEnabled -->
+                <key>signon.management.page.breach-alerts.enabled</key>
+                <dict>
+                    <key>Value</key>
+                    <true/>
+                    <key>Status</key>
+                    <string>locked</string>
+                </dict>
+                <!-- ConfigureDoNotTrack; Firefox replaced DNT with Global Privacy Control -->
+                <key>privacy.globalprivacycontrol.enabled</key>
+                <dict>
+                    <key>Value</key>
+                    <true/>
+                    <key>Status</key>
+                    <string>locked</string>
+                </dict>
+                <!-- SmartScreenEnabled -->
+                <key>browser.safebrowsing.malware.enabled</key>
+                <dict>
+                    <key>Value</key>
+                    <true/>
+                    <key>Status</key>
+                    <string>locked</string>
+                </dict>
+                <key>browser.safebrowsing.phishing.enabled</key>
+                <dict>
+                    <key>Value</key>
+                    <true/>
+                    <key>Status</key>
+                    <string>locked</string>
+                </dict>
+                <!-- RestoreOnStartup (1 = reopen last session) -->
+                <key>browser.startup.page</key>
+                <dict>
+                    <key>Value</key>
+                    <integer>3</integer>
+                    <key>Status</key>
+                    <string>default</string>
+                </dict>
+                <!-- NewTabPageAllowedBackgroundTypes (3 = disable all) -->
+                <key>browser.newtabpage.activity-stream.newtabWallpapers.enabled</key>
+                <dict>
+                    <key>Value</key>
+                    <false/>
+                    <key>Status</key>
+                    <string>locked</string>
+                </dict>
+                <!-- EdgeShoppingAssistantEnabled -->
+                <key>browser.shopping.experience2023.enabled</key>
+                <dict>
+                    <key>Value</key>
+                    <false/>
+                    <key>Status</key>
+                    <string>locked</string>
+                </dict>
+                <!-- HubsSidebarEnabled and the Copilot policies; AIControls is not used because it
+                     would also disable translation, which edge.reg keeps enabled -->
+                <key>browser.ml.chat.enabled</key>
+                <dict>
+                    <key>Value</key>
+                    <false/>
+                    <key>Status</key>
+                    <string>locked</string>
+                </dict>
+                <!-- SpellcheckLanguage -->
+                <key>spellchecker.dictionary</key>
+                <dict>
+                    <key>Value</key>
+                    <string>en-US</string>
+                    <key>Status</key>
+                    <string>default</string>
+                </dict>
+            </dict>
+        </dict>
+    </array>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadIdentifier</key>
+    <string>com.stefangreve.firefox.policies</string>
+    <key>PayloadUUID</key>
+    <string>56C806A7-DAD6-4717-8290-10CF40757818</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+    <key>PayloadDisplayName</key>
+    <string>Firefox Policies</string>
+    <key>PayloadDescription</key>
+    <string>Privacy and UI policies for Firefox, mirroring the Microsoft Edge policies used on Windows.</string>
+    <key>PayloadOrganization</key>
+    <string>StefanGreve</string>
+    <key>PayloadScope</key>
+    <string>System</string>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+</dict>
+</plist>

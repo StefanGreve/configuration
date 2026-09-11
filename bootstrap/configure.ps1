@@ -126,6 +126,19 @@ process {
             if (!(Get-Command aspell -ErrorAction SilentlyContinue)) {
                 Write-Warning "aspell is not installed; run install.ps1 -Applications to enable spellchecking."
             }
+
+            # iTerm2 omits both of these keys from the settings it exports, so the repository copy holds
+            # no pointer back to itself and a fresh machine would never load it.
+            $ITerm2Settings = [Path]::Combine($Root, "appSettings", "iterm2")
+
+            if (Test-Path -Path ([Path]::Combine($ITerm2Settings, "com.googlecode.iterm2.plist"))) {
+                if (Get-Process -Name "iTerm2" -ErrorAction SilentlyContinue) {
+                    Write-Warning "iTerm2 flushes its own defaults on quit; quit it and re-run to load $ITerm2Settings."
+                } else {
+                    defaults write com.googlecode.iterm2 PrefsCustomFolder -string $ITerm2Settings
+                    defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
+                }
+            }
         } else {
             Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
         }

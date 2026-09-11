@@ -92,6 +92,18 @@ The profile is stored in the `org.mozilla.firefox` preference domain rather than
 application bundle, so it survives a cask upgrade. Re-run the command above after editing the file;
 macOS replaces the profile when the payload identifier matches.
 
+---
+
+**MacOS only.** iTerm2 keeps its settings in `appSettings/iterm2` through *Load settings from a custom
+folder or URL*, so the application writes the repository copy itself and nothing needs to be symlinked;
+`cfprefsd` refuses to write through a symlink under `~/Library/Preferences`. `configure.ps1` points a new
+machine at the folder, but only while iTerm2 is closed, because iTerm2 overwrites these keys from memory
+when it quits. To enable it by hand instead, use `Settings > General > Settings` and also turn on *Save
+changes to folder when iTerm2 quits*.
+
+Only settings iTerm2 considers portable are exported: window positions, the Sparkle updater state and
+everything prefixed with `NoSync` stay in `~/Library/Preferences`.
+
 ## Personal Notes
 
 - The `hosts` file on Windows can *not* be replaced by a symbolic link

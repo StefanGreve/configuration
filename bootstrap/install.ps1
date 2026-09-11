@@ -46,6 +46,18 @@ dynamicparam {
         $ParamDictionary.Add("Registry", $RegistryParameter)
     }
 
+    if ($IsMacOS) {
+        $CompletionAttribute = [ParameterAttribute]::new()
+        $CompletionAttribute.ParameterSetName = "Custom"
+
+        $AttributeCollection = [Collection[Attribute]]::new()
+        $AttributeCollection.Add($CompletionAttribute)
+
+        $CompletionParameter = [RuntimeDefinedParameter]::new("Completion", [switch], $AttributeCollection)
+
+        $ParamDictionary.Add("Completion", $CompletionParameter)
+    }
+
     return $ParamDictionary
 }
 
@@ -157,6 +169,12 @@ process {
                 "-NoProfile", "-EncodedCommand", $Encoded
             )
         }
+    }
+
+    if ($PSBoundParameters.Completion -or ($IsMacOS -and $All.IsPresent)) {
+        # Anything installed above that is not yet on PATH in this session is skipped, so re-run this
+        # after restarting the terminal.
+        zsh $([Path]::Combine($Root, "bootstrap", "macos", "completions.sh"))
     }
 
     if ($VsCode.IsPresent -or $All.IsPresent) {

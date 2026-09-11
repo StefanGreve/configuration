@@ -50,9 +50,9 @@ _prompt_precmd() {
 add-zsh-hook precmd _prompt_precmd
 
 # === COMPLETION ===============================================================
-fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
+# the first directory is written by bootstrap/macos/completions.sh, the second by brew formulae
+fpath=(~/.local/share/zsh/site-functions /opt/homebrew/share/zsh/site-functions $fpath)
 
-# -C trusts the existing dump instead of re-scanning fpath on every start
 autoload -Uz compinit && compinit -C
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'

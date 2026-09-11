@@ -57,6 +57,14 @@ The installer script also accepts individual flags for user-customized installat
 and reads its definitions from the `settings` folder. You may need to restart your
 terminal session for the changes to take effect fully.
 
+**MacOS only.** `-All` also writes zsh completion functions to `~/.local/share/zsh/site-functions` for the
+tools that ship a generator instead of a ready-made function; Homebrew formulae install their own. Re-run
+this after upgrading a toolchain, or when a tool was not yet on `PATH` during the initial run:
+
+```pwsh
+./bootstrap/install.ps1 -Completion
+```
+
 ---
 
 Use this Cmdlet to maintain the system.
@@ -64,6 +72,25 @@ Use this Cmdlet to maintain the system.
 ```pwsh
 Update-System -All
 ```
+
+---
+
+**MacOS only.** Firefox is configured through `settings/firefox.mobileconfig`, which mirrors the
+Microsoft Edge policies in `settings/edge.reg` wherever Firefox has an equivalent. Configuration
+profiles cannot be installed from the command line without an MDM, so this step is manual and only
+needs to be done once:
+
+```pwsh
+open ./settings/firefox.mobileconfig
+```
+
+Then open `System Settings > General > Device Management` (older releases list it under
+`Privacy & Security > Profiles`), select the downloaded *Firefox Policies* profile and confirm the
+installation. Restart Firefox and verify the result under `about:policies`.
+
+The profile is stored in the `org.mozilla.firefox` preference domain rather than inside the
+application bundle, so it survives a cask upgrade. Re-run the command above after editing the file;
+macOS replaces the profile when the payload identifier matches.
 
 ## Personal Notes
 

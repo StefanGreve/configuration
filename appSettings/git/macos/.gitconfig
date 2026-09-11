@@ -1,32 +1,47 @@
+[column]
+    ui = auto
 [user]
     email = stefan.ohlsen.greve@gmail.com
     name = StefanGreve
     signingkey = 3D37004E3A1EE085
+[branch]
+    sort = -committerdate
+[tag]
+    sort = version:refname
 [core]
     editor = nvim
     autocrlf = false
     pager = "delta --syntax-theme='Solarized (dark)' --dark"
-    longpaths = true
+    excludesfile = ~/.gitignore
+    fsmonitor = true
+    untrackedCache = true
+    precomposeUnicode = true
 [interactive]
     diffFilter = delta --color-only --features=interactive
 [delta]
     navigate = true
     light = false
+    hyperlinks = true
     features = decorations
 [diff]
+    algorithm = histogram
     colorMoved = default
+    mnemonicPrefix = true
 [merge]
-    conflictstyle = diff3
+    conflictstyle = zdiff3
 [rerere]
     enabled = true
-[blame]
-    hyperlinks = true
+    autoupdate = true
 [init]
     defaultBranch = master
 [commit]
     verbose = true
+    gpgsign = true
+[gpg]
+    program = /opt/homebrew/bin/gpg
 [push]
     autoSetupRemote = true
+    followTags = true
 [pull]
     rebase = true
 [alias]
@@ -49,5 +64,5 @@
 [safe]
     directory = *
 [help]
-    autocorrect = 20
+    autocorrect = prompt
     format = html

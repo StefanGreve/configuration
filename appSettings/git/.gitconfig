@@ -13,23 +13,24 @@
     pager = "delta --syntax-theme='Solarized (dark)' --dark"
     excludesfile = ~/.gitignore
     longpaths = true
+    fsmonitor = true
+    untrackedCache = true
 [interactive]
     diffFilter = delta --color-only --features=interactive
 [delta]
     navigate = true
     light = false
+    hyperlinks = true
     features = decorations
 [diff]
     algorithm = histogram
-    colorMoved = plain
+    colorMoved = default
     mnemonicPrefix = true
 [merge]
-    conflictstyle = diff3
+    conflictstyle = zdiff3
 [rerere]
     enabled = true
     autoupdate = true
-[blame]
-    hyperlinks = true
 [init]
     defaultBranch = master
 [commit]
@@ -37,6 +38,8 @@
 [push]
     autoSetupRemote = true
     followTags = true
+[pull]
+    rebase = true
 [alias]
     init-empty = !"f() { git init && git commit --allow-empty --allow-empty-message --no-edit; }; f"
     unstage = reset HEAD --

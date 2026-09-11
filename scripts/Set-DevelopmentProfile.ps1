@@ -68,9 +68,14 @@ function Set-DevelopmentProfile {
                     # use legacy key with previous primary email address
                     git config --local user.signingkey F380062B9F847687
                 } else {
-                    switch ($env:COMPUTERNAME) {
+                    $HostName = $IsWindows ? $env:COMPUTERNAME : $(hostname)
+
+                    switch ($HostName) {
                         "STGR-BE-LAP02" {
                             git config --local user.signingkey 19328C2B09E1AC4C
+                        }
+                        "Stefans-MacBook-Pro.local" {
+                            git config --local user.signingkey 3D37004E3A1EE085
                         }
                         default {
                             Write-Warning "Configure a local signing key for this device"

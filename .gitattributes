@@ -1,4 +1,11 @@
 * text=auto eol=lf
 
-# .reg files are stored UTF-8 in the repo and checked out as UTF-16 (LE + BOM) on Windows
+# .reg files are stored UTF-8 in the repo and checked out as UTF-16 (LE + BOM) on Windows.
+# This keeps `git diff` on the CLI a proper textual diff (it diffs the UTF-8 blob).
+#
+# Trade-off: VS Code's SCM/diff view does NOT apply working-tree-encoding. It fetches the
+# UTF-8 blob and decodes it with the file's UTF-16 encoding, which yields garbage, so the
+# whole file shows as changed whenever a .reg is opened. That is expected; correct CLI diffs
+# are the priority. (Switching to `*.reg binary` would fix VS Code but make `git diff` report
+# "binary files differ" instead of a line diff.)
 *.reg text working-tree-encoding=UTF-16 eol=crlf

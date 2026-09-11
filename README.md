@@ -18,41 +18,19 @@ in mind.
 
 ## Prerequisites
 
-The setting files are configured to use the classic Code Page 437 character set
-from the original IBM PCs; the respective DOS VGA font can be downloaded from here:
-<https://cp437.github.io/>.
+Install [`pwsh`](https://github.com/PowerShell/PowerShell) and allow local scripts
+to run:
 
-You will need to have [`pwsh`](https://github.com/PowerShell/PowerShell) installed
-on your platform of choice in order to run any of the scripts, as well as an
-appropriate execution policy, e.g.
-
-```powershell
+```pwsh
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted
 ```
 
-After that, follow the instructions on <https://github.com/StefanGreve/profile>
-for importing the PowerShell profile (optional) or run the `profilesetup.ps1`
-script (located in `./bootstrap`) for a user-friendly installation. The script
-works on any platform with `pwsh` installed, including macOS and Linux.
+The bootstrap scripts expect `cargo`, `pipx`, and a platform package manager
+(`winget` on Windows, `brew` on MacOS; Linux is not implemented) on your `PATH`.
 
-Ensure that you have the following commands in your `PATH`:
-
-- `cargo`
-- `pipx`
-
-Additionally, you also need the following platform-specific prerequisites:
-
-### Windows
-
-- `winget`
-
-### MacOS
-
-- `brew`
-
-### Linux
-
-NOT IMPLEMENTED
+The setting files use the classic Code Page 437 character set; the matching DOS VGA
+font is available at <https://cp437.github.io/>. Optionally, follow
+<https://github.com/StefanGreve/profile> to import the PowerShell profile.
 
 ## Usage
 
@@ -60,7 +38,7 @@ NOT IMPLEMENTED
 
 Symlink config files from the `appSettings` directory by force:
 
-```powershell
+```pwsh
 ./bootstrap/configure.ps1 -All
 ```
 
@@ -71,7 +49,7 @@ As a result of running this scripts, a new assets directory will be created in
 
 Install all required programs:
 
-```powershell
+```pwsh
 ./bootstrap/install.ps1 -All
 ```
 
@@ -79,13 +57,52 @@ The installer script also accepts individual flags for user-customized installat
 and reads its definitions from the `settings` folder. You may need to restart your
 terminal session for the changes to take effect fully.
 
+**MacOS only.** `-All` also writes zsh completion functions to `~/.local/share/zsh/site-functions` for the
+tools that ship a generator instead of a ready-made function; Homebrew formulae install their own. Re-run
+this after upgrading a toolchain, or when a tool was not yet on `PATH` during the initial run:
+
+```pwsh
+./bootstrap/install.ps1 -Completion
+```
+
 ---
 
 Use this Cmdlet to maintain the system.
 
-```powershell
+```pwsh
 Update-System -All
 ```
+
+---
+
+**MacOS only.** Firefox is configured through `settings/firefox.mobileconfig`, which mirrors the
+Microsoft Edge policies in `settings/edge.reg` wherever Firefox has an equivalent. Configuration
+profiles cannot be installed from the command line without an MDM, so this step is manual and only
+needs to be done once:
+
+```pwsh
+open ./settings/firefox.mobileconfig
+```
+
+Then open `System Settings > General > Device Management` (older releases list it under
+`Privacy & Security > Profiles`), select the downloaded *Firefox Policies* profile and confirm the
+installation. Restart Firefox and verify the result under `about:policies`.
+
+The profile is stored in the `org.mozilla.firefox` preference domain rather than inside the
+application bundle, so it survives a cask upgrade. Re-run the command above after editing the file;
+macOS replaces the profile when the payload identifier matches.
+
+---
+
+**MacOS only.** iTerm2 keeps its settings in `appSettings/iterm2` through *Load settings from a custom
+folder or URL*, so the application writes the repository copy itself and nothing needs to be symlinked;
+`cfprefsd` refuses to write through a symlink under `~/Library/Preferences`. `configure.ps1` points a new
+machine at the folder, but only while iTerm2 is closed, because iTerm2 overwrites these keys from memory
+when it quits. To enable it by hand instead, use `Settings > General > Settings` and also turn on *Save
+changes to folder when iTerm2 quits*.
+
+Only settings iTerm2 considers portable are exported: window positions, the Sparkle updater state and
+everything prefixed with `NoSync` stay in `~/Library/Preferences`.
 
 ## Personal Notes
 
@@ -96,7 +113,7 @@ Update-System -All
 - The SSH config file is configured to look for two separate SSH keys
 - Import the GPG key for signing commits with the following command:
 
-```powershell
+```pwsh
 gpg --import .\gpg-private-key.asc
 ```
 

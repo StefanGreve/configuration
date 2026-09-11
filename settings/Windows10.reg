@@ -3,21 +3,28 @@ Windows Registry Editor Version 5.00
 ; ==============================================================================
 ; WINDOWS 10 SYSTEM REGISTRIES
 ; ==============================================================================
+;
+; This file targets Windows 10. Some entries are no-ops on Windows 11 (e.g.
+; NoLockScreen); that is acceptable - Windows 10 is the reference here.
 
+; --- filesystem ---------------------------------------------------------------
 [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem]
 ; Set max path length from 260 to 32767 characters
 "LongPathsEnabled"=dword:00000001
 
+; --- system / boot ------------------------------------------------------------
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System]
 ; Enable verbose message output on system start and shutdown
 "VerboseStatus"=dword:00000001
 ; Set to 0 to disable automatically locking the computer screen
 "InactivityTimeoutSecs"=dword:00000000
 
+; --- taskbar / clock ----------------------------------------------------------
 [HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
 ; Show seconds count in taskbar system clock
 "ShowSecondsInSystemClock"=dword:00000001
 
+; --- suggestions & advertising ------------------------------------------------
 [HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager]
 ; Prevent Windows from automatically installing apps through their subscription channels
 "ContentDeliveryAllowed"=dword:00000000
@@ -36,12 +43,15 @@ Windows Registry Editor Version 5.00
 "Enabled"=dword:00000000
 
 [HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Privacy]
+; Don't use diagnostic data for tailored experiences (tips, ads, recommendations)
 "TailoredExperiencesWithDiagnosticDataEnabled"=dword:00000000
 
+; --- lock screen --------------------------------------------------------------
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization]
 ; Show login form immediately
 "NoLockScreen"=dword:00000001
 
+; --- cloud content / spotlight ------------------------------------------------
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\CloudContent]
 ; Disable personalized recommendations from microsoft and notifications about
 ; your Microsoft account
@@ -51,6 +61,7 @@ Windows Registry Editor Version 5.00
 "DisableWindowsSpotlightFeatures"=dword:00000001
 "DisableTailoredExperiencesWithDiagnosticData"=dword:00000001
 
+; --- telemetry / diagnostics --------------------------------------------------
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DataCollection]
 ; Disable telemetry (on Pro this is floored to "Required"; see DiagTrack service below)
 "AllowTelemetry"=dword:00000000
@@ -66,6 +77,13 @@ Windows Registry Editor Version 5.00
 ; "off"/Security level and the service otherwise keeps sending Required data.
 "Start"=dword:00000004
 
+; Disable the Autologger-DiagTrack-Listener ETW session (BSI 5.4.1.2). The DiagTrack service above is
+; already disabled; this closes the remaining boot-time collection path. The actual subkey is
+; "Diagtrack-Listener" (the BSI doc's "AutoLogger-" prefix does not match the live registry).
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\Autologger\Diagtrack-Listener]
+"Start"=dword:00000000
+
+; --- activity feed / timeline -------------------------------------------------
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System]
 ; Disable Windows' 10 timeline feature
 "EnableActivityFeed"=dword:00000000
@@ -73,7 +91,8 @@ Windows Registry Editor Version 5.00
 "UploadUserActivities"=dword:00000000
 "PublishUserActivities"=dword:00000000
 
-[HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\Windows Search]
+; --- windows search / cortana -------------------------------------------------
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search]
 ; Disable cortana-related features related to windows search
 "AllowCortana"=dword:00000000
 "AllowCortanaAboveLock"=dword:00000000
@@ -83,6 +102,7 @@ Windows Registry Editor Version 5.00
 "ConnectedSearchUseWebOverMeteredConnections"=dword:00000000
 "DisableWebSearch"=dword:00000001
 
+; --- speech & input personalization -------------------------------------------
 [HKEY_CURRENT_USER\SOFTWARE\Microsoft\Personalization\Settings]
 ; Decline privacy policy
 "AcceptedPrivacyPolicy"=dword:00000000
@@ -93,12 +113,15 @@ Windows Registry Editor Version 5.00
 "RestrictImplicitTextCollection"=dword:00000001
 
 [HKEY_CURRENT_USER\SOFTWARE\Microsoft\InputPersonalization\TrainedDataStore]
+; Don't harvest contacts into the personalization trained-data store
 "HarvestContacts"=dword:00000000
 
+; --- error reporting ----------------------------------------------------------
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\Windows Error Reporting]
 ; Don't notify Microsoft of application faults, kernel faults, unresponsive applications, etc.
 "Disabled"=dword:00000001
 
+; --- explorer cleanup ---------------------------------------------------------
 ; Remove 3D Objects folder from file explorer (This PC)
 [-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}]
 [-HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\NameSpace\{0DB7E03F-FC29-4DC6-9020-FF41B59E513A}]

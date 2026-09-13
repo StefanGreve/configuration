@@ -66,7 +66,8 @@
     it anyway and explain in chat why the approach did not work.
   - If the entry turns out to be already resolved by other work, or not worth doing, delete it
     and say which of the two it was.
-- After completing a task, suggest a commit message in one of two forms:
+- If the current working directory is part of a git repository, suggest a commit message after
+  completing a task, in one of two forms:
   - Short: a single-line summary for small, self-contained changes.
   - Verbose: a summary line followed by `*` bullet points, for larger changes spanning
     multiple files.

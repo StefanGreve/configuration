@@ -19,8 +19,10 @@ sudo ./dotnet-install.sh --install-dir /usr/local/share/dotnet \
     --os macos \
     --channel LTS
 
-# The installer drops /etc/paths.d/dotnet, so path_helper puts the SDK on PATH; macos/usr/.zshenv exports
-# the matching DOTNET_ROOT and macos/usr/.profile adds the global tool directory
+# Unlike the .pkg, dotnet-install.sh never touches PATH, so register the SDK with path_helper here;
+# macos/usr/.zshenv exports the matching DOTNET_ROOT and macos/usr/.profile adds the global tool directory
+echo "/usr/local/share/dotnet" | sudo tee /etc/paths.d/dotnet > /dev/null
+
 echo "Restart your shell to pick up dotnet (DOTNET_ROOT is exported by macos/usr/.zshenv)."
 
 popd

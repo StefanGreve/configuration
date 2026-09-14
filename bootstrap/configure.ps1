@@ -106,6 +106,18 @@ process {
             if ($null -eq [Environment]::GetEnvironmentVariable("DICPATH", [EnvironmentVariableTarget]::User)) {
                 [Environment]::SetEnvironmentVariable("DICPATH", $Dictionaries, [EnvironmentVariableTarget]::User)
             }
+
+            # Both POWERSHELL_ variables are read during pwsh startup, so the profile-sourced environment.ps1
+            # is too late; User scope also reaches GUI tools that never load a profile, as the LaunchAgent does.
+            @{
+                DOTNET_CLI_TELEMETRY_OPTOUT = "1"
+                DOTNET_CLI_UI_LANGUAGE      = "en-US"
+                DOTNET_NOLOGO               = "1"
+                POWERSHELL_TELEMETRY_OPTOUT = "1"
+                POWERSHELL_UPDATECHECK      = "LTS"
+            }.GetEnumerator() | ForEach-Object {
+                [Environment]::SetEnvironmentVariable($_.Key, $_.Value, [EnvironmentVariableTarget]::User)
+            }
         } elseif ($IsMacOS) {
             if ($null -eq $env:GIT_SSH) {
                 # Started to use a new key generation algorithm for MacOS

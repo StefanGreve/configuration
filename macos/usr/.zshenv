@@ -14,6 +14,8 @@ typeset -U path fpath
 # dotnet: bootstrap/macos/dotnet.sh installs the SDK system-wide
 export DOTNET_ROOT="/usr/local/share/dotnet"
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
+export DOTNET_CLI_UI_LANGUAGE="en-US"
+export DOTNET_NOLOGO=1
 
 # powershell
 export POWERSHELL_TELEMETRY_OPTOUT=1
@@ -21,6 +23,9 @@ export POWERSHELL_UPDATECHECK="LTS"
 
 # brew
 export HOMEBREW_NO_ANALYTICS=1
+
+# cross-vendor opt-out honoured by a growing number of CLI tools
+export DO_NOT_TRACK=1
 
 # programs
 export EDITOR="nvim"

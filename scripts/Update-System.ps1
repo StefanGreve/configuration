@@ -30,6 +30,9 @@ function Update-System {
         [switch] $Npm,
 
         [Parameter(ParameterSetName = "Option")]
+        [switch] $VSCode,
+
+        [Parameter(ParameterSetName = "Option")]
         [switch] $PSModule,
 
         [Parameter(ParameterSetName = "Option")]
@@ -326,6 +329,27 @@ function Update-System {
                 }
             } elseif ($Npm.IsPresent) {
                 Write-Error "npm is not installed." -Category NotInstalled
+            }
+        }
+
+        if ($VSCode.IsPresent -or $All.IsPresent) {
+            if (Get-Command code -ErrorAction SilentlyContinue) {
+                # Identifiers of VS Code extensions to exclude from the update.
+                $VSCodeBlacklist = @()
+
+                if ($VSCodeBlacklist.Count -eq 0) {
+                    code --update-extensions
+                } else {
+                    # "code --update-extensions" is all or nothing, so reinstall the extensions that are not
+                    # blacklisted; --force upgrades an already installed extension instead of prompting.
+                    $Extensions = code --list-extensions | Where-Object { $_ -and $_ -notin $VSCodeBlacklist }
+
+                    foreach ($Extension in $Extensions) {
+                        code --install-extension $Extension --force
+                    }
+                }
+            } elseif ($VSCode.IsPresent) {
+                Write-Error "Visual Studio Code is not installed." -Category NotInstalled
             }
         }
 

@@ -3,9 +3,11 @@
         "brew": [
             "1password-cli",
             "aspell",
+            "apfel",
             "claude-code",
             "discord",
             "drawio",
+            "docker",
             "fastfetch",
             "gh",
             "git",

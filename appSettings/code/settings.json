@@ -48,7 +48,7 @@
     "explorer.confirmDragAndDrop": false,
     "extensions.autoCheckUpdates": false,
     "extensions.autoUpdate": "off",
-    "extensions.ignoreRecommendations": true,
+    "extensions.ignoreRecommendations": false,
     "files.associations": {
         "*.props": "xml",
         "*.slnx": "xml",

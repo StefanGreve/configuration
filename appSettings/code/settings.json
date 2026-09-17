@@ -49,6 +49,11 @@
     "extensions.autoCheckUpdates": false,
     "extensions.autoUpdate": "off",
     "extensions.ignoreRecommendations": true,
+    "files.associations": {
+        "*.props": "xml",
+        "*.slnx": "xml",
+        "*.targets": "xml"
+    },
     "files.autoGuessEncoding": true,
     "files.exclude": {
         "**/.classpath": true,
@@ -139,6 +144,10 @@
             "pattern": "**/*.Types.ps1xml"
         }
     ],
+    "xml.format.maxLineWidth": 120,
+    "[csharp]": {
+        "editor.defaultFormatter": "ms-dotnettools.csharp"
+    },
     "[powershell]": {
         "debug.saveBeforeStart": "nonUntitledEditorsInActiveGroup",
         "editor.defaultFormatter": "ms-vscode.powershell"

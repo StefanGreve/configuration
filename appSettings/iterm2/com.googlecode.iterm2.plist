@@ -38,6 +38,8 @@
 	<integer>1</integer>
 	<key>AppleWindowTabbingMode</key>
 	<string>manual</string>
+	<key>CopySelection</key>
+	<true/>
 	<key>Default Bookmark Guid</key>
 	<string>F8789CAC-99DE-4AAF-8956-0D832C2DBBC0</string>
 	<key>DimInactiveSplitPanes</key>

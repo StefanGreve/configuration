@@ -6,7 +6,7 @@
                 "target": "$HOME\\.claude\\CLAUDE.md"
             },
             {
-                "path": ".\\appSettings\\claude\\settings.json",
+                "path": ".\\appSettings\\claude\\windows\\settings.json",
                 "target": "$HOME\\.claude\\settings.json"
             },
             {
@@ -98,7 +98,7 @@
                 "target": "~/.claude/CLAUDE.md"
             },
             {
-                "path": "./appSettings/claude/settings.json",
+                "path": "./appSettings/claude/macos/settings.json",
                 "target": "~/.claude/settings.json"
             },
             {

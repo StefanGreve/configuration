@@ -4,7 +4,7 @@
 
 - Always respond in English (en-US), even if the user writes in another language, unless they
   explicitly ask for a response in a different language.
-- If a LSP is available:
+- If an LSP is available:
   - Use Grep/Glob for discovery (finding files, searching patterns).
   - Use LSP for understanding (definitions, references, type info, call hierarchies).
   - After locating a file with Grep/Glob, prefer LSP for symbol navigation; read the file when
@@ -71,5 +71,7 @@
   - Short: a single-line summary for small, self-contained changes.
   - Verbose: a summary line followed by `*` bullet points, for larger changes spanning
     multiple files.
+- Only describe changes git will actually record: skip git-ignored files such as `todo.md`, and
+  do not include untracked files you did not create.
 - When you wrote the majority of the code, end a verbose message with a trailer naming the model
   you are running as, for example: `Co-authored-by: Claude Opus 5 <noreply@anthropic.com>`

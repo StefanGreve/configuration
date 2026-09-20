@@ -16,6 +16,8 @@
 	<integer>2</integer>
 	<key>AIVectorStore</key>
 	<integer>0</integer>
+	<key>AdjustWindowForFontSizeChange</key>
+	<false/>
 	<key>AiMaxTokens</key>
 	<integer>1050000</integer>
 	<key>AiModel</key>
@@ -52,6 +54,20 @@
 			<integer>39</integer>
 			<key>Text</key>
 			<string></string>
+		</dict>
+		<key>0x2d-0x40000</key>
+		<dict>
+			<key>Action</key>
+			<integer>25</integer>
+			<key>Text</key>
+			<string>Make Text Smaller</string>
+		</dict>
+		<key>0x3d-0x40000</key>
+		<dict>
+			<key>Action</key>
+			<integer>25</integer>
+			<key>Text</key>
+			<string>Make Text Bigger</string>
 		</dict>
 		<key>0x48-0x60000</key>
 		<dict>

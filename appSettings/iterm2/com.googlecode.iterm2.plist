@@ -53,6 +53,38 @@
 			<key>Text</key>
 			<string></string>
 		</dict>
+		<key>0x48-0x60000</key>
+		<dict>
+			<key>Action</key>
+			<integer>25</integer>
+			<key>Text</key>
+			<string>Move Divider Left
+Resize Split Pane.Move Divider Left</string>
+		</dict>
+		<key>0x4a-0x60000</key>
+		<dict>
+			<key>Action</key>
+			<integer>25</integer>
+			<key>Text</key>
+			<string>Move Divider Down
+Resize Split Pane.Move Divider Down</string>
+		</dict>
+		<key>0x4b-0x60000</key>
+		<dict>
+			<key>Action</key>
+			<integer>25</integer>
+			<key>Text</key>
+			<string>Move Divider Up
+Resize Split Pane.Move Divider Up</string>
+		</dict>
+		<key>0x4c-0x60000</key>
+		<dict>
+			<key>Action</key>
+			<integer>25</integer>
+			<key>Text</key>
+			<string>Move Divider Right
+Resize Split Pane.Move Divider Right</string>
+		</dict>
 		<key>0x5f-0x60000</key>
 		<dict>
 			<key>Action</key>

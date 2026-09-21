@@ -151,6 +151,14 @@ process {
                     defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
                 }
             }
+
+            # launchd never wakes the machine, so without this the first window opens whenever the lid does.
+            # pmset keeps one pair of repeating events; the guard avoids clobbering it and re-prompting.
+            if (!(pmset -g sched | Select-String -Pattern "Repeating power events" -Quiet)) {
+                Write-Host "[ SUDO ] " -ForegroundColor Yellow -NoNewline
+                Write-Host "Schedule a daily wake at 06:58 so the Claude Code window opens on time"
+                sudo pmset repeat wakeorpoweron MTWRFSU 06:58:00
+            }
         } else {
             Write-Error "TODO" -Category NotImplemented -ErrorAction Stop
         }

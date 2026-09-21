@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.stefangreve.claudewindow</string>
+    <!-- launchd hands a job /usr/bin:/bin:/usr/sbin:/sbin, which does not include the Homebrew prefix. -->
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    </dict>
+    <!-- claude reads its credentials from the login keychain and reports "Not logged in" when USER is
+         unset, which the gui domain does not guarantee; id(1) derives it without hardcoding the account.
+         One job serves all three intervals, so the greeting is selected from the hour the job fires; a run
+         coalesced onto wake lands outside those hours and falls back rather than passing no prompt. -->
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/sh</string>
+        <string>-c</string>
+        <string>USER=$(id -un); export USER; case $(date +%H) in 07) g="Good morning";; 12) g="Good afternoon";; 17) g="Good evening";; *) g="Hello";; esac; exec claude --effort low --model haiku --no-session-persistence --print --safe-mode "$g"</string>
+    </array>
+    <key>StartCalendarInterval</key>
+    <array>
+        <dict>
+            <key>Hour</key>
+            <integer>7</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+        </dict>
+        <dict>
+            <key>Hour</key>
+            <integer>12</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+        </dict>
+        <dict>
+            <key>Hour</key>
+            <integer>17</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+        </dict>
+    </array>
+    <key>ProcessType</key>
+    <string>Background</string>
+</dict>
+</plist>

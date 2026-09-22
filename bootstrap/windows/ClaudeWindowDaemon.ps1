@@ -1,4 +1,5 @@
 #Requires -Version 7.4
+#Requires -RunAsAdministrator
 
 <#
 .SYNOPSIS
@@ -16,9 +17,16 @@
     run that Task Scheduler catches up outside those hours falls back to a plain greeting rather than
     invoking claude with no prompt at all.
 
-    The task starts when available, so a run missed while the machine is off is caught up on next wake. It
-    also runs on battery and is capped at a five minute execution time limit. Re-running this script
-    re-registers the task in place because -Force is set.
+    The task may wake the machine, so a time that falls while it sleeps still opens its window punctually.
+    Waking depends on the power scheme permitting wake timers, which usually rules out battery; a time
+    missed that way instead runs shortly after the machine is next available. A failed run is retried twice,
+    five minutes apart, rather than left until the next window five hours later.
+
+    The three times are wall clock times and keep their place across daylight saving transitions. The task
+    also runs on battery and is capped at a five minute execution time limit.
+
+    Re-running this script replaces the task in place and never opens a window as a side effect, even when
+    some of the three times have already passed for the day.
 
 .PARAMETER StartTime
     Time of day, as a TimeSpan, at which the first window opens. The other two runs are derived as
@@ -51,7 +59,7 @@
 [CmdletBinding()]
 param (
     [ValidateScript({ $_ -ge [TimeSpan]::Zero -and $_ -lt [TimeSpan]::FromHours(14) },
-        ErrorMessage = "StartTime must be between 00:00 and 13:59 so the last of the three runs stays before midnight.")]
+        ErrorMessage = "StartTime must be between 00:00 and 13:59 to keep the last run before midnight.")]
     [TimeSpan] $StartTime = "07:00"
 )
 
@@ -76,6 +84,22 @@ if (!(Get-Command claude -ErrorAction SilentlyContinue)) {
     Write-Warning "claude is not on PATH; the task registers but every run will fail until Claude Code is installed."
 }
 
+# Task Scheduler resolves the action against the service PATH, not the PATH of the account the task runs
+# as, so the store build of pwsh, reachable only through its WindowsApps alias, needs an absolute path.
+$ShellCandidates = @(
+    "$env:LOCALAPPDATA\Microsoft\WindowsApps\pwsh.exe"
+    "$env:ProgramFiles\PowerShell\7\pwsh.exe"
+)
+$Shell = $ShellCandidates
+    | Where-Object { Test-Path $_ -PathType Leaf }
+    | Select-Object -First 1
+
+if (!$Shell) {
+    Write-Error "pwsh.exe was not found in any of: $($ShellCandidates -join ', ')." `
+        -Category ObjectNotFound `
+        -ErrorAction Stop
+}
+
 # Task Scheduler pairs one action with every trigger, so the prompt has to resolve at run time. The lookup
 # is keyed by hour rather than by trigger, and ?? covers a catch-up run that lands outside the three hours.
 $Lookup = ($Greetings.GetEnumerator() | ForEach-Object { "$($_.Key.Hours)='$($_.Value)'" }) -join ";"
@@ -83,18 +107,32 @@ $Prompt = "`$(@{$Lookup}[(Get-Date).Hour] ?? 'Hello')"
 $Command = "claude --effort low --model haiku --no-session-persistence --print --safe-mode $Prompt"
 
 $ActionArgs = @{
-    Execute          = "pwsh.exe"
+    Execute          = $Shell
     Argument         = "-NoProfile -NonInteractive -Command `"$Command`""
     WorkingDirectory = $HOME
 }
 $Action = New-ScheduledTaskAction @ActionArgs
 
+$TriggerEnd = [DateTime]::new(2099, 12, 31, 23, 59, 59)
+
 $Triggers = $Greetings.Keys | ForEach-Object {
+    $At = [DateTime]::Today.Add($_)
+
+    # A time already past today was never missed, so rolling it to tomorrow keeps StartWhenAvailable from
+    # treating registration itself as a missed run and opening a window at the hour the script was run.
+    if ($At -lt [DateTime]::Now) {
+        $At = $At.AddDays(1)
+    }
+
     $TriggerArgs = @{
         Daily = $true
-        At    = [DateTime]::Today.Add($_)
+        At    = $At
     }
-    New-ScheduledTaskTrigger @TriggerArgs
+
+    $Trigger = New-ScheduledTaskTrigger @TriggerArgs
+    $Trigger.StartBoundary = $At.ToString("s")
+    $Trigger.EndBoundary = $TriggerEnd.ToString("s")
+    $Trigger
 }
 
 $SettingsArgs = @{
@@ -102,6 +140,9 @@ $SettingsArgs = @{
     AllowStartIfOnBatteries    = $true
     DontStopIfGoingOnBatteries = $true
     StartWhenAvailable         = $true
+    WakeToRun                  = $true
+    RestartCount               = 2
+    RestartInterval            = [TimeSpan]::FromMinutes(5)
 }
 $Settings = New-ScheduledTaskSettingsSet @SettingsArgs
 

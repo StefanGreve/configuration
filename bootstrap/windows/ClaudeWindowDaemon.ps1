@@ -17,16 +17,11 @@
     run that Task Scheduler catches up outside those hours falls back to a plain greeting rather than
     invoking claude with no prompt at all.
 
-    The task may wake the machine, so a time that falls while it sleeps still opens its window punctually.
-    Waking depends on the power scheme permitting wake timers, which usually rules out battery; a time
-    missed that way instead runs shortly after the machine is next available. A failed run is retried twice,
-    five minutes apart, rather than left until the next window five hours later.
-
-    The three times are wall clock times and keep their place across daylight saving transitions. The task
-    also runs on battery and is capped at a five minute execution time limit.
-
-    Re-running this script replaces the task in place and never opens a window as a side effect, even when
-    some of the three times have already passed for the day.
+    The task may wake the machine, subject to the power scheme permitting wake timers, which usually rules
+    out battery; a time missed while asleep runs shortly after the machine is next available instead. A
+    failed run is retried twice, five minutes apart. The three times hold their place across daylight
+    saving transitions. The task runs on battery, is capped at five minutes, and is replaced in place when
+    this script is re-run, without opening a window as a side effect.
 
 .PARAMETER StartTime
     Time of day, as a TimeSpan, at which the first window opens. The other two runs are derived as
@@ -45,9 +40,9 @@
     Run from an elevated (Administrator) PowerShell session. Registering a task in the Task Scheduler
     root library requires administrator rights.
 
-    The task runs under your interactive account and therefore authenticates as the signed-in Claude Code
-    user. Nothing is logged: when the login expires or claude fails for any other reason, the non-zero exit
-    code surfaces in the Last Run Result column of Task Scheduler.
+    The task runs under your account without a stored password and outside any interactive session, so no
+    console window appears. Nothing is logged: when the login expires or claude fails for any other reason,
+    its exit code surfaces in the Last Run Result column of Task Scheduler.
 
 .LINK
     https://learn.microsoft.com/en-us/powershell/module/scheduledtasks/register-scheduledtask
@@ -104,7 +99,8 @@ if (!$Shell) {
 # is keyed by hour rather than by trigger, and ?? covers a catch-up run that lands outside the three hours.
 $Lookup = ($Greetings.GetEnumerator() | ForEach-Object { "$($_.Key.Hours)='$($_.Value)'" }) -join ";"
 $Prompt = "`$(@{$Lookup}[(Get-Date).Hour] ?? 'Hello')"
-$Command = "claude --effort low --model haiku --no-session-persistence --print --safe-mode $Prompt"
+$Claude = "claude --effort low --model haiku --no-session-persistence --print --safe-mode $Prompt"
+$Command = "$Claude; exit `$LASTEXITCODE"
 
 $ActionArgs = @{
     Execute          = $Shell
@@ -146,10 +142,18 @@ $SettingsArgs = @{
 }
 $Settings = New-ScheduledTaskSettingsSet @SettingsArgs
 
+$PrincipalArgs = @{
+    UserId    = "$env:USERDOMAIN\$env:USERNAME"
+    LogonType = "S4U"
+    RunLevel  = "Limited"
+}
+$Principal = New-ScheduledTaskPrincipal @PrincipalArgs
+
 $TaskArgs = @{
     Action      = $Action
     Trigger     = $Triggers
     Settings    = $Settings
+    Principal   = $Principal
     Description = $Description
 }
 $Task = New-ScheduledTask @TaskArgs

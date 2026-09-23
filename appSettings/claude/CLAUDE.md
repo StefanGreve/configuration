@@ -4,6 +4,8 @@
 
 - Always respond in English (en-US), even if the user writes in another language, unless they
   explicitly ask for a response in a different language.
+- Use precise language in chat responses, comments, and documentation: replace slang and colloquialisms
+  with accurate terms, and make the subject, the action, and any temporal or causal relationship explicit.
 - If an LSP is available:
   - Use Grep/Glob for discovery (finding files, searching patterns).
   - Use LSP for understanding (definitions, references, type info, call hierarchies).

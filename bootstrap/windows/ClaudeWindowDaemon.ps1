@@ -21,7 +21,7 @@
     out battery; a time missed while asleep runs shortly after the machine is next available instead. A
     failed run is retried twice, five minutes apart. The three times hold their place across daylight
     saving transitions. The task runs on battery, is capped at five minutes, and is replaced in place when
-    this script is re-run, without opening a window as a side effect.
+    this script is re-run, without opening a usage window as a side effect.
 
 .PARAMETER StartTime
     Time of day, as a TimeSpan, at which the first window opens. The other two runs are derived as

@@ -7,9 +7,12 @@
 .DESCRIPTION
     Creates (or overwrites) a Windows scheduled task named "ClockOutDaemon" that runs
     scripts/windows/Stop-Work.ps1 via pwsh.exe at the configured clock-out time (17:30 by default)
-    every weekday (Monday through Friday). The task starts when available, so a run missed while the
-    machine is off is caught up on next wake. It also runs on battery and is capped at a five minute
-    execution time limit. Re-running this script re-registers the task in place because -Force is set.
+    every weekday (Monday through Friday).
+
+    A missed run is dropped rather than caught up later, because closing your work applications is only
+    wanted at the end of the day. The reminder time holds across daylight saving transitions and no console
+    window appears. The task runs on battery, is capped at a five minute execution time limit, and is
+    replaced in place when this script is re-run.
 
 .PARAMETER ClockOutTime
     Time of day, as a TimeSpan, at which the reminder fires. Accepts values from 00:00 up to (but not
@@ -48,25 +51,41 @@ $Description = "Reminds you to clock out at $($ClockOutTime.ToString('hh\:mm')) 
 
 # ==============================================================================
 
+$ShellCandidates = @(
+    "$env:LOCALAPPDATA\Microsoft\WindowsApps\pwsh.exe"
+    "$env:ProgramFiles\PowerShell\7\pwsh.exe"
+)
+$Shell = $ShellCandidates
+    | Where-Object { Test-Path $_ -PathType Leaf }
+    | Select-Object -First 1
+
+if (!$Shell) {
+    Write-Error "pwsh.exe was not found in any of: $($ShellCandidates -join ', ')." `
+        -Category ObjectNotFound `
+        -ErrorAction Stop
+}
+
 $StopWork = [Path]::GetFullPath((Join-Path $PSScriptRoot "..\..\scripts\windows\Stop-Work.ps1"))
 $ActionArgs = @{
-    Execute  = "pwsh.exe"
-    Argument = "-NoProfile -ExecutionPolicy Bypass -File `"$StopWork`""
+    Execute  = "conhost.exe"
+    Argument = "--headless `"$Shell`" -NoProfile -ExecutionPolicy Bypass -File `"$StopWork`""
 }
 $Action = New-ScheduledTaskAction @ActionArgs
+
+$At = [DateTime]::Today.Add($ClockOutTime)
 
 $TriggerArgs = @{
     Weekly     = $true
     DaysOfWeek = [DayOfWeek]::Monday..[DayOfWeek]::Friday
-    At         = [DateTime]::Today.Add($ClockOutTime)
+    At         = $At
 }
 $Trigger = New-ScheduledTaskTrigger @TriggerArgs
+$Trigger.StartBoundary = $At.ToString("s")
 
 $SettingsArgs = @{
     ExecutionTimeLimit         = [TimeSpan]::FromMinutes(5)
     AllowStartIfOnBatteries    = $true
     DontStopIfGoingOnBatteries = $true
-    StartWhenAvailable         = $true
 }
 $Settings = New-ScheduledTaskSettingsSet @SettingsArgs
 

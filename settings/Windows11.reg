@@ -59,10 +59,6 @@ Windows Registry Editor Version 5.00
 "ScoobeSystemSettingEnabled"=dword:00000000
 
 ; --- security hardening -------------------------------------------------------
-; the entries below come from claude-hardening.md. items that cannot be expressed as
-; static registry data (per-interface NetbiosOptions, firewall profile scoping, auditpol,
-; Set-ProcessMitigation, certificate removal, wlan profiles) are documented there instead.
-
 ; restore mark-of-the-web on downloaded files. SaveZoneInformation=2 stops Windows from
 ; writing the Zone.Identifier stream, which silently disables SmartScreen, Office Protected
 ; View and the corporate BlockContentExecutionFromInternet policy. deleting the value

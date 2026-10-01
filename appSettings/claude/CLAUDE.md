@@ -59,21 +59,7 @@
 
 ## Task Management
 
-- Track tasks in a `todo.md` file at the repository root.
-- When a task is finished, delete its entry outright (including title and all detail lines).
-  Never mark it `- [x]`, and never ask permission first: the deletion is part of finishing
-  the task, not a separate decision.
-  - If only some bullets of a multi-bullet entry are done, delete those and leave the rest.
-  - If the entry's proposed approach turned out to be wrong but its goal was achieved, delete
-    it anyway and explain in chat why the approach did not work.
-  - If the entry turns out to be already resolved by other work, or not worth doing, delete it
-    and say which of the two it was.
+- Track tasks in a `todo.md` file at the repository root, following the `devkit:taskmgr` skill
+  for how entries are retired.
 - If the current working directory is part of a git repository, suggest a commit message after
-  completing a task, in one of two forms:
-  - Short: a single-line summary for small, self-contained changes.
-  - Verbose: a summary line followed by `*` bullet points, for larger changes spanning
-    multiple files.
-- Only describe changes git will actually record: skip git-ignored files such as `todo.md`, and
-  do not include untracked files you did not create.
-- When you wrote the majority of the code, end a verbose message with a trailer naming the model
-  you are running as, for example: `Co-authored-by: Claude Opus 5 <noreply@anthropic.com>`
+  completing a task, following the `devkit:commit-message` skill.

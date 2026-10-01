@@ -39,7 +39,16 @@
     "command": "pwsh -NoProfile -File $HOME/.claude/statusline.ps1"
   },
   "enabledPlugins": {
-    "csharp-lsp@claude-plugins-official": true
+    "csharp-lsp@claude-plugins-official": true,
+    "devkit@stefangreve-plugins": true
+  },
+  "extraKnownMarketplaces": {
+    "stefangreve-plugins": {
+      "source": {
+        "source": "github",
+        "repo": "StefanGreve/claude-plugins"
+      }
+    }
   },
   "outputStyle": "Explanatory",
   "language": "english",

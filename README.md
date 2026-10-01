@@ -119,3 +119,5 @@ gpg --import .\gpg-private-key.asc
 
 - In order to use the Work profile of `Set-DevelopmentProfile` script, you need to
   define the environment variables `GitWorkUserName` and `GitWorkUserEmail` first.
+- Configure a *usage window anchor* routine that starts the 5-hour usage windows
+  at 04:00, 09:00, 14:00, 19:00 and 00:00 CET/CEST by using the `/schedule` command

@@ -146,10 +146,6 @@
             {
                 "path": "./macos/LaunchAgents/com.stefangreve.environment.plist",
                 "target": "~/Library/LaunchAgents/com.stefangreve.environment.plist"
-            },
-            {
-                "path": "./macos/LaunchAgents/com.stefangreve.claudewindow.plist",
-                "target": "~/Library/LaunchAgents/com.stefangreve.claudewindow.plist"
             }
         ],
         "nvim": [

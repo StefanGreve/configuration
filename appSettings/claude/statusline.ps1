@@ -2,7 +2,7 @@
 #Requires -Version 7.4
 
 # Claude Code status line
-# (( model )) @ [reponame] (context remaining) [NNNk in / NNk out]
+# (( model :: effort )) @ [reponame] (context remaining) [NNNk in / NNk out]
 # Reads the Claude Code statusLine JSON from stdin and writes a single coloured line.
 
 using namespace System.IO
@@ -15,6 +15,10 @@ $Data = $InputJson | ConvertFrom-Json
 
 $ModelName = $Data.model.display_name
 if (-not $ModelName) { $ModelName = 'Claude' }
+
+# == effort level - absent unless the current model supports the parameter =====
+
+$EffortLevel = $Data.effort.level
 
 # == repo name - git toplevel basename, falling back to the cwd leaf ===========
 
@@ -69,11 +73,19 @@ if ($null -ne $LastUsage) {
 $StatusLine = [StringBuilder]::new()
 
 $null = & {
-    # (( model )) @ [repo]
+    # (( model :: effort )) @ [repo]
     $StatusLine.Append($PSStyle.Foreground.BrightWhite)
     $StatusLine.Append("(( ")
     $StatusLine.Append($PSStyle.Foreground.BrightYellow)
     $StatusLine.Append($ModelName)
+
+    if ($EffortLevel) {
+        $StatusLine.Append($PSStyle.Foreground.BrightWhite)
+        $StatusLine.Append(" :: ")
+        $StatusLine.Append($PSStyle.Foreground.BrightYellow)
+        $StatusLine.Append($EffortLevel)
+    }
+
     $StatusLine.Append($PSStyle.Foreground.BrightWhite)
     $StatusLine.Append(" )) @ [")
     $StatusLine.Append($PSStyle.Foreground.BrightGreen)

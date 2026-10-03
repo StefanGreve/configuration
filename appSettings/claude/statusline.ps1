@@ -2,7 +2,7 @@
 #Requires -Version 7.4
 
 # Claude Code status line
-# (( model :: effort )) @ [reponame] (context remaining) [NNNk in / NNk out]
+# (( model :: effort )) @ [reponame] (Y% context, Z% window remaining) [NNNk in / NNk out]
 # Reads the Claude Code statusLine JSON from stdin and writes a single coloured line.
 
 using namespace System.IO
@@ -42,6 +42,15 @@ $Remaining = $Data.context_window.remaining_percentage
 
 if ($null -eq $Remaining -and $null -ne $Data.context_window.used_percentage) {
     $Remaining = 100 - $Data.context_window.used_percentage
+}
+
+# == 5-hour window remaining - absent until the first API response of a =========
+# == session, for non-subscribers, and once the window has expired =============
+
+$WindowRemaining = $null
+
+if ($null -ne $Data.rate_limits.five_hour.used_percentage) {
+    $WindowRemaining = 100 - $Data.rate_limits.five_hour.used_percentage
 }
 
 # == last-prompt token usage - null before first message and after /compact ====
@@ -93,27 +102,30 @@ $null = & {
     $StatusLine.Append($PSStyle.Foreground.BrightWhite)
     $StatusLine.Append("]")
 
-    # (context remaining)
-    if ($null -ne $Remaining) {
-        $Pct = [Math]::Floor([double]$Remaining)
-        $StatusLine.Append(" ")
+    # (Y% context, Z% window remaining)
+    if ($null -ne $Remaining -or $null -ne $WindowRemaining) {
+        $Parts = @()
+        if ($null -ne $Remaining)       { $Parts += @{ Pct = [Math]::Floor([double]$Remaining);       Label = '% context' } }
+        if ($null -ne $WindowRemaining) { $Parts += @{ Pct = [Math]::Floor([double]$WindowRemaining); Label = '% window'  } }
 
-        if ($Pct -lt 10) {
-            # below 10% the whole segment turns bright red as a warning
-            $StatusLine.Append($PSStyle.Foreground.BrightRed)
-            $StatusLine.Append("(")
-            $StatusLine.Append($Pct)
-            $StatusLine.Append("% remaining)")
-        } else {
-            $StatusLine.Append($PSStyle.Foreground.Blue)
-            $StatusLine.Append("(")
-            $StatusLine.Append($PSStyle.Foreground.BrightBlue)
-            $StatusLine.Append($Pct)
-            $StatusLine.Append("% remaining")
-            $StatusLine.Append($PSStyle.Foreground.Blue)
-            $StatusLine.Append(")")
+        # below 10% in either figure the whole segment turns bright red as a warning
+        $IsLow     = [bool]($Parts | Where-Object { $_.Pct -lt 10 })
+        $Frame     = $IsLow ? $PSStyle.Foreground.BrightRed : $PSStyle.Foreground.Blue
+        $Highlight = $IsLow ? $PSStyle.Foreground.BrightRed : $PSStyle.Foreground.BrightBlue
+
+        $StatusLine.Append(" ")
+        $StatusLine.Append($Frame)
+        $StatusLine.Append("(")
+
+        for ($i = 0; $i -lt $Parts.Count; $i++) {
+            if ($i -gt 0) { $StatusLine.Append(", ") }
+            $StatusLine.Append($Highlight)
+            $StatusLine.Append($Parts[$i].Pct)
+            $StatusLine.Append($Frame)
+            $StatusLine.Append($Parts[$i].Label)
         }
 
+        $StatusLine.Append(" remaining)")
         $StatusLine.Append($PSStyle.Foreground.BrightWhite)
     }
 

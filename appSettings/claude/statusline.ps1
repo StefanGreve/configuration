@@ -104,14 +104,12 @@ $null = & {
 
     # (Y% context, Z% window remaining)
     if ($null -ne $Remaining -or $null -ne $WindowRemaining) {
+        # each figure carries its own warning floor; only the number and its percent sign turn red
         $Parts = @()
-        if ($null -ne $Remaining)       { $Parts += @{ Pct = [Math]::Floor([double]$Remaining);       Label = '% context' } }
-        if ($null -ne $WindowRemaining) { $Parts += @{ Pct = [Math]::Floor([double]$WindowRemaining); Label = '% window'  } }
+        if ($null -ne $Remaining)       { $Parts += @{ Pct = [Math]::Floor([double]$Remaining);       Label = ' context'; Threshold = 60 } }
+        if ($null -ne $WindowRemaining) { $Parts += @{ Pct = [Math]::Floor([double]$WindowRemaining); Label = ' window';  Threshold = 20 } }
 
-        # below 10% in either figure the whole segment turns bright red as a warning
-        $IsLow     = [bool]($Parts | Where-Object { $_.Pct -lt 10 })
-        $Frame     = $IsLow ? $PSStyle.Foreground.BrightRed : $PSStyle.Foreground.Blue
-        $Highlight = $IsLow ? $PSStyle.Foreground.BrightRed : $PSStyle.Foreground.BrightBlue
+        $Frame = $PSStyle.Foreground.Blue
 
         $StatusLine.Append(" ")
         $StatusLine.Append($Frame)
@@ -119,8 +117,14 @@ $null = & {
 
         for ($i = 0; $i -lt $Parts.Count; $i++) {
             if ($i -gt 0) { $StatusLine.Append(", ") }
+
+            $Highlight = ($Parts[$i].Pct -lt $Parts[$i].Threshold) `
+                ? $PSStyle.Foreground.BrightRed `
+                : $PSStyle.Foreground.BrightBlue
+
             $StatusLine.Append($Highlight)
             $StatusLine.Append($Parts[$i].Pct)
+            $StatusLine.Append("%")
             $StatusLine.Append($Frame)
             $StatusLine.Append($Parts[$i].Label)
         }

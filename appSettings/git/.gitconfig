@@ -63,3 +63,5 @@
 [help]
     autocorrect = prompt
     format = html
+[credential "https://git.swisslab.de"]
+    provider = bitbucket

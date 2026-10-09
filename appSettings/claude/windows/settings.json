@@ -32,7 +32,7 @@
       "~/Desktop/repos"
     ]
   },
-  "model": "opus[1m]",
+  "model": "opus",
   "defaultShell": "powershell",
   "statusLine": {
     "type": "command",
@@ -63,5 +63,10 @@
   "showThinkingSummaries": true,
   "theme": "dark",
   "editorMode": "vim",
-  "autoCompactEnabled": true
+  "autoCompactEnabled": true,
+  "modelSettings": {
+    "claude-opus-5-5": {
+      "effortLevel": "high"
+    }
+  }
 }

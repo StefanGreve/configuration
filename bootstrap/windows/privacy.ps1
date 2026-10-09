@@ -15,6 +15,11 @@
     the local cache, including pinned files, so that no content listed by
     Get-DeliveryOptimizationStatus remains available for upload to other peers.
 
+    .PARAMETER DisableTelemetryServices
+    Stops and disables services that collect usage data: Microsoft Usage and Quality Insights
+    (wuqisvc) and the HP analytics services. Services that do not exist on the device are
+    skipped.
+
     .PARAMETER DisableTelemetryTasks
     Disables the scheduled tasks that collect diagnostic and usage data, such as the
     Compatibility Appraiser, Device Census, and the Customer Experience Improvement Program.
@@ -60,6 +65,9 @@ param(
     [switch] $DisableDeliveryOptimizationPeering,
 
     [Parameter(ParameterSetName = "Custom")]
+    [switch] $DisableTelemetryServices,
+
+    [Parameter(ParameterSetName = "Custom")]
     [switch] $DisableTelemetryTasks,
 
     [Parameter(ParameterSetName = "Custom")]
@@ -76,7 +84,12 @@ begin {
             -ErrorAction Stop
     }
 
-    $Steps = @($DisableDeliveryOptimizationPeering, $DisableTelemetryTasks, $EnableMacRandomization)
+    $Steps = @(
+        $DisableDeliveryOptimizationPeering
+        $DisableTelemetryServices
+        $DisableTelemetryTasks
+        $EnableMacRandomization
+    )
 
     if (!$All.IsPresent -and $Steps.IsPresent -notcontains $true) {
         Write-Error "Specify -All or at least one step to run" -Category InvalidArgument -ErrorAction Stop
@@ -105,6 +118,29 @@ process {
         }
         else {
             Write-Verbose "Delivery Optimization peering is disabled: ${Summary}"
+        }
+    }
+
+    if ($DisableTelemetryServices.IsPresent -or $All.IsPresent) {
+        $TelemetryServices = @(
+            "HPAudioAnalytics"
+            "HpTouchpointAnalyticsService"
+            "wuqisvc"
+        )
+
+        foreach ($ServiceName in $TelemetryServices) {
+            $Service = Get-Service -Name $ServiceName -ErrorAction SilentlyContinue
+
+            if ($null -eq $Service) {
+                Write-Verbose "Skip missing service ${ServiceName}"
+            }
+            elseif ($Service.StartType -eq "Disabled" -and $Service.Status -eq "Stopped") {
+                Write-Verbose "Skip disabled service ${ServiceName}"
+            }
+            elseif ($PSCmdlet.ShouldProcess("$($Service.DisplayName) (${ServiceName})", "Disable and stop service")) {
+                Set-Service -InputObject $Service -StartupType Disabled
+                Stop-Service -InputObject $Service
+            }
         }
     }
 

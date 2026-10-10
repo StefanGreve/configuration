@@ -2,7 +2,7 @@
 #Requires -Version 7.4
 
 # Claude Code status line
-# (( model :: effort )) @ [reponame] (Y% context, Z% window remaining) [NNNk in / NNk out]
+# (( model :: effort )) @ [reponame] (Y% context, Z% window remaining) [NNNk in / NNk out] Resets in <time>
 # Reads the Claude Code statusLine JSON from stdin and writes a single coloured line.
 
 using namespace System.IO
@@ -51,6 +51,26 @@ $WindowRemaining = $null
 
 if ($null -ne $Data.rate_limits.five_hour.used_percentage) {
     $WindowRemaining = 100 - $Data.rate_limits.five_hour.used_percentage
+}
+
+# == 5-hour window reset - Unix epoch seconds, absent under the same ===========
+# == conditions as the percentage above, and once the window has elapsed =======
+
+function Format-Duration ([TimeSpan] $Span) {
+    if ($Span.TotalMinutes -lt 1) { return '<1m' }
+
+    return ($Span.TotalHours -ge 1) `
+        ? "$([Math]::Floor($Span.TotalHours))h $($Span.Minutes)m" `
+        : "$($Span.Minutes)m"
+}
+
+$ResetsIn = $null
+
+if ($null -ne $Data.rate_limits.five_hour.resets_at) {
+    $ResetAt = [DateTimeOffset]::FromUnixTimeSeconds([long] $Data.rate_limits.five_hour.resets_at)
+    $Span    = $ResetAt - [DateTimeOffset]::UtcNow
+
+    if ($Span -gt [TimeSpan]::Zero) { $ResetsIn = Format-Duration $Span }
 }
 
 # == last-prompt token usage - null before first message and after /compact ====
@@ -146,6 +166,14 @@ $null = & {
         $StatusLine.Append($PSStyle.Foreground.Magenta)
         $StatusLine.Append("]")
         $StatusLine.Append($PSStyle.Foreground.BrightWhite)
+    }
+
+    # Resets in <time>
+    if ($ResetsIn) {
+        $StatusLine.Append(" ")
+        $StatusLine.Append($PSStyle.Foreground.BrightBlack)
+        $StatusLine.Append("Resets in ")
+        $StatusLine.Append($ResetsIn)
     }
 
     $StatusLine.Append($PSStyle.Reset)

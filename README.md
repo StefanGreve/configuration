@@ -25,8 +25,10 @@ to run:
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted
 ```
 
-The bootstrap scripts expect `cargo`, `pipx`, and a platform package manager
+The bootstrap scripts expect `cargo`, `npm`, `pipx`, and a platform package manager
 (`winget` on Windows, `brew` on MacOS; Linux is not implemented) on your `PATH`.
+MCP server registration additionally requires `claude`, and is skipped with a warning
+when Claude Code is not installed.
 
 The setting files use the classic Code Page 437 character set; the matching DOS VGA
 font is available at <https://cp437.github.io/>. Optionally, follow

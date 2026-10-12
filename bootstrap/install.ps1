@@ -17,6 +17,12 @@ param(
     [switch] $DotnetTool,
 
     [Parameter(ParameterSetName = "Custom")]
+    [switch] $Mcp,
+
+    [Parameter(ParameterSetName = "Custom")]
+    [switch] $Npm,
+
+    [Parameter(ParameterSetName = "Custom")]
     [switch] $PipX,
 
     [Parameter(ParameterSetName = "Custom")]
@@ -106,6 +112,26 @@ process {
             $PackageManagers.DotnetTool | Install-DotnetTool
         } else {
             Write-Error "TODO: install dotnet" -Category NotImplemented -ErrorAction Stop
+        }
+    }
+
+    if ($Npm.IsPresent -or $All.IsPresent) {
+        if (Get-Command npm -ErrorAction SilentlyContinue) {
+            $PackageManagers.Npm | Install-Npm
+        } else {
+            Write-Error "npm is not installed, but it is required to proceed. Please install npm and try again." -Category NotInstalled -ErrorAction Stop
+        }
+    }
+
+    if ($Mcp.IsPresent -or $All.IsPresent) {
+        if (Get-Command claude -ErrorAction SilentlyContinue) {
+            $McpServers = $Apps | Select-Object -ExpandProperty "McpServers"
+
+            foreach ($Server in $McpServers.PSObject.Properties) {
+                Register-McpServer -Name $Server.Name -Definition $Server.Value
+            }
+        } else {
+            Write-Warning "Claude Code is not on PATH; skipping MCP server registration."
         }
     }
 

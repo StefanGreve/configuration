@@ -56,6 +56,20 @@ function Install-DotnetTool {
     }
 }
 
+function Install-Npm {
+    [OutputType([void])]
+    param(
+        [Parameter(Position = 0, Mandatory, ValueFromPipeline)]
+        [string[]] $Package
+    )
+
+    process {
+        foreach ($p in $Package) {
+            npm install --global $p
+        }
+    }
+}
+
 function Install-PipX {
     [OutputType([void])]
     param(
@@ -135,5 +149,25 @@ function Install-WinGet {
                 --accept-source-agreements `
                 --disable-interactivity
         }
+    }
+}
+
+function Register-McpServer {
+    [OutputType([void])]
+    param(
+        [Parameter(Position = 0, Mandatory)]
+        [string] $Name,
+
+        [Parameter(Position = 1, Mandatory)]
+        [psobject] $Definition
+    )
+
+    process {
+        # User scope keeps the server available in every project. add-json refuses to
+        # overwrite an existing registration, so the entry is dropped beforehand to keep
+        # repeated bootstrap runs idempotent; removing an absent server is not an error.
+        claude mcp remove $Name --scope user *> $null
+
+        claude mcp add-json $Name ($Definition | ConvertTo-Json -Compress) --scope user
     }
 }

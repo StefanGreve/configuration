@@ -29,8 +29,16 @@
     Enables random hardware (MAC) addresses on every physical Wi-Fi adapter, so that the device
     cannot be tracked by its MAC address across Wi-Fi networks.
 
+    .PARAMETER RemoveConsumerApps
+    Removes the specified consumer app packages for all users and deprovisions them, so that new
+    user profiles do not receive them either. If dism.exe cannot remove a provisioning entry, for
+    example because its files are missing, the script marks the package family as deprovisioned
+    instead. Accepts All or any of BingNews, BingSearch, BingWeather, ClientWebExperience
+    (Widgets), Copilot, Cortana, CrossDevice, Getstarted (Tips), WindowsFeedbackHub, and
+    YourPhone (Phone Link). Removed apps can be reinstalled from the Microsoft Store.
+
     .PARAMETER All
-    Runs every step.
+    Runs every step, including -RemoveConsumerApps All.
 
     .INPUTS
     None. You cannot pipe objects to this script.
@@ -56,6 +64,11 @@
 
     Disables the telemetry tasks and enables MAC randomization, but leaves Delivery Optimization
     unchanged.
+
+    .EXAMPLE
+    PS> .\privacy.ps1 -RemoveConsumerApps WindowsFeedbackHub, ClientWebExperience
+
+    Removes Feedback Hub and Widgets for all users.
 #>
 
 [CmdletBinding(SupportsShouldProcess, DefaultParameterSetName = "Custom")]
@@ -73,6 +86,13 @@ param(
     [Parameter(ParameterSetName = "Custom")]
     [switch] $EnableMacRandomization,
 
+    [Parameter(ParameterSetName = "Custom")]
+    [ValidateSet(
+        "All", "BingNews", "BingSearch", "BingWeather", "ClientWebExperience", "Copilot", "Cortana", "CrossDevice",
+        "Getstarted", "WindowsFeedbackHub", "YourPhone"
+    )]
+    [string[]] $RemoveConsumerApps,
+
     [Parameter(ParameterSetName = "All", Mandatory)]
     [switch] $All
 )
@@ -85,13 +105,14 @@ begin {
     }
 
     $Steps = @(
-        $DisableDeliveryOptimizationPeering
-        $DisableTelemetryServices
-        $DisableTelemetryTasks
-        $EnableMacRandomization
+        $DisableDeliveryOptimizationPeering.IsPresent
+        $DisableTelemetryServices.IsPresent
+        $DisableTelemetryTasks.IsPresent
+        $EnableMacRandomization.IsPresent
+        $RemoveConsumerApps.Count -gt 0
     )
 
-    if (!$All.IsPresent -and $Steps.IsPresent -notcontains $true) {
+    if (!$All.IsPresent -and $Steps -notcontains $true) {
         Write-Error "Specify -All or at least one step to run" -Category InvalidArgument -ErrorAction Stop
     }
 }
@@ -196,6 +217,70 @@ process {
                 }
                 else {
                     Write-Verbose "MAC randomization is enabled on $($Adapter.Name)"
+                }
+            }
+        }
+    }
+
+    if ($RemoveConsumerApps.Count -gt 0 -or $All.IsPresent) {
+        $ConsumerApps = [ordered]@{
+            BingNews            = "Microsoft.BingNews_8wekyb3d8bbwe"
+            BingSearch          = "Microsoft.BingSearch_8wekyb3d8bbwe"
+            BingWeather         = "Microsoft.BingWeather_8wekyb3d8bbwe"
+            ClientWebExperience = "MicrosoftWindows.Client.WebExperience_cw5n1h2txyewy"
+            Copilot             = "Microsoft.Copilot_8wekyb3d8bbwe"
+            Cortana             = "Microsoft.549981C3F5F10_8wekyb3d8bbwe"
+            CrossDevice         = "MicrosoftWindows.CrossDevice_cw5n1h2txyewy"
+            Getstarted          = "Microsoft.Getstarted_8wekyb3d8bbwe"
+            WindowsFeedbackHub  = "Microsoft.WindowsFeedbackHub_8wekyb3d8bbwe"
+            YourPhone           = "Microsoft.YourPhone_8wekyb3d8bbwe"
+        }
+        $DeprovisionedKey = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Deprovisioned"
+
+        $RemoveAll = $All.IsPresent -or "All" -in $RemoveConsumerApps
+        $Selection = $ConsumerApps.GetEnumerator() | Where-Object { $RemoveAll -or $_.Key -in $RemoveConsumerApps }
+
+        $InstalledPackages = Get-AppxPackage -AllUsers
+        # Store-installed pwsh is packaged: the Dism cmdlets fail and all-user removals are denied
+        $DismOutput = dism.exe /Online /Get-ProvisionedAppxPackages /English
+
+        if ($LASTEXITCODE -ne 0) {
+            Write-Error "dism.exe could not list provisioned packages (exit code ${LASTEXITCODE})" -Category ReadError
+        }
+
+        $ProvisionedPackages = $DismOutput |
+            Select-String -Pattern '^PackageName : (.+)$' |
+            ForEach-Object { $_.Matches[0].Groups[1].Value }
+
+        foreach ($App in $Selection) {
+            $Name, $Publisher = $App.Value.Split("_")
+            $Marker = "${DeprovisionedKey}\$($App.Value)"
+            $Deprovisioned = Test-Path -Path $Marker
+            $Installed = @($InstalledPackages | Where-Object PackageFamilyName -eq $App.Value)
+            $Provisioned = @($ProvisionedPackages |
+                Where-Object { !$Deprovisioned -and $_ -like "${Name}_*_${Publisher}" })
+
+            if ($Installed.Count -eq 0 -and $Provisioned.Count -eq 0) {
+                Write-Verbose "Skip absent app package ${Name}"
+            }
+            elseif ($PSCmdlet.ShouldProcess($Name, "Remove for all users and deprovision")) {
+                foreach ($PackageName in $Provisioned) {
+                    dism.exe /Online /Remove-ProvisionedAppxPackage /PackageName:$PackageName /English | Out-Null
+
+                    if ($LASTEXITCODE -ne 0) {
+                        New-Item -Path $Marker -Force | Out-Null
+                        Write-Warning "Marked ${Name} as deprovisioned; dism.exe failed (exit code ${LASTEXITCODE})"
+                    }
+                }
+
+                foreach ($Package in Get-AppxPackage -AllUsers -Name $Name) {
+                    $Command = "Remove-AppxPackage -Package '$($Package.PackageFullName)' -AllUsers"
+                    $Output = powershell.exe -NoProfile -NonInteractive -Command $Command 2>&1
+
+                    if ($LASTEXITCODE -ne 0) {
+                        $Reason = $Output | Select-Object -First 1
+                        Write-Error "Could not remove $($Package.PackageFullName): ${Reason}" -Category WriteError
+                    }
                 }
             }
         }

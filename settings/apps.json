@@ -117,6 +117,7 @@
             "ms-python.vscode-pylance",
             "ms-toolsai.jupyter",
             "ms-vscode.hexeditor",
+            "ms-vscode.makefile-tools",
             "ms-vscode.powershell",
             "ms-vscode-remote.remote-ssh",
             "ms-vscode-remote.remote-wsl",

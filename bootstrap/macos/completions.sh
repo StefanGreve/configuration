@@ -2,7 +2,7 @@
 #
 # Writes zsh completion functions for the tools that ship a generator instead of a ready-made function,
 # mirroring the RegisterNativeCompletions list of the PowerShell profile. Formulae that install their own
-# function into $HOMEBREW_PREFIX/share/zsh/site-functions (brew, gh, git, op, pipx) are not repeated here.
+# function into $HOMEBREW_PREFIX/share/zsh/site-functions (brew, gh, git, op) are not repeated here.
 #
 # Re-run after upgrading a toolchain.
 #

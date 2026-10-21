@@ -23,13 +23,13 @@ param(
     [switch] $Npm,
 
     [Parameter(ParameterSetName = "Custom")]
-    [switch] $PipX,
-
-    [Parameter(ParameterSetName = "Custom")]
     [switch] $PSModule,
 
     [Parameter(ParameterSetName = "Custom")]
     [switch] $NeoVim,
+
+    [Parameter(ParameterSetName = "Custom")]
+    [switch] $Uv,
 
     [Parameter(ParameterSetName = "Custom")]
     [switch] $VsCode,
@@ -135,16 +135,16 @@ process {
         }
     }
 
-    if ($Pipx.IsPresent -or $All.IsPresent) {
-        if (!(Get-Command pipx -ErrorAction SilentlyContinue)) {
+    if ($Uv.IsPresent -or $All.IsPresent) {
+        if (!(Get-Command uv -ErrorAction SilentlyContinue)) {
             & ($IsWindows ? "py" : "python3") -m pip config set global.require-virtualenv False
 
             if ($IsMacOS) {
-                brew install --yes pipx
+                brew install --yes uv
             } elseif ($IsWindows) {
-                py -m pip install --user pipx
+                py -m pip install --user uv
 
-                # Append the pipx executable directory and the user-scope app directory to PATH,
+                # Append the uv executable directory and the uv tool directory to PATH,
                 # skipping any entry that is already present so repeated runs do not create duplicates.
                 $UserScripts = py -c "import sysconfig; print(sysconfig.get_path('scripts', 'nt_user'))"
 
@@ -155,13 +155,13 @@ process {
                     }
                 }
             } else {
-                Write-Error "TODO: install pipx" -Category NotImplemented -ErrorAction Stop
+                Write-Error "TODO: install uv" -Category NotImplemented -ErrorAction Stop
             }
 
             & ($IsWindows ? "py" : "python3") -m pip config set global.require-virtualenv True
         }
 
-        $PackageManagers.PipX | Install-PipX
+        $PackageManagers.Uv | Install-UvTool
     }
 
     if ($PSModule.IsPresent -or $All.IsPresent) {

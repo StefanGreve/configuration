@@ -10,7 +10,7 @@
 # rust (rustup)
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
-# python packages (pipx)
+# python packages (uv tool)
 PATH="$HOME/.local/bin:$PATH"
 
 # dotnet global tools; the SDK itself arrives via /etc/paths.d/dotnet

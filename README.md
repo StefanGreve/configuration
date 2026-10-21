@@ -25,7 +25,7 @@ to run:
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted
 ```
 
-The bootstrap scripts expect `cargo`, `npm`, `pipx`, and a platform package manager
+The bootstrap scripts expect `cargo`, `npm`, `python`, and a platform package manager
 (`winget` on Windows, `brew` on MacOS; Linux is not implemented) on your `PATH`.
 MCP server registration additionally requires `claude`, and is skipped with a warning
 when Claude Code is not installed.

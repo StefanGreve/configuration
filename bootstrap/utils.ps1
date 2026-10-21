@@ -70,20 +70,6 @@ function Install-Npm {
     }
 }
 
-function Install-PipX {
-    [OutputType([void])]
-    param(
-        [Parameter(Position = 0, Mandatory, ValueFromPipeline)]
-        [string[]] $Package
-    )
-
-    process {
-        foreach ($p in $Package) {
-            pipx install --force $p --verbose
-        }
-    }
-}
-
 function Install-PSModule {
     [OutputType([void])]
     param(
@@ -94,6 +80,20 @@ function Install-PSModule {
     process {
         foreach ($n in $Name) {
             Install-Module -Name $n -Scope CurrentUser -Repository PSGallery -Force -AcceptLicense
+        }
+    }
+}
+
+function Install-UvTool {
+    [OutputType([void])]
+    param(
+        [Parameter(Position = 0, Mandatory, ValueFromPipeline)]
+        [string[]] $Package
+    )
+
+    process {
+        foreach ($p in $Package) {
+            uv tool install --force $p
         }
     }
 }

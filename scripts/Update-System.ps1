@@ -18,7 +18,7 @@ function Update-System {
         [switch] $Brew,
 
         [Parameter(ParameterSetName = "Option")]
-        [switch] $Pipx,
+        [switch] $Uv,
 
         [Parameter(ParameterSetName = "Option")]
         [switch] $Cargo,
@@ -241,18 +241,11 @@ function Update-System {
             }
         }
 
-        if ($Pipx.IsPresent -or $All.IsPresent) {
-            if (Get-Command pipx -ErrorAction SilentlyContinue) {
-                # Names of global pipx packages to exclude from the update.
-                $PipxBlacklist = @()
-
-                if ($PipxBlacklist.Count -eq 0) {
-                    pipx upgrade-all
-                } else {
-                    pipx upgrade-all --skip $PipxBlacklist
-                }
-            } elseif ($Pipx.IsPresent) {
-                Write-Error "pipx is not installed." -Category NotInstalled
+        if ($Uv.IsPresent -or $All.IsPresent) {
+            if (Get-Command uv -ErrorAction SilentlyContinue) {
+                uv tool upgrade --all
+            } elseif ($Uv.IsPresent) {
+                Write-Error "uv is not installed." -Category NotInstalled
             }
         }
 

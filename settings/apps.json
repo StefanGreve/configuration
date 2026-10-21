@@ -21,10 +21,10 @@
             "nvim",
             "obsidian",
             "pinentry-mac",
-            "pipx",
             "python@3.12",
             "rider",
             "raspberry-pi-imager",
+            "uv",
             "visual-studio-code",
             "wget"
         ],
@@ -55,10 +55,6 @@
         "npm": [
             "@microsoft/learn-cli"
         ],
-        "pipx": [
-            "markitdown[pdf]",
-            "uv"
-        ],
         "psmodule": [
             "ClassExplorer",
             "Microsoft.WinGet.Client",
@@ -66,6 +62,10 @@
             "PowerTools",
             "PSScriptAnalyzer",
             "Sixel"
+        ],
+        "uv": [
+            "graphifyy",
+            "markitdown[pdf]"
         ],
         "winget": [
             "9WZDNCRDMDM3",

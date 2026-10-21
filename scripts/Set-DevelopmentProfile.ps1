@@ -63,6 +63,7 @@ function Set-DevelopmentProfile {
 
                 # always configure commit signing via gpg on personal accounts
                 git config --local commit.gpgsign true
+                git config --local tag.gpgsign true
 
                 if ($UseLegacySigningKey) {
                     # use legacy key with previous primary email address

@@ -44,6 +44,8 @@
     followTags = true
 [pull]
     rebase = true
+[fetch]
+    prune = true
 [alias]
     init-empty = !"f() { git init && git commit --allow-empty --allow-empty-message --no-edit; }; f"
     unstage = reset HEAD --

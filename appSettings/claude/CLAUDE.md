@@ -63,3 +63,7 @@
   for how entries are retired.
 - If the current working directory is part of a git repository, suggest a commit message after
   completing a task, following the `devkit:commit-message` skill.
+
+# graphify
+- **graphify** (`~/.claude/skills/graphify/SKILL.md`) - any input to knowledge graph. Trigger: `/graphify`
+When the user types `/graphify`, use the installed graphify skill or instructions before doing anything else.

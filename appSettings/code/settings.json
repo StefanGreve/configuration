@@ -46,6 +46,11 @@
     "explorer.compactFolders": false,
     "explorer.confirmDelete": false,
     "explorer.confirmDragAndDrop": false,
+    "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.patterns": {
+        "*.csproj": "packages.lock.json",
+        "*.slnx": "Directory.Build.props, Directory.Build.targets, Directory.Packages.props, dotnet-tools.json, global.json, nuget.config"
+    },
     "extensions.autoCheckUpdates": false,
     "extensions.autoUpdate": "off",
     "extensions.ignoreRecommendations": false,

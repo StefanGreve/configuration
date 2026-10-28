@@ -47,7 +47,9 @@
     "explorer.confirmDelete": false,
     "explorer.confirmDragAndDrop": false,
     "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.expand": false,
     "explorer.fileNesting.patterns": {
+        "*.cs": "${capture}.*.cs",
         "*.csproj": "packages.lock.json",
         "*.slnx": "Directory.Build.props, Directory.Build.targets, Directory.Packages.props, dotnet-tools.json, global.json, nuget.config"
     },

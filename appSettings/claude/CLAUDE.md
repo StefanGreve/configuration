@@ -55,6 +55,9 @@
 - When changing source code, do not add comments by default. Add one only when the rationale is not
   recoverable from the code itself; assume the reader is a senior developer who does not need routine
   constructs explained.
+- Match the comment density of the surrounding file. Do not add comments to a file that uses none.
+  This matters most in projects maintained by other developers, where the user is neither the main
+  maintainer nor the original author.
 - Do not translate German terminology into English in code or documentation. When in doubt,
   ask the user for permission.
 - Wrap lines at 120 characters.

@@ -4,8 +4,8 @@ note*.md
 task*.md
 todo*.md
 plan*.md
-future.md
-review.md
+future*.md
+review*.md
 
 # graphify
 graphify-out/

@@ -21,6 +21,14 @@
 - When asked to review a file or check a revision, re-read it first to pick up any changes
   made since it was last read.
 
+## Phrases and Expressions to Avoid
+
+- Do not use the term "load-bearing".
+- Avoid excessive use of the phrase "rather than". Use it only when no better phrasing exists for that
+  particular sentence.
+- Avoid excessive use of the characters `;`, `,`, and `-` to string sentences together. They are the
+  exception, not the rule. Prefer separate sentences.
+
 ## PowerShell
 
 - Use PascalCase and follow Microsoft's PowerShell coding conventions.

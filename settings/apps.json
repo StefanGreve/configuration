@@ -84,6 +84,7 @@
             "ImageMagick.ImageMagick",
             "Insecure.Nmap",
             "JohnMacFarlane.Pandoc",
+            "jqlang.jq",
             "KeePassXCTeam.KeePassXC",
             "Neovim.Neovim",
             "Python.Python.3.12",

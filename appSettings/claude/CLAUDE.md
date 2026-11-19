@@ -18,8 +18,12 @@
   - Logic errors or bugs in code.
   - Spelling mistakes or grammatical issues in documentation or comments.
   - Outdated comments that no longer reflect the current code.
+- When you notice an error in library code, do not suggest a workaround in the user's code right away.
+  Suggest opening an issue or a pull request upstream first.
 - When asked to review a file or check a revision, re-read it first to pick up any changes
   made since it was last read.
+- Questions from the user are not decisions. Answer the question, and wait for an explicit instruction
+  before acting on it.
 
 ## Phrases and Expressions to Avoid
 

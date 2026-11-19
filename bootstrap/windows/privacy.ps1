@@ -15,6 +15,11 @@
     the local cache, including pinned files, so that no content listed by
     Get-DeliveryOptimizationStatus remains available for upload to other peers.
 
+    .PARAMETER DisableSampleSubmission
+    Sets the Microsoft Defender Antivirus sample submission consent to NeverSend, so that Defender
+    does not upload files for cloud analysis. Skipped when Defender is not running, for example
+    because another antivirus product replaces it.
+
     .PARAMETER DisableTelemetryServices
     Stops and disables services that collect usage data: Microsoft Usage and Quality Insights
     (wuqisvc) and the HP analytics services. Services that do not exist on the device are
@@ -51,6 +56,7 @@
     Delivery Optimization rejects local changes to a download mode configured through Group
     Policy or MDM. In that case, the script leaves the mode unchanged and writes a warning if
     the effective mode still permits peering.
+    NeverSend prevents block at first sight from functioning.
     netsh refuses MAC randomization if the adapter does not support it or an administrator
     blocked it. In that case, the script writes a warning and continues.
 
@@ -76,6 +82,9 @@
 param(
     [Parameter(ParameterSetName = "Custom")]
     [switch] $DisableDeliveryOptimizationPeering,
+
+    [Parameter(ParameterSetName = "Custom")]
+    [switch] $DisableSampleSubmission,
 
     [Parameter(ParameterSetName = "Custom")]
     [switch] $DisableTelemetryServices,
@@ -106,6 +115,7 @@ begin {
 
     $Steps = @(
         $DisableDeliveryOptimizationPeering.IsPresent
+        $DisableSampleSubmission.IsPresent
         $DisableTelemetryServices.IsPresent
         $DisableTelemetryTasks.IsPresent
         $EnableMacRandomization.IsPresent
@@ -139,6 +149,20 @@ process {
         }
         else {
             Write-Verbose "Delivery Optimization peering is disabled: ${Summary}"
+        }
+    }
+
+    if ($DisableSampleSubmission.IsPresent -or $All.IsPresent) {
+        $Preference = Get-MpPreference -ErrorAction SilentlyContinue
+
+        if ($null -eq $Preference) {
+            Write-Verbose "Skip sample submission because Microsoft Defender Antivirus is not running"
+        }
+        elseif ($Preference.SubmitSamplesConsent -eq 2) {
+            Write-Verbose "Skip sample submission because the consent is already NeverSend"
+        }
+        elseif ($PSCmdlet.ShouldProcess("Microsoft Defender Antivirus", "Set sample submission consent to NeverSend")) {
+            Set-MpPreference -SubmitSamplesConsent NeverSend
         }
     }
 

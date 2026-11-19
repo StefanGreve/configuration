@@ -110,6 +110,7 @@ process {
             # Both POWERSHELL_ variables are read during pwsh startup, so the profile-sourced environment.ps1
             # is too late; User scope also reaches GUI tools that never load a profile, as the LaunchAgent does.
             @{
+                DO_NOT_TRACK                = "1"
                 DOTNET_CLI_TELEMETRY_OPTOUT = "1"
                 DOTNET_CLI_UI_LANGUAGE      = "en-US"
                 DOTNET_NOLOGO               = "1"

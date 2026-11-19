@@ -10,3 +10,5 @@ review*.md
 
 # graphify
 graphify-out/
+
+**/.claude/settings.local.json

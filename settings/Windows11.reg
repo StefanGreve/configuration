@@ -20,8 +20,9 @@ Windows Registry Editor Version 5.00
 @=""
 
 ; --- windows 11 AI ------------------------------------------------------------
-; disable Windows Recall (periodic AI screen snapshots); relevant on Copilot+ PCs
+; remove Windows Recall and its saved snapshots; relevant on Copilot+ PCs
 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsAI]
+"AllowRecallEnablement"=dword:00000000
 "DisableAIDataAnalysis"=dword:00000001
 
 ; turn off Windows Copilot (partly deprecated since Copilot became a Store app)

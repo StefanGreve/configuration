@@ -8,4 +8,5 @@
 # whole file shows as changed whenever a .reg is opened. That is expected; correct CLI diffs
 # are the priority. (Switching to `*.reg binary` would fix VS Code but make `git diff` report
 # "binary files differ" instead of a line diff.)
+# Upstream bug: https://github.com/microsoft/vscode/issues/127441
 *.reg text working-tree-encoding=UTF-16LE-BOM eol=crlf

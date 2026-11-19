@@ -10,6 +10,11 @@
     through commands. Each step runs only when its switch is specified; -All runs every step.
     Candidates for further steps are tracked in privacy.md at the repository root.
 
+    .PARAMETER ClearErrorReports
+    Deletes the queued and archived Windows Error Reporting data of the device and of the user
+    who runs the script. Disabling error reporting leaves existing reports on disk, and the
+    crash dumps they contain can include memory contents.
+
     .PARAMETER DisableDeliveryOptimizationPeering
     Sets the Delivery Optimization download mode to CdnOnly (HTTP only, no peering) and deletes
     the local cache, including pinned files, so that no content listed by
@@ -82,6 +87,9 @@
 [OutputType([void])]
 param(
     [Parameter(ParameterSetName = "Custom")]
+    [switch] $ClearErrorReports,
+
+    [Parameter(ParameterSetName = "Custom")]
     [switch] $DisableDeliveryOptimizationPeering,
 
     [Parameter(ParameterSetName = "Custom")]
@@ -115,6 +123,7 @@ begin {
     }
 
     $Steps = @(
+        $ClearErrorReports.IsPresent
         $DisableDeliveryOptimizationPeering.IsPresent
         $DisableSampleSubmission.IsPresent
         $DisableTelemetryServices.IsPresent
@@ -128,6 +137,33 @@ begin {
     }
 }
 process {
+    if ($ClearErrorReports.IsPresent -or $All.IsPresent) {
+        try {
+            $ReportRoots = @(
+                "${env:ProgramData}\Microsoft\Windows\WER"
+                "${env:LOCALAPPDATA}\Microsoft\Windows\WER"
+            )
+            $ReportFolders = foreach ($Root in $ReportRoots) {
+                "${Root}\ReportArchive"
+                "${Root}\ReportQueue"
+            }
+
+            foreach ($ReportFolder in $ReportFolders) {
+                $Reports = Get-ChildItem -Path $ReportFolder -Force -ErrorAction SilentlyContinue
+
+                if (!$Reports) {
+                    Write-Verbose "Skip empty or missing folder ${ReportFolder}"
+                }
+                elseif ($PSCmdlet.ShouldProcess($ReportFolder, "Delete $(@($Reports).Count) error reports")) {
+                    $Reports | Remove-Item -Recurse -Force
+                }
+            }
+        }
+        catch {
+            Write-Error "Could not clear the error reports: $_" -Category $_.CategoryInfo.Category
+        }
+    }
+
     if ($DisableDeliveryOptimizationPeering.IsPresent -or $All.IsPresent) {
         try {
             $Config = Get-DOConfig -Verbose:$false

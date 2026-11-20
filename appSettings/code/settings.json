@@ -94,6 +94,8 @@
         "https://aka.ms/": true,
         "https://raw.githubusercontent.com/": true
     },
+    "markdown.preview.scrollEditorWithPreview": true,
+    "markdown.preview.scrollPreviewWithEditor": false,
     "npm.fetchOnlinePackageInfo": false,
     "powershell.integratedConsole.showOnStartup": false,
     "powershell.pester.codeLens": false,
